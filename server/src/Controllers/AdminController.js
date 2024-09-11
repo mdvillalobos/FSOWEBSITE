@@ -115,9 +115,7 @@ const getApplicationsForReRanking = async (req, res) => {
             return res.json(applications);
         }
 
-        return res.json({
-            error: 'Sorr! We encounter a problem while retrieving the data. Please try again later.'
-        })
+        return res.json(null)
 
     } catch (error) {
         console.log(error);

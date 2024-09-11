@@ -7,16 +7,16 @@ const RankModal = (props) => {
   const [data, setData] = useState({
     rankName: '',
     track: '',
-    requirement_1: null,
-    requirement_2: null,
-    requirement_3: null,
-    requirement_4: null,
-    requirement_5: null,
-    requirement_6: null,
-    requirement_7: null,
-    requirement_8: null,
-    requirement_9: null,
-    requirement_10: null,
+    requirement_1: '',
+    requirement_2: '',
+    requirement_3: '',
+    requirement_4: '',
+    requirement_5: '',
+    requirement_6: '',
+    requirement_7: '',
+    requirement_8: '',
+    requirement_9: '',
+    requirement_10: '',
   })
   
   const { createRank } = useCreateRank();

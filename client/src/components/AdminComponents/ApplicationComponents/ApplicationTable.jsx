@@ -31,18 +31,21 @@ const ApplicationTable = () => {
                 </thead>
                 <tbody className='divide-y-8 divide-white'>
                     {
-                        data.map(i =>(
-                            <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
-                                <td className='px-10 py-4'>{i.name}</td>
-                                <td className='px-10 py-4'>{i.email} </td>
-                                <td className='px-10 py-4'>{i.college}</td>
-                                <td className='px-10 py-4'>{i.department}</td>
-                                <td className='px-10 py-4'>{i.currentRank}</td>
-                                <td className='px-10 py-4'>{i.applyingFor}</td>
-                            </tr>
-                        ))
-
-                }
+                        data != null ? (
+                            data.map(i =>(
+                                <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
+                                    <td className='px-10 py-4'>{i.name}</td>
+                                    <td className='px-10 py-4'>{i.email} </td>
+                                    <td className='px-10 py-4'>{i.college}</td>
+                                    <td className='px-10 py-4'>{i.department}</td>
+                                    <td className='px-10 py-4'>{i.currentRank}</td>
+                                    <td className='px-10 py-4'>{i.applyingFor}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <p>No Data</p>
+                        )
+                    }
                 </tbody>
             </table>
         </div>

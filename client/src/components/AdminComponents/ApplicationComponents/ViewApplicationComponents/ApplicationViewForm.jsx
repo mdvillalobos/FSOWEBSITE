@@ -93,7 +93,7 @@ const ViewApplicationForm = ({rest}) => {
                             handleViewImage={handleViewImage}
                         />
 
-                        {requirement.requirement_4 != null && 
+                        {requirement.requirement_4 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_4}
                                 rest={rest.requirement_4}
@@ -103,7 +103,7 @@ const ViewApplicationForm = ({rest}) => {
                             />
                         }
 
-                        {requirement.requirement_5 != null && 
+                        {requirement.requirement_5 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_5}
                                 rest={rest.requirement_5}
@@ -113,7 +113,7 @@ const ViewApplicationForm = ({rest}) => {
                             />
                         }
 
-                        {requirement.requirement_6 != null && 
+                        {requirement.requirement_6 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_6}
                                 rest={rest.requirement_6}
@@ -122,7 +122,7 @@ const ViewApplicationForm = ({rest}) => {
                                 handleViewImage={handleViewImage}
                             />
                         }
-                        {requirement.requirement_7 != null && 
+                        {requirement.requirement_7 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_7}
                                 rest={rest.requirement_7}
@@ -131,7 +131,7 @@ const ViewApplicationForm = ({rest}) => {
                                 handleViewImage={handleViewImage}
                             />
                         }
-                        {requirement.requirement_8 != null && 
+                        {requirement.requirement_8 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_8}
                                 rest={rest.requirement_8}
@@ -140,7 +140,7 @@ const ViewApplicationForm = ({rest}) => {
                                 handleViewImage={handleViewImage}
                             />
                         }
-                        {requirement.requirement_9 != null && 
+                        {requirement.requirement_9 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_9}
                                 rest={rest.requirement_9}
@@ -149,7 +149,7 @@ const ViewApplicationForm = ({rest}) => {
                                 handleViewImage={handleViewImage}
                             />
                         }
-                        {requirement.requirement_10 != null && 
+                        {requirement.requirement_10 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_10}
                                 rest={rest.requirement_10}

@@ -28,6 +28,8 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
     const [ requirement_9, setRequirement_9 ] = useState(null);
     const [ requirement_10, setRequirement_10 ] = useState(null);
 
+    console.log(data.name, data.college, data.department, data.currentRank, data.academicYear, data.requirement_1, data.requirement_2, data.requirement_3)
+
     useEffect(() => {
         const fetchData = async () => {
             const [requirementResponse, profileResponse] = await Promise.all([
@@ -42,10 +44,10 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
 
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
-        if(requirement.requirement_1 != null && !requirement_1 || requirement.requirement_2 != null && !requirement_2 || requirement.requirement_3 != null && !requirement_3 ||
-            requirement.requirement_4 != null && !requirement_4 || requirement.requirement_5 != null && !requirement_5 || requirement.requirement_6 != null && !requirement_6 || 
-            requirement.requirement_7 != null && !requirement_7 || requirement.requirement_8 != null && !requirement_8 || requirement.requirement_9 != null && !requirement_9 || 
-            requirement.requirement_10 != null && !requirement_10 ) {
+        if(requirement.requirement_1 != '' && !requirement_1 || requirement.requirement_2 != '' && !requirement_2 || requirement.requirement_3 != '' && !requirement_3 ||
+            requirement.requirement_4 != '' && !requirement_4 || requirement.requirement_5 != '' && !requirement_5 || requirement.requirement_6 != '' && !requirement_6 || 
+            requirement.requirement_7 != '' && !requirement_7 || requirement.requirement_8 != '' && !requirement_8 || requirement.requirement_9 != '' && !requirement_9 || 
+            requirement.requirement_10 != '' && !requirement_10 ) {
             return Toast.fire({
                 icon: 'error',
                 title: 'Please fill up all fields'
@@ -78,70 +80,70 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
 
                 <div className='pt-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-1'>Qualification</h1>
-                    {requirement.requirement_1 != null && 
+                    {requirement.requirement_1 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_1}
                             setData={setRequirement_1}
                         />
                     }
 
-                    {requirement.requirement_2 != null && 
+                    {requirement.requirement_2 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_2}
                             setData={setRequirement_2}
                         />
                     }
 
-                    {requirement.requirement_3 != null && 
+                    {requirement.requirement_3 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_3}
                             setData={setRequirement_3}
                         />
                     }
 
-                    {requirement.requirement_4 != null && 
+                    {requirement.requirement_4 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_4}
                             setData={setRequirement_4}
                         />
                     }
 
-                    {requirement.requirement_5 != null && 
+                    {requirement.requirement_5 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_5}
                             setData={setRequirement_5}
                         />
                     }
 
-                    {requirement.requirement_6 != null && 
+                    {requirement.requirement_6 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_6}
                             setData={setRequirement_6}
                         />
                     }
 
-                    {requirement.requirement_8 != null && 
+                    {requirement.requirement_8 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_7}
                             setData={setRequirement_7}
                         />
                     }
 
-                    {requirement.requirement_8 != null && 
+                    {requirement.requirement_8 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_8}
                             setData={setRequirement_8}
                         />
                     }
 
-                    {requirement.requirement_9 != null && 
+                    {requirement.requirement_9 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_9}
                             setData={setRequirement_9}
                         />
                     }
 
-                    {requirement.requirement_10 != null && 
+                    {requirement.requirement_10 != '' && 
                         <ReRankingFields
                             requirement={requirement.requirement_10}
                             setData={setRequirement_10}

@@ -17,7 +17,7 @@ app.use('/', require('./src/Routes/ApiRoutes'));
 // database connection
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log('Database Connected'))
-.catch(() => console.log('Database not connected', err));
+.catch((err) => console.log('Database not connected', err));
 
 
 // port

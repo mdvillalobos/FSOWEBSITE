@@ -10,7 +10,7 @@ const ProfileCard = () => {
     <div className='min-w-fit w-[20vw]'>
         <div className="py-6 rounded-xl overflow-hidden bg-white shadow-lg font-Poppins">
             <div className="flex justify-center">
-              {user.gender === 'Male' ? (
+              {!!user && user.gender === 'Male' ? (
                 <img src={maleProfile} alt="" className='w-[65%] h-52 rounded-full'/>
               ) : (
                 <img src={femaleProfile} alt="" className='w-[65%] h-52 rounded-full'/>

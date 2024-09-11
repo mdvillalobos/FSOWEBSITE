@@ -79,7 +79,7 @@ const submitApplicationEntry = async (req, res) => {
         }
 
         return res.json({
-            error: "Sorry! We encountered a problem while submitting your application. Please try again later. "
+            error: "Sorry! We encountered a problem while submitting your application. Please try again later."
         })
 
     } catch (error) {

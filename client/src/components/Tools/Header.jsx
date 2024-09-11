@@ -40,7 +40,7 @@ const header = ({location}) => {
       <div className="flex border-l-2 before:mr-5">
         <div className="relative duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center '>
-            {user.gender === 'Male' ? (
+            {!!user && user.gender === 'Male' ? (
               <img src={maleProfile} alt="" className='h-[33px] w-[33px] rounded-full'/>
             ) : (
               <img src={femaleProfile} alt="" className='h-[33px] w-[33px] rounded-full'/>
