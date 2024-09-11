@@ -19,6 +19,7 @@ router.use(
     })
 )
 
+router.get('/', (res, req) => res.send('tanginaaa gumana kanaaa'))
 
 //login
 router.post('/api/login', login);
