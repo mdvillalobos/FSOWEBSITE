@@ -1,0 +1,93 @@
+import React from 'react';
+import { Route, Routes} from 'react-router-dom';
+import axios from 'axios';
+
+//authentications
+import Login from './view/Auth/Login.jsx';
+import Registration from './view/Auth/Register.jsx';
+import ProfileRegistration from './view/Auth/ProfileRegistration.jsx';
+import EmailVerification from './view/Auth/EmailVerification.jsx';
+import ForgotPassword from './view/Auth/ForgotPassword.jsx';
+import VerifyOTP from './view/Auth/VerifyOtp.jsx';
+import ResetPassword from './view/Auth/ResetPassword.jsx';
+
+//user
+import Home from './view/User/Home.jsx';
+import Profile from './view/User/Profile.jsx';
+import Survey from './view/User/Survey.jsx';
+import Report from './view/User/Report.jsx';
+import Application from './view/User/Application.jsx';
+import ApplicationForm from './view/User/ApplicationForm.jsx';
+import PersonalDetails from './view/User/PersonalDetails.jsx';
+import ChangePassword from './view/User/ChangePassword.jsx';
+
+//admin 
+import AdminHome from './view/Admin/Home.jsx';
+import Dashboard from './view/Admin/Dashboard.jsx';
+import AdminProfile from './view/Admin/Profile.jsx';
+import AdminSurvey from './view/Admin/Report.jsx';
+import AdminApplication from './view/Admin/Application.jsx';
+import ViewApplication from './view/Admin/ViewApplication.jsx';
+
+//Error page
+import ErrorPage from './view/Error/ErrorPage.jsx';
+import Restriction from './view/Error/Restriction.jsx';
+import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
+
+axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.withCredentials = true;
+
+
+function App() {
+  const { PageRouteProtection, AuthPageProtection} = useProtectRoutes();
+
+  return (
+    <Routes>
+      {/* authentication */}
+      <Route element={<AuthPageProtection/>}>
+        <Route exact path="/" element={ <Login/> }/>
+        <Route exact path="/login" element={ <Login/> }/>
+        <Route exact path="/register" element={ <Registration/> }/>
+        <Route exact path="/registration" element={ <Registration/> }/>
+        <Route exact path='/emailverification' element={ <EmailVerification/> }/>
+        <Route exact path='/profileregistration' element={ <ProfileRegistration/> }/>
+
+        {/* forgot password */}
+        <Route exact path='/forgotpassword' element={ <ForgotPassword/> }/>
+        <Route exact path='/verifyotp' element={ <VerifyOTP/> }/>
+        <Route exact path='/resetpassword' element={ <ResetPassword/> }/>
+      </Route>
+
+      {/* User */}
+      <Route element={<PageRouteProtection providedRole={'faculty'}/>}>
+        <Route exact path="/home" element={ <Home/> }/>
+        <Route exact path="/profile" element={ <Profile/> }/>
+        <Route exact path="/application" element={ <Application /> }/>
+        <Route exact path="/report" element={ <Report/> }/>
+        <Route exact path="/survey" element={ <Survey/> }/>
+        <Route exact path="/settings/personaldetails" element={ <PersonalDetails/> }/>
+        <Route exact path="/settings/password&security" element={ <ChangePassword/> }/>
+
+        {/* Application forms */}
+        <Route exact path='/application/form' element={ <ApplicationForm/> }/>
+      </Route>
+      
+
+      {/* admin */}
+      <Route element={<PageRouteProtection providedRole={'director'}/>}>
+        <Route exact path="/admin/home" element={ <AdminHome/> }/>
+        <Route exact path="/admin/profile" element={ <AdminProfile/> }/>
+        <Route exact path="/admin/dashboard" element={ <Dashboard/> }/>
+        <Route exact path="/admin/report" element={ <AdminSurvey/> }/>
+        <Route exact path="/admin/application" element={ <AdminApplication/> }/>
+        <Route exact path='/admin/viewapplication' element={ <ViewApplication/> }/>
+      </Route>
+
+      {/* Error Page */}
+      <Route path='*' element={<ErrorPage/>}/>
+      <Route path='/restriction'element ={<Restriction/>}/>
+    </Routes>
+  )
+}
+
+export default App
