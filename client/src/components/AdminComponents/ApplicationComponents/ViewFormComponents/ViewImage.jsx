@@ -1,7 +1,6 @@
 import React from 'react'
 import { RxCross2 } from "react-icons/rx";
 
-
 const ViewImage = ({handleExit, image}) => {
   return (
     <div className='fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/70 justify-center items-center'>

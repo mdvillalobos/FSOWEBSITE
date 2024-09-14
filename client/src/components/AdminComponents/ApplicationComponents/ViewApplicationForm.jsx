@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { FocusOn } from 'react-focus-on'
-
-import ApplicationMaster from './UserDetails.jsx'
-import ViewImage from './ViewImage.jsx';
-import ApplicationInput from './ApplicationInputs.jsx';
-import useSubmitReview from '../../../../hooks/AdminHooks/useSubmitReview.jsx';
-import { NavLink } from 'react-router-dom'
+import ApplicationMaster from './ViewFormComponents/UserDetails.jsx'
+import ViewImage from './ViewFormComponents/ViewImage.jsx';
+import ApplicationInput from './ViewFormComponents/ApplicationInputs.jsx';
+import useSubmitReview from '../../../hooks/AdminHooks/useSubmitReview.jsx';
 
 const ViewApplicationForm = ({rest}) => {
     const { submitReview } = useSubmitReview();
@@ -73,21 +71,21 @@ const ViewApplicationForm = ({rest}) => {
                     <div>
                         <ApplicationInput
                             requirement={requirement.requirement_1}
-                            rest={rest.requirement_1}
+                            imagePath={rest.requirement_1}
                             checkedValue={checkedReq1}
                             setCheckedValue={setCheckedReq1}
                             handleViewImage={handleViewImage}
                         />
                         <ApplicationInput
                             requirement={requirement.requirement_2}
-                            rest={rest.requirement_2}
+                            imagePath={rest.requirement_2}
                             checkedValue={checkedReq2}
                             setCheckedValue={setCheckedReq2}
                             handleViewImage={handleViewImage}
                         />
                         <ApplicationInput
                             requirement={requirement.requirement_3}
-                            rest={rest.requirement_3}
+                            imagePath={rest.requirement_3}
                             checkedValue = {checkedReq3}
                             setCheckedValue={setCheckedReq3}
                             handleViewImage={handleViewImage}
@@ -96,7 +94,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_4 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_4}
-                                rest={rest.requirement_4}
+                                imagePath={rest.requirement_4}
                                 checkedValue = {checkedReq4}
                                 setCheckedValue={setCheckedReq4}
                                 handleViewImage={handleViewImage}
@@ -106,7 +104,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_5 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_5}
-                                rest={rest.requirement_5}
+                                imagePath={rest.requirement_5}
                                 checkedValue = {checkedReq5}
                                 setCheckedValue={setCheckedReq5}
                                 handleViewImage={handleViewImage}
@@ -116,7 +114,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_6 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_6}
-                                rest={rest.requirement_6}
+                                imagePath={rest.requirement_6}
                                 checkedValue = {checkedReq6}
                                 setCheckedValue={setCheckedReq6}
                                 handleViewImage={handleViewImage}
@@ -125,7 +123,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_7 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_7}
-                                rest={rest.requirement_7}
+                                imagePath={rest.requirement_7}
                                 checkedValue = {checkedReq7}
                                 setCheckedValue={setCheckedReq7}
                                 handleViewImage={handleViewImage}
@@ -134,7 +132,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_8 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_8}
-                                rest={rest.requirement_8}
+                                rimagePathest={rest.requirement_8}
                                 checkedValue = {checkedReq8}
                                 setCheckedValue={setCheckedReq8}
                                 handleViewImage={handleViewImage}
@@ -143,7 +141,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_9 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_9}
-                                rest={rest.requirement_9}
+                                imagePath={rest.requirement_9}
                                 checkedValue = {checkedReq9}
                                 setCheckedValue={setCheckedReq9}
                                 handleViewImage={handleViewImage}
@@ -152,7 +150,7 @@ const ViewApplicationForm = ({rest}) => {
                         {requirement.requirement_10 != '' && 
                             <ApplicationInput
                                 requirement={requirement.requirement_10}
-                                rest={rest.requirement_10}
+                                imagePath={rest.requirement_10}
                                 checkedValue = {checkedReq10}
                                 setCheckedValue={setCheckedReq10}
                                 handleViewImage={handleViewImage}

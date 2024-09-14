@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { IoImageOutline } from "react-icons/io5";
-import ApplicationViewForm from '../../components/AdminComponents/ApplicationComponents/ViewApplicationComponents/ApplicationViewForm.jsx';
+import ApplicationViewForm from '../../components/AdminComponents/ApplicationComponents/ViewApplicationForm.jsx';
 
 import BackBtn from '../../components/Tools/AdminBack.jsx';
 import Header from "../../components/Tools/Header.jsx";

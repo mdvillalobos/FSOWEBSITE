@@ -7,14 +7,11 @@ import Header from "../../components/Tools/Header.jsx";
 const Report = () => {
   return (
     <div className='bg-[#f4f7fa] h-[100dvh]'>
-      <Header/>
+      <Header location={'Weekly Report'}/>
       <div className="px-14 py-2">
         <BackBtn/>
-          <div className='bg-white py-4 px-8 shadow-md rounded-xl overflow-hidden'>
-            <div className="flex justify-between mb-6">
-              <div className="font-Poppins">
-                <p className='text-3xl mt-1 font-Poppin font-semibold text-NuBlue tracking-tight'>Weekly Report</p>
-              </div>
+          <div className='bg-white py-5 px-8 shadow-md rounded-xl overflow-hidden'>
+            <div className="flex justify-end mb-2">
               <ReportModal/>
             </div>
             <Table/>

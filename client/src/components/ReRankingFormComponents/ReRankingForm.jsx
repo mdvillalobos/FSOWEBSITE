@@ -87,7 +87,7 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
                         />
                     }
 
-                    {requirement.requirement_2 != '' && 
+                    {requirement.requirement_2 != ''  && 
                         <ReRankingFields
                             requirement={requirement.requirement_2}
                             setData={setRequirement_2}

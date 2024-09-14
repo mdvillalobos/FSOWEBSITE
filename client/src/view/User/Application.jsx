@@ -6,10 +6,9 @@ import Header from "../../components/Tools/Header.jsx";
 const Application = () => {
   return (
     <div className="bg-[#f4f7fa] h-screen w-screen">
-    <Header />
+      <Header location={'Application For Re-Ranking'}/>
       <div className="px-16 py-2">
         <BackBtn/>
-        <h1 className='text-4xl font-semibold font-Montserrat mb-4 mt-4'>Application For Re-Ranking</h1>
         <Choices/>
       </div>
     </div>

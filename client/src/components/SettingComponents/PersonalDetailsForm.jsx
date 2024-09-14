@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import useEditProfile from '../../hooks/FacultyHooks/useEditProfile.jsx'
+import useEditProfile from '../../hooks/UserHooks/useEditProfile.jsx'
 
 const PersonalDetailsForm = () => {
   

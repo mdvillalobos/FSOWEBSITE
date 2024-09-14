@@ -19,12 +19,16 @@ const RankTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map(i => (
-                        <tr key={i._id}>
-                            <td className='px-10 py-4'>{i.rankName}</td>
-                            <td className='px-10 py-4'>{i.track}</td>
-                        </tr>
-                    ))}
+                    {data != null ? (
+                        data.map(i => (
+                            <tr key={i._id}>
+                                <td className='px-10 py-4'>{i.rankName}</td>
+                                <td className='px-10 py-4'>{i.track}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <p>No Data</p>
+                    )}
                 </tbody>
             </table>
         </div>

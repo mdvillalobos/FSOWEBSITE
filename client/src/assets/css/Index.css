@@ -7,12 +7,12 @@
 
 
 @layer components {
-    /*header*/
+    /* HEADER */
     .dropDownItem { 
         @apply flex w-full px-2 py-3 rounded-lg text-sm text-[#585757] font-Poppins font-medium tracking-tight duration-200 hover:bg-[#5d69c6] hover:text-white 
     }
 
-    /*Authentication forms*/
+    /* AUTHENTICATION FORMS*/
     .formBtn {
         @apply bg-NuBlue text-white py-3 px-2.5 mt-7 mb-5 rounded-md cursor-pointer font-Poppins font-medium text-sm
         max-[396px]:mt-5 max-[396px]:py-2.5
@@ -29,7 +29,7 @@
         max-sm:text-[2.6rem] max-sm:after:mt-3
     }
 
-    /*Authentication components*/
+    /* AUTHENTICATION COMPONENTS */
     .auth-container {
         @apply w-[360px] duration-200
         max-[396px]:w-[270px]
@@ -52,14 +52,13 @@
         max-lg:gap-0
     }
 
-    /*navigation*/
+    /* NAVIGATION */
     .nav-container {
         @apply flex w-full justify-center flex-wrap gap-16
         max-sm:flex-col max-sm:gap-0
         max-lg:gap-10
         
     }
-
     .navigation {
         @apply flex flex-col bg-[#4b538f] text-white text-center shadow-md w-72 h-80 mt-16 py-8 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
         max-[396px]:w-80 max-[396px]:pl-6
@@ -100,7 +99,7 @@
         max-lg:text-xs max-lg:text-left max-lg:mx-0
     }
 
-    /*Profile*/
+    /* PROFILE */
     .profileFields {
         @apply flex mb-4
     }
@@ -133,7 +132,7 @@
         file:py-2.5 file:px-3 file:border-0 file:mr-2 file:text-white file:bg-[#4b538f] file:text-xs file:hover:bg-[#5d69c6] file:duration-200 file:cursor-pointer
     }
 
-    /* setting */
+    /* SETTINGS */
     .settingNav {
         @apply text-[1rem] font-Poppins flex py-3 px-4 duration-300 mb-1 hover:bg-[#bbc1ee] rounded-xl
     }
@@ -152,7 +151,7 @@
         peer-valid:top-1.5 peer-valid:text-[0.8rem] peer-valid:text-[#9ca0a4]
     }
 
-    /* view application page */
+    /* ADMIN VIEW APPLICATION FORM */
     .imageButton {
         @apply border-2 flex rounded-lg px-2 py-3 space-x-2 hover:bg-NuButtonHover hover:text-white duration-200 hover:border-NuButtonHover
     }
@@ -175,6 +174,11 @@
 
     .checkBoxDecline {
         @apply h-5 w-5 cursor-pointer accent-red-500 bg-slate-700 rounded
+    }
+
+    /* CREATE RANK MODAL */
+    .rankInputs {
+        @apply px-2 py-2 text-sm border-2 outline-none w-full duration-300
     }
 }
 

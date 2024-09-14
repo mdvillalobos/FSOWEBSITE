@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import useChangePassword from '../../hooks/FacultyHooks/useChangePassword';
+import useChangePassword from '../../hooks/UserHooks/useChangePassword';
 
 const ChangePasswordForm = () => {
   const [data, setData] = useState({

@@ -27,7 +27,7 @@ const header = ({location}) => {
     <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8'>
       <div className='flex space-x-6'>
           <div className="flex my-auto mx-0 after:border-r-2 after:ml-5">
-            <img src={logo} alt="Nu Logo" className='h-9 mr-2'/>
+            <img src={logo} alt="Nu Logo" className='h-9 mr-2 '/>
             <div className="text-[#4b538f] font-semibold font-Poppins">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
