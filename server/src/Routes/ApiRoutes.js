@@ -15,7 +15,7 @@ const router = Router();
 router.use(
     cors({
         credentials: true,
-        origin: 'https://nufso.netlify.app/'
+        origin: 'https://nufso.netlify.app'
     })
 )
 

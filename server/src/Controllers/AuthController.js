@@ -37,7 +37,7 @@ const login = async (req, res) => {
             const userData = await User.findOne({email: user.email})
             jwt.sign({email: user.email, role: user.role}, process.env.JWT_SECRET, {}, (err, loginToken) => {
                 if(err) throw err;
-                res.cookie('loginToken', loginToken, { httpOnly: true }).json({user: userData, role: user.role})
+                res.cookie('loginToken', loginToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'None' }).json({user: userData, role: user.role})
             }) 
         }
     } catch (error) {
