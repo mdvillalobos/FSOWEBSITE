@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    /* HEADER */
+    .dropDownItem { 
+        @apply flex w-full px-2 py-3 rounded-lg text-sm text-[#585757] font-Poppins font-medium tracking-tight duration-200 hover:bg-[#5d69c6] hover:text-white 
+    }
+
+    /* AUTHENTICATION FORMS*/
+    .formBtn {
+        @apply bg-NuBlue text-white py-3 px-2.5 mt-7 mb-5 rounded-md cursor-pointer font-Poppins font-medium text-sm
+        max-[396px]:mt-5 max-[396px]:py-2.5
+    }
+
+    .form {
+       @apply h-screen grid place-items-center
+    }
+
+    .formContainer {
+        @apply bg-white px-10 py-8 shadow-lg rounded-xl max-[396px]:p-5 max-sm:p-6
+    }
+
+    .form-title {
+        @apply font-Poppins text-center text-[2.3rem] font-semibold
+        max-[396px]:text-[2.3rem] max-[396px]:mb-4 
+        max-sm:text-[2.6rem]
+    }
+
+    /* AUTHENTICATION COMPONENTS */
+    .auth-container {
+        @apply w-[360px] duration-200
+        max-[396px]:w-[270px]
+        max-sm:w-[330px]
+    }
+
+    .auth-input-container {
+        @apply flex border-2 rounded-lg px-3 mt-4 focus-within:border-[#c1c6f2] duration-200 bg-[#f5f6fa]
+    }
+
+    .auth-input-field {
+        @apply outline-none text-[0.8rem] ml-2 py-4 bg-transparent w-full h-full font-medium font-Poppins
+        max-[396px]:py-3.5 max-[396px]:text-[0.7rem]
+    }
+
+    .profile-registration-container {
+        @apply flex flex-wrap gap-14 font-Poppins
+        max-sm:flex-col max-sm:w-full max-sm:gap-0 
+        max-md:gap-0 
+        max-lg:gap-0
+    }
+
+    /* NAVIGATION */
+    .nav-container {
+        @apply flex w-full justify-center flex-wrap gap-16
+        max-sm:flex-col max-sm:gap-0
+        max-lg:gap-10
+        
+    }
+    .navigation {
+        @apply flex flex-col bg-[#4b538f] text-white text-center shadow-md w-72 h-80 mt-16 py-8 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
+        max-[396px]:w-80 max-[396px]:pl-6
+        /* min-width 640px*/
+        max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0 
+        /*min-width 1024px*/
+        max-lg:h-48 max-lg:min-w-80 max-lg:flex-row max-lg:m-0 max-lg:mx-auto
+    }
+
+    .iconContainer {
+        @apply mx-auto 
+        max-sm:mx-0 max-sm:my-auto max-sm:mr-5
+        max-lg:my-auto max-lg:mr-4
+    }
+
+    .icon {
+        @apply text-[5.5rem]
+        max-sm:text-5xl 
+        max-md:text-7xl
+        max-lg:text-6xl
+    }
+
+    .nameContainer {
+        @apply max-lg:my-auto
+    }
+
+    .nav-Name {
+        @apply text-center text-xl mt-5 mb-4 font-Poppins
+        max-sm:mt-0 max-sm:mb-0 max-sm:text-left
+        max-md:mb-2 max-md:mt-4
+        max-lg:mt-0 max-lg:text-left
+    }
+
+    .nav-Definition {
+        @apply text-center mt-9 mx-2 text-sm font-Poppins
+        max-sm:hidden  
+        max-md:mt-0
+        max-lg:text-xs max-lg:text-left max-lg:mx-0
+    }
+
+    /* PROFILE */
+    .profileFields {
+        @apply flex mb-4
+    }
+    
+    .label {
+        @apply text-base font-medium w-32 
+    }
+
+    /*APPLICATION FORMS*/
+    .requirements {
+        @apply font-normal font-Poppins
+    }
+    .formTitle {
+        @apply text-[1.2rem] font-medium tracking-tight font-Poppins mb-1
+    }
+
+    .inputContainer {
+        @apply flex justify-between
+    }
+    .inputLabel {
+        @apply text-base font-normal
+    }
+
+    .inputFields {
+        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 text-sm relative top-[-9px] rounded-md
+    }
+
+    .inputFileFields {
+        @apply relative top-[-9px] ml-3 w-[25vw] text-sm bg-white overflow-hidden rounded-md border-2 cursor-pointer
+        file:py-2.5 file:px-3 file:border-0 file:mr-2 file:text-white file:bg-[#4b538f] file:text-xs file:hover:bg-[#5d69c6] file:duration-200 file:cursor-pointer
+    }
+
+    /* SETTINGS */
+    .settingNav {
+        @apply text-[1rem] font-Poppins flex py-3 px-4 duration-300 mb-1 hover:bg-[#bbc1ee] rounded-xl
+    }
+
+    .setting-column-container {
+        @apply flex justify-between w-full space-x-2
+    }
+
+    .setting-input-container {
+        @apply relative rounded-lg mt-4 w-[47%]
+    }
+
+    .setting-input-label {
+        @apply absolute left-3.5 top-5 pointer-events-none duration-200
+        peer-focus:text-[0.8rem] peer-focus:top-1.5 peer-focus:text-[#9ca0a4]
+        peer-valid:top-1.5 peer-valid:text-[0.8rem] peer-valid:text-[#9ca0a4]
+    }
+
+    /* ADMIN VIEW APPLICATION FORM */
+    .imageButton {
+        @apply border-2 flex rounded-lg px-2 py-3 space-x-2 hover:bg-NuButtonHover hover:text-white duration-200 hover:border-NuButtonHover
+    }
+
+    .imageNameContainer {
+        @apply flex flex-col text-left
+    }
+
+    .uploadName {
+        @apply text-xs font-medium
+    }
+
+    .imagePathName {
+        @apply text-[0.7rem] translate-y-1 w-48 text-ellipsis overflow-hidden whitespace-nowrap 
+    }
+
+    .checkBoxApprove {
+        @apply h-5 w-5 cursor-pointer accent-green-600 bg-slate-700 rounded
+    }
+
+    .checkBoxDecline {
+        @apply h-5 w-5 cursor-pointer accent-red-500 bg-slate-700 rounded
+    }
+
+    /* CREATE RANK MODAL */
+    .rankInputs {
+        @apply px-2 py-2 text-sm border-2 outline-none w-full duration-300
+    }
+}
+
+td:first-child{
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+td:last-child{
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+/* toast */
+.colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
+}
+  
+.colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+  
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-html-container {
+    color: white;
+}
