@@ -2,12 +2,11 @@ import React, { useState, useEffect }from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PersonalInformation from './PersonalInformation.jsx';
-import ReRankingFields from './ReRankingFields';
-import submitApplicationForm from '../../hooks/ApplicationsHooks/SubmitApplicationForm.jsx';
+import useGetApplicationData from '../../hooks/ApplicationHooks/useGetApplicationData.jsx';
 import useToast from '../../hooks/Helpers/useToast.jsx';
 
-const ReRankingForm = ({ApplyingFor, userTrack}) => {
-    const { submitApplication } = submitApplicationForm();
+const ReRankingForm = ({ ApplyingFor, userTrack }) => {
+    const { getApplicationData } = useGetApplicationData();
     const { Toast } = useToast();
     const [ requirement, setRequirement ] = useState([]);
     const [ data, setData ] = useState({
@@ -28,15 +27,19 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
     const [ requirement_9, setRequirement_9 ] = useState(null);
     const [ requirement_10, setRequirement_10 ] = useState(null);
 
-    console.log(data.name, data.college, data.department, data.currentRank, data.academicYear, data.requirement_1, data.requirement_2, data.requirement_3)
-
     useEffect(() => {
         const fetchData = async () => {
             const [requirementResponse, profileResponse] = await Promise.all([
                 axios.get(`/api/getRequirement?rank=${ApplyingFor}`),
                 axios.get('/api/getProfile'),
             ]);
-            setData({name: profileResponse.data.firstName + ' ' + profileResponse.data.lastName, department: profileResponse.data.department, currentRank:profileResponse.data.rank});
+            setData({ 
+                name: `${profileResponse.data.firstName} ${profileResponse.data.lastName}`,
+                college: '',
+                department: profileResponse.data.department, 
+                currentRank: profileResponse.data.rank,
+                academicYear: ''
+            })
             setRequirement(requirementResponse.data);
         }
         fetchData();
@@ -44,17 +47,27 @@ const ReRankingForm = ({ApplyingFor, userTrack}) => {
 
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
-        if(requirement.requirement_1 != '' && !requirement_1 || requirement.requirement_2 != '' && !requirement_2 || requirement.requirement_3 != '' && !requirement_3 ||
-            requirement.requirement_4 != '' && !requirement_4 || requirement.requirement_5 != '' && !requirement_5 || requirement.requirement_6 != '' && !requirement_6 || 
-            requirement.requirement_7 != '' && !requirement_7 || requirement.requirement_8 != '' && !requirement_8 || requirement.requirement_9 != '' && !requirement_9 || 
-            requirement.requirement_10 != '' && !requirement_10 ) {
+
+        const hasEmptyFields = 
+            (requirement.requirement_1 !== '' && !requirement_1) ||
+            (requirement.requirement_2 !== '' && !requirement_2) ||
+            (requirement.requirement_3 !== '' && !requirement_3) ||
+            (requirement.requirement_4 !== '' && !requirement_4) ||
+            (requirement.requirement_5 !== '' && !requirement_5) ||
+            (requirement.requirement_6 !== '' && !requirement_6) ||
+            (requirement.requirement_7 !== '' && !requirement_7) ||
+            (requirement.requirement_8 !== '' && !requirement_8) ||
+            (requirement.requirement_9 !== '' && !requirement_9) ||
+            (requirement.requirement_10 !== '' && !requirement_10)
+        
+        if(hasEmptyFields) {
             return Toast.fire({
                 icon: 'error',
                 title: 'Please fill up all fields'
-            })
+            });
         }
         else {
-            await submitApplication(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, 
+            await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, 
                 requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
                 requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
             )

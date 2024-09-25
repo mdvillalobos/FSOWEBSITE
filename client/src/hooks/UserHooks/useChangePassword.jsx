@@ -5,15 +5,16 @@ import useLogout from '../AuthHooks/useLogout.jsx';
 const useChangePassword = () => {
     const { Logout } = useLogout();
     const { Toast } = useToast();
-    const ChangePassword = async (oldPassword, newPassword, confirmNewPassword) => {
-        try {
-            if(!oldPassword || !newPassword || !confirmNewPassword) {
-                return Toast.fire({
-                    icon: "error",
-                    title: 'Kindly fill up all the fields'
-                });
-            }
 
+    const ChangePassword = async (oldPassword, newPassword, confirmNewPassword) => {
+        if(!oldPassword || !newPassword || !confirmNewPassword) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all the fields'
+            });
+        }
+        
+        try {
             const { data } = await axios.post('/api/changepassword', {
                 oldPassword, newPassword, confirmNewPassword
             })
@@ -26,14 +27,14 @@ const useChangePassword = () => {
             }
 
             else {
-              Logout();
+                Logout();
             }
 
         } catch (error) {
-            console.log(error)
+            console.error(`Change Password Error: ${ error.message }`);
         }
     }
-    return {ChangePassword}
+    return { ChangePassword }
 }
 
 export default useChangePassword

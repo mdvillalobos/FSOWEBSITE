@@ -1,5 +1,4 @@
 import { React, useState } from 'react';
-import { LuPencil } from "react-icons/lu";
 import useCreateRank from '../../../hooks/AdminHooks/useCreateRank.jsx';
 
 
@@ -33,7 +32,7 @@ const RankModal = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="relative h-[90%] w-[50%] bg-white shadow-lg rounded-2xl px-7 py-7 space-y-5 overflow-hidden font-Poppins">
+      <div className="relative h-[90%] w-[50%] bg-white shadow-lg rounded-2xl px-7 py-7 space-y-5 overflow-auto font-Poppins">
         <div className="flex justify-between">
           <h2 className='text-3xl font-bold font-Poppins text-center w-full'>RANK FORM</h2> 
           <button onClick={props.toggle} className='absolute top-3 right-3 text-3xl px-2 duration-300 rounded-full hover:bg-[#eae7e7] text-[#3b3c3c]'>&times;</button>
@@ -74,18 +73,15 @@ const RankModal = (props) => {
               className='rankInputs'
             />
 
-            {data.requirement_3 != '' || data.requirement_4 != '' ? (
-              <textarea 
-                placeholder='Requirment 4'
-                value={data.requirement_4} 
-                onChange={(e) => setData({...data, requirement_4: e.target.value})} 
-                className='rankInputs'
-             />
-            ) : (
-              <p></p>
-            )}
+            
+            <textarea 
+              placeholder='Requirment 4'
+              value={data.requirement_4} 
+              onChange={(e) => setData({...data, requirement_4: e.target.value})} 
+              className='rankInputs'
+            />
 
-<textarea 
+            <textarea 
               placeholder='Requirment 5'
               value={data.requirement_5} 
               onChange={(e) => setData({...data, requirement_5: e.target.value})} 

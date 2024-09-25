@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import { React, useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext'
 
 const useProtectRoutes = () => {
-    const {role, user} = useContext(UserContext);
+    const { role, user } = useContext(UserContext);
 
-    const PageRouteProtection = ({providedRole}) => {
-        if(role != undefined) {
+    const PageRouteProtection = ({ providedRole }) => {
+        if(role !== undefined) {
             return user === null ? <Navigate to='/'/> : <>{role === providedRole ? <Outlet/> : <>{role != providedRole && <Navigate to='/restriction'/>}</>}</>
         }
     }
@@ -16,7 +16,7 @@ const useProtectRoutes = () => {
     }
 
 
-    return {PageRouteProtection, AuthPageProtection}
+    return { PageRouteProtection, AuthPageProtection }
 }
 
 

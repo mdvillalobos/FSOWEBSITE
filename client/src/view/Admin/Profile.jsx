@@ -5,18 +5,18 @@ import ProfileCard from '../../components/UserComponents/ProfileComponents/Profi
 import About from '../../components/UserComponents/ProfileComponents/About.jsx';
 
 const Profile = () => {
-  return (
-    <div className="bg-[#f4f7fa] h-screen">
-      <Header location={'Profile'}/>
-        <div className="px-16 py-2">
-            <BackBtn/>
-            <div className="flex w-full space-x-10">
-                <ProfileCard/>
-                <About/>
+    return (
+        <div className="bg-[#f4f7fa] h-screen">
+            <Header location={'Profile'}/>
+            <div className="px-16 py-2">
+                <BackBtn/>
+                <div className="flex w-full space-x-10">
+                    <ProfileCard/>
+                    <About/>
+                </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Profile

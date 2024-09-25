@@ -1,25 +1,24 @@
 import React from 'react'
-
 import BackgroundHead from "../../components/AuthComponents/FormHeader.jsx";
 import BackgroundFoot from "../../components/AuthComponents/FormFooter.jsx";
 import VerifyOtpForm from '../../components/AuthComponents/VerifyOtpForm.jsx'
 
 const VerifyOTP = () => {
-  return (
-    <div className="bg-[#f4f7f9]"> 
-      <BackgroundHead/>
-          <div className="form">
-              <div className="formContainer">
-                <h1 className="form-title">Recovery</h1>
-                <p className="mt-3 font-Poppins max-[396px]:text-sm">Enter the 6-digit OTP that sent to your Email.</p>
-                <div>
-                    <VerifyOtpForm/>
+    return (
+        <div className="bg-[#f4f7f9]"> 
+            <BackgroundHead/>
+                <div className="form">
+                    <div className="formContainer">
+                    <h1 className="form-title">Recovery</h1> 
+                    <p className="font-Poppins mb-4 text-center text-[.9rem] text-gray-500 max-[396px]:text-[.76rem]">Enter the 6-digit OTP that sent to your Email.</p>
+                    <div>
+                        <VerifyOtpForm/>
+                    </div>
+                    </div>
                 </div>
-              </div>
-          </div>
-      <BackgroundFoot/>
-    </div>
-  )
+            <BackgroundFoot/>
+        </div>
+    )
 }
 
 export default VerifyOTP

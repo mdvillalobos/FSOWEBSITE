@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react'
 import useRegisterProfile from '../../hooks/AuthHooks/useRegisterProfile';
-
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +8,7 @@ import Box from '@mui/material/Box';
 import { FormControl } from '@mui/material';
 
 const ProfileRegistrationForm = () => {
+  const { registerProfile } = useRegisterProfile();
   const [data, setData] = useState({
     lastName: '', 
     firstName: '',
@@ -17,13 +17,11 @@ const ProfileRegistrationForm = () => {
     position: '', 
     track: '', 
     rank: ''
-  })
+  });
 
-  const { registerProfile } = useRegisterProfile();
   const RegisterUserInfo = async (e) => {
     e.preventDefault();
-    const {lastName, firstName, middleName, department, position, track, rank} = data
-    await registerProfile(lastName, firstName, middleName, department, position, track, rank)
+    await registerProfile(data.lastName, data.firstName, data.middleName, data.department, data.position, data.track, data.rank);
   }
 
   return (

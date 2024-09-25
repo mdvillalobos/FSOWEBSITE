@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer components {
     /* HEADER */
@@ -13,34 +9,37 @@
     }
 
     /* AUTHENTICATION FORMS*/
-    .formBtn {
-        @apply bg-NuBlue text-white py-3 px-2.5 mt-7 mb-5 rounded-md cursor-pointer font-Poppins font-medium text-sm
-        max-[396px]:mt-5 max-[396px]:py-2.5
-    }
-
     .form {
-       @apply h-screen grid place-items-center
+       @apply grid place-items-center min-h-screen
+       
     }
 
     .formContainer {
-        @apply bg-white px-10 py-8 shadow-lg rounded-xl max-[396px]:p-5 max-sm:p-6
+        @apply bg-white px-8 py-8 shadow-lg rounded-xl
+        max-[396px]:p-5 
+        max-sm:p-6
     }
 
     .form-title {
-        @apply font-Poppins text-center text-[2.3rem] font-semibold
-        max-[396px]:text-[2.3rem] max-[396px]:mb-4 
-        max-sm:text-[2.6rem]
+        @apply font-Poppins text-center text-[2.3rem] font-semibold mb-[4px]
+        max-[396px]:text-[2rem]
+        max-sm:text-[2.2rem]
+    }
+
+    .formBtn {
+        @apply bg-NuBlue text-white py-3 rounded-md cursor-pointer font-Poppins font-medium text-sm
+        max-[396px]:py-2.5 
     }
 
     /* AUTHENTICATION COMPONENTS */
     .auth-container {
         @apply w-[360px] duration-200
-        max-[396px]:w-[270px]
+        max-[396px]:w-[300px]
         max-sm:w-[330px]
     }
 
     .auth-input-container {
-        @apply flex border-2 rounded-lg px-3 mt-4 focus-within:border-[#c1c6f2] duration-200 bg-[#f5f6fa]
+        @apply flex border-2 rounded-lg px-3 focus-within:border-[#c1c6f2] duration-200 bg-[#f5f6fa] mb-4 
     }
 
     .auth-input-field {
@@ -59,6 +58,7 @@
     .nav-container {
         @apply flex w-full justify-center flex-wrap gap-16
         max-sm:flex-col max-sm:gap-0
+        max-md:gap-4
         max-lg:gap-10
         
     }
@@ -66,7 +66,8 @@
         @apply flex flex-col bg-[#4b538f] text-white text-center shadow-md w-72 h-80 mt-16 py-8 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
         max-[396px]:w-80 max-[396px]:pl-6
         /* min-width 640px*/
-        max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0 
+        max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0  
+        max-md:h-44
         /*min-width 1024px*/
         max-lg:h-48 max-lg:min-w-80 max-lg:flex-row max-lg:m-0 max-lg:mx-auto
     }
@@ -81,7 +82,7 @@
         @apply text-[5.5rem]
         max-sm:text-5xl 
         max-md:text-7xl
-        max-lg:text-6xl
+        max-lg:text-7xl
     }
 
     .nameContainer {
@@ -91,15 +92,15 @@
     .nav-Name {
         @apply text-center text-xl mt-5 mb-4 font-Poppins
         max-sm:mt-0 max-sm:mb-0 max-sm:text-left
-        max-md:mb-2 max-md:mt-4
-        max-lg:mt-0 max-lg:text-left
+        max-md:mb-2
+        max-lg:mt-0 max-lg:text-left max-lg:mb-2
     }
 
     .nav-Definition {
         @apply text-center mt-9 mx-2 text-sm font-Poppins
         max-sm:hidden  
         max-md:mt-0
-        max-lg:text-xs max-lg:text-left max-lg:mx-0
+        max-lg:text-xs max-lg:text-left max-lg:mx-0 max-lg:mt-0
     }
 
     /* PROFILE */
@@ -196,7 +197,7 @@ td:last-child{
 }
 
 /* toast */
-.colored-toast.swal2-icon-success {
+/* .colored-toast.swal2-icon-success {
     background-color: #a5dc86 !important;
 }
   
@@ -208,15 +209,16 @@ td:last-child{
     background-color: #f8bb86 !important;
 }
 
-.colored-toast .swal2-title {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-}
-  
 .colored-toast .swal2-close {
     color: white;
 }
 
 .colored-toast .swal2-html-container {
     color: white;
+} */
+
+.colored-toast .swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
 }

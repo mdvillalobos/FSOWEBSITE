@@ -10,7 +10,7 @@ const Restriction = () => {
             <p className='text-center font-medium mt-4 text-xl'>
                 You're not authorized to access this page using the credentials that you supplied.
             </p>
-            <Link to ='/' className='bg-[#3e65c4] rounded-full px-14 py-3 text-white shadow-base hover:bg-NuButtonHover duration-200 font-bold mt-5'>Go back to home</Link>
+            <Link to ='/' className='bg-[#3e65c4] rounded-full px-14 py-3 text-white shadow-base hover:bg-NuButtonHover duration-200 font-bold mt-5'>GO BACK TO HOME</Link>
         </div>
     )
 }

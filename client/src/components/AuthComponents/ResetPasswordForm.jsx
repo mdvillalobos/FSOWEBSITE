@@ -5,19 +5,14 @@ import { IoEyeSharp } from "react-icons/io5";
 import useResetPassword from '../../hooks/AuthHooks/useResetPassword';
 
 const ResetPasswordForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [data, setData] = useState({
-    password: '',
-    confirmPassword: ''
-  })
-
-  const {ResetPassword} = useResetPassword();
+  const { ResetPassword } = useResetPassword();
+  const [ showPassword, setShowPassword ] = useState(false);
+  const [ showConfirm, setShowConfirm ] = useState(false);
+  const [ data, setData ] = useState({ password: '', confirmPassword: '' })
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    const {password, confirmPassword} = data;
-    await ResetPassword(password, confirmPassword)
+    await ResetPassword(data.password, data.confirmPassword)
   }
 
   return (

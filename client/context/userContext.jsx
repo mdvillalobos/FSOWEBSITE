@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
-export const UserContext = createContext({})
+export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState();
@@ -10,28 +10,29 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                axios.get('/api/getRole').then(({data}) => {
-                    setRole(data);
-                });
-                
-                axios.get('/api/getProfile').then(({data}) => {
-                    setUser(data);
-                });
-            
+                const [ getProfile, getRole ] = await Promise.all([
+                    axios.get('/api/getProfile'),
+                    axios.get('/api/getRole'),
+                ]);
+                setUser(getProfile.data);
+                setRole(getRole.data)
+
+
             } catch (error) {
-                console.log(error);
-                setUser(null)
-                setRole(null)
+                console.error(`Fetching User Information Error: ${ error.message }`);
+                setUser(null);
+                setRole(null);
             }
         };
 
         checkAuth();
-    }, [])
-    console.log(user)
-    console.log(role)
+    }, []);
+
+    /* console.log(`User: ${user}`)
+    console.log(`Role: ${role}`) */
 
     return (
-        <UserContext.Provider value={{user, setUser, role, setRole}}>
+        <UserContext.Provider value={{ user, setUser, role, setRole }}>
             {children}
         </UserContext.Provider>
     )

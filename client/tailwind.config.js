@@ -22,13 +22,7 @@ export default {
       fontFamily: {
         'Poppins': ['Poppins', 'sans-serif'],
         'Montserrat': ['Montserrat', 'sans-serif'],
-        'Quicksand': ['Quicksand', 'sans-serif'],
-        'DM-Sans': ['DM Sans', 'sans-serif']
       },
-
-      backgroundImage: {
-        'nuLogo': "url('./src/assets/images/tae.png')"
-      }
     },
   },
   plugins: [],

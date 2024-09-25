@@ -5,37 +5,44 @@ import { UserContext } from '../../../context/userContext.jsx';
 
 const useLogin = () => {
     const { setUser, setRole } = useContext(UserContext);
-    const { Toast } = useToast();
+    const { Toast, LoadingToast } = useToast();
+
     const Login = async (email, password) => {
+        if(!email || !password) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all fields'
+            });
+        }
+        
+        LoadingToast.fire({
+            title: 'Logging you in...',
+        });
         try {
-            if(!email || !password) {
+            const { data } = await axios.post('/api/login', {
+                email, password
+            });
+         
+            if(data.error) {
                 return Toast.fire({
                     icon: "error",
-                    title: 'Required all fields'
-                });
-            }
-
-            const {data} = await axios.post('/api/login', {
-                email, password
-            })
-    
-            if(data.error) {
-                Toast.fire({
-                    icon: "error",
-                    title: data.error
+                    title: data.error,
                 });
             }
     
             else {
+                LoadingToast.close();
                 setUser(data.user);
                 setRole(data.role);
             }
+
         } catch (error) {
-            console.log(error)
+            console.error(`Login Error: ${ error.message }`);
+
         }
     }
 
-    return {Login}
+    return { Login }
 }
 
 export default useLogin

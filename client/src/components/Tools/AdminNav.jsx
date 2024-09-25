@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-
 import { BsFillPersonFill } from "react-icons/bs";
 import { TbReport } from "react-icons/tb";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { BiSolidDashboard } from "react-icons/bi";
-
-
 
 const AdminNav = () => {
   return (

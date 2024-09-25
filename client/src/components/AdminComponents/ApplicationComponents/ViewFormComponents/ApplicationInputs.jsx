@@ -1,5 +1,5 @@
 import React from 'react'
-import { PiCheckerboardDuotone, PiImagesLight } from "react-icons/pi";
+import { PiImagesLight } from "react-icons/pi";
 
 const ViewPageMaster = ({requirement, imagePath, checkedValue, setCheckedValue, handleViewImage}) => {
     return (

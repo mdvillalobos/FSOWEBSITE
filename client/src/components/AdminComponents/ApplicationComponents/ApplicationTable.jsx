@@ -1,4 +1,4 @@
-import React, {useState, useEffect }from 'react'
+import React, { useState, useEffect }from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,7 +43,9 @@ const ApplicationTable = () => {
                                 </tr>
                             ))
                         ) : (
-                            <p>No Data</p>
+                            <tr>
+                                <td>No Data</td>
+                            </tr>
                         )
                     }
                 </tbody>

@@ -1,8 +1,7 @@
-import React from 'react';
-import { Route, Routes} from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 
-//authentications
 import Login from './view/Auth/Login.jsx';
 import Registration from './view/Auth/Register.jsx';
 import ProfileRegistration from './view/Auth/ProfileRegistration.jsx';
@@ -34,18 +33,17 @@ import ErrorPage from './view/Error/ErrorPage.jsx';
 import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
-axios.defaults.baseURL = 'http://localhost:3001';
-/* axios.defaults.baseURL = 'https://immense-beach-61936-0b4347dca5cf.herokuapp.com' */
+/* axios.defaults.baseURL = 'http://localhost:3001'; */
+axios.defaults.baseURL = 'https://nufso-server-89a07a15c016.herokuapp.com/'
 axios.defaults.withCredentials = true;
-
 
 function App() {
   const { PageRouteProtection, AuthPageProtection} = useProtectRoutes();
 
   return (
     <Routes>
-      {/* authentication */}
-      <Route element={<AuthPageProtection/>}>
+       {/* authentication */}
+       <Route element={<AuthPageProtection/>}>
         <Route exact path="/" element={ <Login/> }/>
         <Route exact path="/login" element={ <Login/> }/>
         <Route exact path="/register" element={ <Registration/> }/>

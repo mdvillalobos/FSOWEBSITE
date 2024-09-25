@@ -6,7 +6,7 @@ import ViewImage from './ViewFormComponents/ViewImage.jsx';
 import ApplicationInput from './ViewFormComponents/ApplicationInputs.jsx';
 import useSubmitReview from '../../../hooks/AdminHooks/useSubmitReview.jsx';
 
-const ViewApplicationForm = ({rest}) => {
+const ViewApplicationForm = ({ rest }) => {
     const { submitReview } = useSubmitReview();
     const [ requirement, setRequirement ] = useState([]);
     const [ showImage, setShowImage ] = useState({
@@ -32,11 +32,11 @@ const ViewApplicationForm = ({rest}) => {
     }, []);
 
     const handleExit = () => {
-        setShowImage({show: false});
+        setShowImage({ show: false });
     }
 
     const handleViewImage = (image) => {
-        setShowImage({show: true, image: image});
+        setShowImage({ show: true, image: image });
     }
 
     const handleSubmitReview = async (decision) => {

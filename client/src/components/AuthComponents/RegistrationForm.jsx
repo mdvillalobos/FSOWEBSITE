@@ -8,26 +8,24 @@ import IconButton from '@mui/material/IconButton';
 import useRegister from '../../hooks/AuthHooks/useRegister';
 
 const registrationForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [data, setData] = useState({
-        employeeID: '',
-        email: '',
-        password: '',
+    const { Register } = useRegister();
+    const [ showPassword, setShowPassword ] = useState(false);
+    const [ data, setData ] = useState({ 
+        employeeID: '', 
+        email: '', 
+        password: '' 
     });
 
-    const {Register} = useRegister();
-    
     const handleRegistration = async (e) => {
         e.preventDefault();
-        const {employeeID, email, password} = data
-        await Register(employeeID, email, password);
+        await Register(data.employeeID, data.email, data.password);
     }
 
     return (
         <div>
             <form onSubmit={handleRegistration} className='auth-container'>
                 <div className='auth-input-container'>
-                    <FaIdCardClip className='mt-4 mr-1 ml-1' size='1.2rem' color='#707074'/>
+                    <FaIdCardClip className='my-auto mx-1' size='1.2rem' color='#707074'/>
                     <input 
                         type="text"
                         placeholder='Employee ID Number' 
@@ -38,7 +36,7 @@ const registrationForm = () => {
                 </div>
 
                 <div className='auth-input-container'>
-                    <MdEmail className='mt-4 mr-1 ml-1' size='1.2rem' color='#707074'/>
+                    <MdEmail className='my-auto mx-1' size='1.2rem' color='#707074'/>
                     <input 
                         type="text"
                         placeholder='Work Email' 
@@ -49,7 +47,7 @@ const registrationForm = () => {
                 </div>
 
                 <div className="auth-input-container">
-                    <IoLockOpen className='mt-4 mr-1 ml-1' size='1.2rem' color='#707074'/>
+                    <IoLockOpen className='my-auto mx-1' size='1.2rem' color='#707074'/>
                     <input 
                         type={showPassword ? 'text' : 'password'}
                         placeholder='Password'
@@ -68,7 +66,7 @@ const registrationForm = () => {
 
                 <div className="flex flex-col">
                     <input type="submit" value="Register" className='formBtn'/>
-                    <span className="flex justify-center text-sm">
+                    <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem]    ">
                         <p className='mr-2 font-Poppins'>Already Have An Account?</p>
                         <Link to="/" className="no-underline text-blue-900 font-medium font-Poppins hover:underline">Login</Link>
                     </span>

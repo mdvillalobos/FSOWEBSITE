@@ -30,13 +30,12 @@ const EmailVerification = () => {
 
   const handleVerifyEmail = async (e) => {
     e.preventDefault();
-    const { otp } = data;
-    await verifyEmail(otp);
+    await verifyEmail(data.otp);
   }
 
   return (
     <div>
-      <form onSubmit={handleVerifyEmail} className='auth-container'>
+      <form onSubmit={ handleVerifyEmail } className='auth-container'>
         <div className='auth-input-container'>
           <input 
             type="number"
@@ -47,10 +46,10 @@ const EmailVerification = () => {
           />
         </div>
         <div className="flex flex-col">
-            <input type="submit" value="Submit" className='formBtn'/>
+            <input type="submit" value="Verify" className='formBtn'/>
         </div>
       </form>
-      <p className='flex font-Poppins text-sm text-center justify-center'>Didn't receive one time pin? 
+      <p className='flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] font-Poppins'>Didn't receive one time pin? 
         <button className='text-center text-blue-500 ml-2 hover:underline duration-300' onClick={handleResendOtp} disabled={!resendButton}>
           {!resendButton ?  `Resend in ${timer}` : "Resend"}
         </button>

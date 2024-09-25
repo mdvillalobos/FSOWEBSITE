@@ -4,27 +4,39 @@ import useToast from '../Helpers/useToast.jsx';
 
 const useRegister = () => {
     const navigate = useNavigate();
-    const { Toast } = useToast();
+    const { Toast, LoadingToast } = useToast();
+    
     const Register = async (employeeID, email, password) => {
+        if(!employeeID || !email || !password) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all fields.'
+            });
+        }
+
+        LoadingToast.fire({
+            title: 'Registering your data. Please wait.'
+        })
         try {
-            const {data} = await axios.post('/api/register', {
+            const { data } = await axios.post('/api/register', {
                 employeeID, email, password
             });
     
             if(data.error) {
-                Toast.fire({
+                return Toast.fire({
                     icon: "error",
                     title: data.error
                  });
             }
             else {
+                LoadingToast.close();
                 navigate('/emailverification');
             }
         } catch (error) {
-            console.log(error)
+            console.error(`Registration Error: ${ error.message }`);
         }
     }
-    return {Register}
+    return { Register }
 }
 
 export default useRegister

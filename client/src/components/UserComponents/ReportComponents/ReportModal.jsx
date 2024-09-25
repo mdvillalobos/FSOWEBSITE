@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { LuPencil } from "react-icons/lu";
 import useCreateReport from '../../../hooks/UserHooks/useCreateReport';
 
@@ -25,18 +25,16 @@ const ReportModal = () => {
 export default ReportModal
 
 function CreateReport(props) {
-  const [data, setData] = useState({
+  const { createReport } = useCreateReport();
+  const [ data, setData ] = useState({
     subject: '',
     message: '', 
     date: '' 
   });
 
-  const {createReport} = useCreateReport();
-  
   const handleSubmitReport = async (e) =>{
     e.preventDefault();
-    const {subject, message, date} = data;
-    await createReport(subject, message, date, props)
+    await createReport(data.subject, data.message, data.date, props)
   }
 
   return (

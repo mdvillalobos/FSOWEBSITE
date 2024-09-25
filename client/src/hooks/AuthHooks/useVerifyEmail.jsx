@@ -3,28 +3,40 @@ import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 
 const useVerifyEmail = () => {
-    const { Toast } = useToast();
-    const navigate = useNavigate()
+    const { Toast, LoadingToast } = useToast();
+    const navigate = useNavigate();
+
     const verifyEmail = async (otp) => {
+        if(!otp) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Please enter your email'
+            });
+        }
+
+        LoadingToast.fire({
+            title: 'Verifying OTP...'
+        });
         try {
-            const {data} = await axios.post('/api/verifyEmail' , {
+            const { data } = await axios.post('/api/verifyEmail' , {
                 otp,
             });
       
             if(data.error) {
-                Toast.fire({
+                return Toast.fire({
                     icon: "error",
                     title: data.error
                 });
             }
             else {
-                navigate('/profileregistration')
+                LoadingToast.close();
+                navigate('/profileregistration');
             }
         } catch (error) {
-            console.log(error)
+            console.error(`EMail Verification Error: ${ error.message }`);
         }
     }
-    return {verifyEmail}
+    return { verifyEmail }
 }
 
 export default useVerifyEmail

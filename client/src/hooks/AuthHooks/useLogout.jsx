@@ -6,17 +6,19 @@ import { UserContext } from '../../../context/userContext';
 const useLogout = () => {
     const { setUser, setRole } = useContext(UserContext);
     const navigate = useNavigate();
+    
     const Logout = async () => {
         try {
             await axios.post('/api/logout')
             .then(setUser(null))
             .then(setRole(null))
-            .then(navigate('/login'))
+            .then(navigate('/login'));
+
         } catch (error) {
-            console.log(error)
+            console.error(`Logout Error ${ error.message }`);
         }
     }
-    return {Logout}
+    return { Logout }
 }
 
 export default useLogout

@@ -1,17 +1,17 @@
 import useToast from '../Helpers/useToast';
 import useSubmitApplication from "./useSubmitApplication";
 
-const submitApplicationForm = () => {
+const useGetApplicationData = () => {
     const { Toast } = useToast();
     const { submitForm } = useSubmitApplication();
-    const submitApplication = async (name, college, department, currentRank, academicYear, ApplyingFor, userTrack, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
+    const getApplicationData = async (name, college, department, currentRank, academicYear, ApplyingFor, userTrack, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
         try {
             if(!name || !college || !department || !currentRank || !academicYear) {
                 return Toast.fire({
                     icon: 'error',
                     title: 'Please fill up all fields'
-                })
-            };
+                });
+            }
 
             const formData = new FormData();
             formData.append('name', name);
@@ -35,11 +35,11 @@ const submitApplicationForm = () => {
             await submitForm(formData);
 
         } catch (error) {
-            return console.log(error);
+            console.error(`Application For Re-Ranking Submittion Error: ${ error.message }`);
         }
     }
 
-  return { submitApplication };
+  return { getApplicationData };
 }
 
-export default submitApplicationForm
+export default useGetApplicationData

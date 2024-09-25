@@ -21,7 +21,7 @@ const useSubmitReview = () => {
                 navigate('/admin/application');
             }
         } catch (error) {
-            console.log(error)
+            console.error(`Reviw Application Error: ${ error.message }`);
         }
     }
 

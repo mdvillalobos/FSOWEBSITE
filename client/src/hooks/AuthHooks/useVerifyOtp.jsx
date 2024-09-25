@@ -6,25 +6,36 @@ const useVerifyOtp = () => {
     const { Toast } = useToast();
     const navigate = useNavigate();
     const VerifyUserOtp = async (otp) => {
+        if(!otp) {
+            return  Toast.fire({
+                icon: "error",
+                title: 'Please enter your One-Time-Pin.'
+            });
+        }
+
+        LoadingToast.fire({
+            title: 'Verifying OTP...'
+        });
         try {
-            const {data} = await axios.post('/api/verifyEmail' , {
+            const { data } = await axios.post('/api/verifyEmail' , {
                 otp,
             });
         
             if(data.error) {
-                Toast.fire({
+                return Toast.fire({
                     icon: "error",
                     title: data.error
                 });
             }
             else {
+                LoadingToast.close();
                 navigate('/resetpassword')
             }
         } catch (error) {
-            console.log(error)
+            console.error(`OTP Verification Error: ${ error.message }`);
         }
     }
-    return {VerifyUserOtp}
+    return { VerifyUserOtp }
 }
 
 export default useVerifyOtp

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import useChangePassword from '../../hooks/UserHooks/useChangePassword';
 
 const ChangePasswordForm = () => {

@@ -2,22 +2,33 @@ import axios from "axios"
 import useToast from "../Helpers/useToast"
 
 function useSendOTP() {
-    const { Toast } = useToast();
-    const resendOTP = () => {
-        const { data } = axios.post('/api/resendOTP');
+    const { Toast, LoadingToast } = useToast();
 
-        if(data.error) {
-            Toast.fire({
-                icon: 'error',
-                title: data.error
-            });
+    const resendOTP = async () => {
+        LoadingToast.fire({
+            title: 'Sending your OTP.'
+        });
+
+        try {
+            const { data } = await axios.post('/api/resendOTP');
+
+            if(data.error) {
+                return Toast.fire({
+                    icon: 'error',
+                    title: data.error
+                });
+            }
+            else {
+                return Toast.fire({
+                    icon: 'success',
+                    title: 'Your OTP Sent Successfully!'
+                });
+            }
         }
-        else {
-            Toast.fire({
-                icon: 'success',
-                title: 'Your OTP Sent Successfully!'
-            });
+        catch(error) {
+            console.error( `Sending One Time Pin Error: ${ error.message }`)
         }
+        
     }
 
     return { resendOTP }

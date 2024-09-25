@@ -6,11 +6,21 @@ import { UserContext } from '../../../context/userContext.jsx';
 
 const useRegisterProfile = () => {
     const { setUser, setRole } = useContext(UserContext);
-    const { Toast } = useToast();
+    const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
     const registerProfile = async (lastName, firstName, middleName, department, position, track, rank) => {
+        if(!lastName || !firstName || !department || !position || !track || !rank) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all fields.'
+            });
+        }
+
+        LoadingToast.fire({
+            title: 'Registering your data. Please wait!'
+        })
         try {
-            const {data} = await axios.post('/api/registeProfile', {
+            const { data } = await axios.post('/api/registeProfile', {
                 lastName, firstName, middleName, department, position, track, rank
             });
         
@@ -23,10 +33,11 @@ const useRegisterProfile = () => {
             else {
                 setUser(data.user);
                 setRole(data.role);
+                LoadingToast.close();
                 navigate('/home');
             }
         } catch (error) {
-            console.log(error);
+            console.error(`Profile registration error ${ error.message }`);
         }
     }
 

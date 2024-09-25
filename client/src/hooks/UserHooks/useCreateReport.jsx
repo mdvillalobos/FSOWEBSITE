@@ -3,7 +3,14 @@ import useToast from "../Helpers/useToast.jsx";
 
 const useCreateReport = () => {
     const {Toast} = useToast();
+
     const createReport = async (subject, message, date, props) => {
+        if(!subject ||!message || !date) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all fields.'
+            });
+        }
         try {
             const {data} = await axios.post('api/submitreport', {
                 message, date, subject
@@ -16,14 +23,14 @@ const useCreateReport = () => {
                 });
             }
             else {
-                location.reload();
+                /* location.reload(); */
                 props.toggle();
             }
         } catch (error) {
-          console.log(error)
+          console.error(`Report Submittion Error: ${ error.message }`);
         }
     }
-    return {createReport}
+    return { createReport }
 }
 
 export default useCreateReport

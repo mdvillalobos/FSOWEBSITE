@@ -1,39 +1,36 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import useFindEmail from '../../hooks/AuthHooks/useFindEmail';
 import { MdEmail } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import useFindEmail from '../../hooks/AuthHooks/useFindEmail';
+
 
 const ForgotPasswordForm = () => {
-    const [data, setData] = useState({
-        email: ''
-    });
-
-    const {findEmail} = useFindEmail();
+    const { findEmail } = useFindEmail();
+    const [ data, setData ] = useState({ email: ''});
 
     const handleFindEmail = async (e) => {
         e.preventDefault();
-        const {email} = data;
-        await findEmail(email);
+        await findEmail(data.email);
     }
 
     return (
         <div>
-            <form onSubmit={handleFindEmail} className='auth-container'>
+            <form onSubmit={ handleFindEmail } className='auth-container'>
                 <div className='auth-input-container'>
-                    <MdEmail className='mt-4 mr-1 ml-1' size='1.2rem' color='#707074'/>
+                    <MdEmail className='my-auto mx-1' size='1.2rem' color='#707074'/>
                     <input 
                         type="text"
                         placeholder='Work Email' 
-                        value={data.email}
-                        onChange={(e) => setData({...data, email: e.target.value})}
+                        value={ data.email }
+                        onChange={(e) => setData({...data, email: e.target.value })}
                         className='auth-input-field'
                     />
                 </div>
 
                 <div className="flex flex-col">
                     <input type="submit" value="Submit" className='formBtn'/>
-                    <Link to="/" className="flex justify-center no-underline text-sm text-gray-500 font-medium font-Poppins hover:underline">
+                    <Link to="/" className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] no-underline hover:underline font-Poppins"> 
                         <IoMdArrowRoundBack className='mr-1 relative top-[2.5px]'/> 
                         Back to login
                     </Link>

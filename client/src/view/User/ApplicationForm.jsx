@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import { React, useContext } from 'react'
 import { useLocation } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext.jsx';
-
 import Header from '../../components/Tools/Header.jsx';
 import BackBtn from '../../components/UserComponents/ApplicationComponents/Return.jsx';
 import ReRankingForm from '../../components/ReRankingFormComponents/ReRankingForm.jsx';
@@ -10,7 +9,8 @@ const ApplicationForm = () => {
     const location = useLocation();
     const { user } = useContext(UserContext);
     const { selectedForm } = location.state || {};
-    const track = user.track
+    const track = user.track;
+    
     return (
         <div className='bg-[#f4f7fa] h-[100dvh]'>
             <Header location={selectedForm}/>

@@ -21,7 +21,7 @@ const verifyOtpForm = () => {
       }
       return () => clearInterval(time);
     }
-  }, [resendButton, timer]);
+  }, [ resendButton, timer ]);
 
   const handleResendOtp = async () => {
     setResendButton(false);
@@ -31,8 +31,7 @@ const verifyOtpForm = () => {
 
   const hanldeOtpVerification = async (e) => {
     e.preventDefault();
-    const {otp} = data;
-    await VerifyUserOtp(otp);
+    await VerifyUserOtp(data.otp);
   }
 
   return (
@@ -40,7 +39,7 @@ const verifyOtpForm = () => {
       <form onSubmit={hanldeOtpVerification} className='auth-container'>    
         <div className='auth-input-container'>
           <input 
-            type="text"
+            type="number"
             placeholder='Enter One Time Pin' 
             value={data.otp}
             onChange={(e) => setData({...data, otp: e.target.value})}
@@ -52,7 +51,7 @@ const verifyOtpForm = () => {
           <input type="submit" value="Submit" className='formBtn'/>
         </div>
       </form>
-      <p className='flex font-Poppins text-sm text-center justify-center'>Didn't receive one time pin? 
+      <p className='flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] font-Poppins'>Didn't receive one time pin? 
         <button className='text-center text-blue-500 ml-2 hover:underline duration-300' onClick={handleResendOtp} disabled={!resendButton}>
           {!resendButton ?  `Resend in ${timer}` : "Resend"}
         </button>
