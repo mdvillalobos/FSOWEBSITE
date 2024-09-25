@@ -34,7 +34,7 @@ import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
 /* axios.defaults.baseURL = 'http://localhost:3001'; */
-axios.defaults.baseURL = 'https://nufso-server-89a07a15c016.herokuapp.com/'
+axios.defaults.baseURL = 'https://nufso-server-89a07a15c016.herokuapp.com/';
 axios.defaults.withCredentials = true;
 
 function App() {
