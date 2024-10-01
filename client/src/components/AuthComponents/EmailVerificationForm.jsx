@@ -1,13 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import useVerifyEmail from '../../hooks/AuthHooks/useVerifyEmail';
 import useSendOTP from '../../hooks/AuthHooks/useSendOTP';
 
 const EmailVerification = () => {
   const { resendOTP } = useSendOTP();
   const { verifyEmail } = useVerifyEmail();
-  const [ data, setData ] = useState({ otp: ''});
   const [ resendButton , setResendButton ] = useState(false);
   const [ timer, setTimer ] = useState(20);
+  const [ data, setData ] = useState(Array(6).fill(''));
+  const inputRefs = useRef([]);
+
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+
+    if (/^[0-9]$/.test(value) || value === '') {
+      const OTPdata = [...data];
+      OTPdata[index] = value;
+      setData(OTPdata);
+
+      if (value && index < data.length - 1) {
+        inputRefs.current[index + 1].focus();
+      } else if (!value && index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+    }
+  };
 
   useEffect(() => {
     if(!resendButton) {
@@ -30,20 +47,25 @@ const EmailVerification = () => {
 
   const handleVerifyEmail = async (e) => {
     e.preventDefault();
-    await verifyEmail(data.otp);
+    const otp = data.join('');
+    await verifyEmail(otp);
   }
 
   return (
     <div>
       <form onSubmit={ handleVerifyEmail } className='auth-container'>
-        <div className='auth-input-container'>
-          <input 
-            type="number"
-            placeholder='Enter One Time Pin' 
-            value={data.otp}
-            onChange={(e) => setData({...data, otp: e.target.value})}
-            className='auth-input-field'
-          />
+        <div className="flex gap-3 justify-center mb-4">
+          {data.map((digit, index) => (
+            <input
+              key={index}
+              type="text"
+              value={digit}
+              onChange={(e) => handleChange(e, index)}
+              ref={(el) => (inputRefs.current[index] = el)}
+              maxLength="1"
+              className='border-2 w-[50px] h-16 text-center font-Poppins font-semibold rounded-md'
+            />
+          ))}
         </div>
         <div className="flex flex-col">
             <input type="submit" value="Verify" className='formBtn'/>

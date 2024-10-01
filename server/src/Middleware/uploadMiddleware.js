@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const { errorMonitor } = require('stream');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -14,15 +15,45 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    fileFilter: function(req, file, cb, res) {
-        const fileType = path.extname(file.originalname)
-        fileType == '.jpg' || fileType == '.png' || fileType == '.jpeg' 
-            ? cb(null, true)
-            : cb(new Error('Invalid File Type.'), false)
+    fileFilter: function(req, file, cb) {
+        const fileTypes = /jpeg|jpg|png|gif/;
+        const isFileTypeValid = fileTypes.test(file.mimetype) && fileTypes.test(file.originalname.split('.').pop().toLowerCase());
+        
+        if (isFileTypeValid) {
+            return cb(null, true);
+        }
+        console.log(file.originalname)
+        return cb(new Error('Error: File type not supported!'));
     },
-    limits: {
-        fileSize: 1024 * 1024 * 2
-    }
-})
+    limits: { fileSize: 50 * 1024 * 1024 }
+});
 
-module.exports = upload
+const multerErrorHandler = (err, req, res, next) => {
+    const start = Date.now();
+    if(err instanceof multer.MulterError) {
+        console.log(`Sending Multer Error: ${err.code}`)
+        console.log(`Sending Multer Error: ${err.message}`);
+        res.json({ error: err.message })
+        console.log(`Multer Error Sended: ${ err.message }`);
+        console.log(`MUlter Error Timeout at: ${ Date.now() - start }ms`)
+        return;
+    }
+    else if(err) {
+        console.log(`Sending General Error: ${err.code}`)
+        console.log(`Sending General Error: ${err.message}`);;
+        res.json({ error: err.message})
+        console.log(`General Error Sended: ${ err.message }`);
+        console.log(`General Error Timeout at: ${ Date.now() - start }ms`)
+        return
+    }
+
+    console.log('Go to the next Step');
+    console.log(`Multer Error Handler run at: ${ Date.now() - start }ms`);
+    next();
+}
+
+module.exports = {
+    upload,
+    multerErrorHandler
+}
+ 

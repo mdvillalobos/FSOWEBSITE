@@ -14,7 +14,6 @@ const useFindEmail = () => {
             });
         }
 
-
         LoadingToast.fire({ 
             title: 'Verifying your email. Please wait!'
         })

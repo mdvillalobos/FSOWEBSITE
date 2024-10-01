@@ -27,7 +27,15 @@ const useToast = () => {
         didOpen: () => {
             Swal.showLoading()
         },
-        animation: false,
+        
+        showClass: {
+            backdrop: 'swal2-noanimation', // disable backdrop animation
+            popup: '',                     // disable popup animation
+            icon: ''                       // disable icon animation
+        },
+        hideClass: {
+            popup: '',                     // disable popup fade-out animation
+        },
     })
 
     return { Toast, LoadingToast }

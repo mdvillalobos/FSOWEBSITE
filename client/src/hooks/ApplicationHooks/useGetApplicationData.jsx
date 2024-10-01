@@ -35,7 +35,7 @@ const useGetApplicationData = () => {
             await submitForm(formData);
 
         } catch (error) {
-            console.error(`Application For Re-Ranking Submittion Error: ${ error.message }`);
+            console.error(`Getting User Application Data Error: ${ error.message }`);
         }
     }
 

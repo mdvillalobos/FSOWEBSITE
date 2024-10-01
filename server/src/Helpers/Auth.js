@@ -16,8 +16,8 @@ const hashPassword = (password) => {
     })
 }
 
-const comparePassword = (password, HashedPassword) => {
-    return bcrypt.compare(password, HashedPassword)
+const compareHashed = (plainText, hashedText) => {
+    return bcrypt.compare(plainText, hashedText)
 }
 
 const OTPChecker = async (email, otp, res) => {
@@ -39,7 +39,7 @@ const OTPChecker = async (email, otp, res) => {
 
 module.exports = {
     hashPassword,
-    comparePassword,
+    compareHashed,
     OTPChecker
 
 }

@@ -3,13 +3,13 @@ import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 
 const useVerifyOtp = () => {
-    const { Toast } = useToast();
+    const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
     const VerifyUserOtp = async (otp) => {
         if(!otp) {
             return  Toast.fire({
                 icon: "error",
-                title: 'Please enter your One-Time-Pin.'
+                title: 'Required all fields'
             });
         }
 
@@ -29,7 +29,7 @@ const useVerifyOtp = () => {
             }
             else {
                 LoadingToast.close();
-                navigate('/resetpassword')
+                return navigate('/resetpassword');
             }
         } catch (error) {
             console.error(`OTP Verification Error: ${ error.message }`);

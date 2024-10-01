@@ -8,9 +8,9 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
-import logo from '../../assets/images/NU_shield.png';
-import maleProfile from '../../assets/images/male.png';
-import femaleProfile from '../../assets/images/female.png';
+import logo from '../../assets/images/NU_shield.webp';
+import maleProfile from '../../assets/images/male.webp';
+import femaleProfile from '../../assets/images/female.webp';
 
 const header = ({location}) => {
   const {user} = useContext(UserContext);
@@ -22,16 +22,16 @@ const header = ({location}) => {
   }
 
   return (
-    <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8'>
+    <div className='flex py-6 px-16 shadow bg-white justify-between max-sm:px-8'>
       <div className='flex space-x-6'>
           <div className="flex my-auto mx-0 after:border-r-2 after:ml-5">
-            <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5' width={28}/>
-            <div className="text-[#4b538f] font-semibold font-Poppins">
+            <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>
+            <div className="text-[#4b538f] font-semibold font-Poppins max-[396px]:hidden">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
             </div>
           </div>
-          <div className="my-auto text-xl font-Poppins font-medium text-gray-400">{location}</div>
+          <div className="my-auto text-xl font-Poppins font-medium text-gray-500">{location}</div>
       </div>
 
 
@@ -39,9 +39,13 @@ const header = ({location}) => {
         <div className="relative duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center '>
             {!!user && user.gender === 'Male' ? (
-              <img src={maleProfile} alt="" className='h-[33px] w-[33px] rounded-full'/>
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+              </div>
             ) : (
-              <img src={femaleProfile} alt="" className='h-[33px] w-[33px] rounded-full'/>
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+              </div>
             )}
             {!!user && (<p className='text-[0.8rem] ml-3 text-black font-medium font-Poppins max-sm:hidden'>{user.firstName} {user.lastName}</p>)}
             

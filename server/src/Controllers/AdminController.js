@@ -1,6 +1,5 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-
 const Account = require('../Models/Account');
 const User = require('../Models/User');
 const Reports = require('../Models/Reports');
@@ -11,117 +10,83 @@ const { hashPassword, comparePassword } = require('../Helpers/Auth');
 const getAllReports = async (req, res) => {
     try {
         const reports = await Reports.find();
-        
-        if(reports) {
-            return res.json(reports);
-        }
-
-        return res.json({
-            error: "Sorry. There's a problem while retrieving the data. Please try again later."
-        })
+        return res.json(reports);
     }
 
     catch (error) {
-        return res.json(error)
+        console.error(`Fetching Reports Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
     }
 }
-
-const createRank = async (req, res) => {
-    const {rankName, track, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10} = req.body;
-
-    try {
-        if(!rankName || !track) {
-            return res.json({
-                error: 'Required All Fields'
-            })
-        }
-
-        const isRankExisting = await Ranks.findOne({rankName: rankName, track: track})
-
-        if(!isRankExisting) {
-            const data = await Ranks.create({
-                rankName: rankName,
-                track: track,
-                requirement_1: requirement_1,
-                requirement_2: requirement_2,
-                requirement_3: requirement_3,
-                requirement_4: requirement_4,
-                requirement_5: requirement_5,
-                requirement_6: requirement_6,
-                requirement_7: requirement_7,
-                requirement_8: requirement_8,
-                requirement_9: requirement_9,
-                requirement_10:  requirement_10,
-            })
-    
-            if(!data) {
-                return res.json({
-                    error: 'Error creating data. Please try again later.'
-                })
-            }
-            return res.json(data);
-        }
-
-        return res.json({
-            error: `Rank is already existing in ${track}` 
-        })
-
-    } catch (error) {
-        console.log(error)    
-    }
-} 
 
 const getAllRanks = async (req, res) => {
     try {
         const rankList = await Ranks.find();
+        return res.json(rankList);
         
-        if(rankList) {
-            return res.json(rankList);
-        }
-
-        return res.json({
-            error: "Sorry. There's a problem while retrieving the data. Please try again later."
-        });
-
     } catch (error) {
-        
+        console.error(`Fetching Ranks Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
     }
 }
+
+const createRank = async (req, res) => {
+    const { rankName, track, ...requirements } = req.body;
+
+    if(!rankName || !track) {
+        return res.json({ error: 'Required all fields.' });
+    }
+
+    try {
+        const isRankExisting = await Ranks.findOne({ rankName: rankName, track: track });
+
+        if(isRankExisting) {
+            return res.json({ error: `Rank is already existed from ${track}` })
+        }
+
+        const newRank = await Ranks.create({
+            rankName,
+            track,
+            ...requirements
+        })
+
+        return res.json({ success: true, message: 'Rank successfully created.', data: newRank });
+
+
+    } catch (error) {
+        console.error(`Creation Of Rank Error: ${ error.message }`);  
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+} 
 
 
 const getApplicationsForReRanking = async (req, res) => {
     const { loginToken } = req.cookies;
     try {
         const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userInfo = await Account.findOne({email: decode.email});
+        const userData = await Account.findOne({ email: decode.email });
 
-        if(userInfo.approver == 'Approver1') {
-            const applications = await ApplicationForms.find({prevApprover: null});
-            return res.json(applications);
-        }
+        const approverMapping = {
+            'Approver1': null,
+            'Approver2': 'Approver1',
+            'Approver3': 'Approver2',
+            'Approver4': 'Approver3'
+        };
 
-        if(userInfo.approver == 'Approver2') {
-            const applications = await ApplicationForms.find({prevApprover: 'Approver1'});
-            return res.json(applications);
-        }
-
-        if(userInfo.approver == 'Approver3') {
-            const applications = await ApplicationForms.find({prevApprover: 'Approver2'});
-            return res.json(applications);
-        }
-
-        if(userInfo.approver == 'Approver4') {
-            const applications = await ApplicationForms.find({prevApprover: 'Approver3'});
+        const previousApprover = approverMapping[userData.approver];
+        if(previousApprover !== undefined) {
+            const applications = await ApplicationForms.find({ prevApprover: previousApprover });
             return res.json(applications);
         }
 
         return res.json(null)
 
+
     } catch (error) {
-        console.log(error);
+        console.error(`Fetching Applications Error: ${ error.message }`);
+        return res.json({ error: 'An internal server error occurred.' });
     }
 }
-
 
 module.exports = {
     getAllReports,

@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PersonalInformation from './PersonalInformation.jsx';
 import useGetApplicationData from '../../hooks/ApplicationHooks/useGetApplicationData.jsx';
+import ReRankingFields from './ReRankingFields.jsx';
 import useToast from '../../hooks/Helpers/useToast.jsx';
 
 const ReRankingForm = ({ ApplyingFor, userTrack }) => {
     const { getApplicationData } = useGetApplicationData();
     const { Toast } = useToast();
+    const [ isLoading, setIsLoading ] = useState(false);
     const [ requirement, setRequirement ] = useState([]);
     const [ data, setData ] = useState({
         name: "",
@@ -48,6 +50,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
 
+        setIsLoading(true);
         const hasEmptyFields = 
             (requirement.requirement_1 !== '' && !requirement_1) ||
             (requirement.requirement_2 !== '' && !requirement_2) ||
@@ -66,11 +69,19 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
                 title: 'Please fill up all fields'
             });
         }
-        else {
+
+        try {
             await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, 
                 requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
                 requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
-            )
+            );
+        }
+
+        catch (error) {
+            console.error(`Front End Submittion Of Form Error: ${ error.message }`);
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -164,8 +175,8 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
                     }
 
                     <div className="flex justify-end mt-4">
-                        <Link to="/application" className='text-sm py-2 px-6 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                        <input type="submit" value="Submit" className=' py-2 px-6 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer' />
+                        <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
+                        <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Submit</button>
                     </div>
             
                 </div>

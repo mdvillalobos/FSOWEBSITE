@@ -2,7 +2,6 @@ import React from "react";
 import BackgroundHead from "../../components/AuthComponents/FormHeader.jsx";
 import BackgroundFoot from "../../components/AuthComponents/FormFooter.jsx";
 import LoginForm from "../../components/AuthComponents/LoginForm.jsx";
-import logo from '../../assets/images/NU_shield.png';
 
 const Login = () => {
     return (

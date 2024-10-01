@@ -10,7 +10,7 @@ const useVerifyEmail = () => {
         if(!otp) {
             return Toast.fire({
                 icon: "error",
-                title: 'Please enter your email'
+                title: 'Required all fields'
             });
         }
 

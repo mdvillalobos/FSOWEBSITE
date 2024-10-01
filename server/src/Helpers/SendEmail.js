@@ -16,18 +16,20 @@ const transporter = nodemailer.createTransport({
 const sendEmailVerification = async (email) => {
     try {
         const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
+        console.log(otp)
+        console.log(email)
         const HashedOTP = await bcrypt.hash(otp, 12);
         const userRecord = await EmailVerification.findOne({owner: email});
 
         if(!userRecord) {
-            const UserOTP = await EmailVerification.create({
+            await EmailVerification.create({
                 owner: email,
                 Otp: HashedOTP
             })
         }
         
         else {
-            await EmailVerification.updateOne({owner: email}, {otp: HashedOTP})
+            await EmailVerification.updateOne({owner: email}, {Otp: HashedOTP})
         }
 
         await transporter.sendMail({

@@ -1,5 +1,5 @@
 import React from 'react';
-import RestrictedImage from '../../assets/images/restricted.png';
+import RestrictedImage from '../../assets/images/restricted.webp';
 import { Link } from 'react-router-dom';
 
 const Restriction = () => {

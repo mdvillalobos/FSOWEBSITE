@@ -7,6 +7,7 @@ const useRegister = () => {
     const { Toast, LoadingToast } = useToast();
     
     const Register = async (employeeID, email, password) => {
+        const regex = /^(?=.{5,})(\d+(-\d+)?)$/;
         if(!employeeID || !email || !password) {
             return Toast.fire({
                 icon: "error",
@@ -14,9 +15,16 @@ const useRegister = () => {
             });
         }
 
+        if(!regex.test(employeeID)) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Invalid Employee id format.'
+            });
+        }
+
         LoadingToast.fire({
             title: 'Registering your data. Please wait.'
-        })
+        });
         try {
             const { data } = await axios.post('/api/register', {
                 employeeID, email, password
