@@ -4,7 +4,7 @@ const { errorMonitor } = require('stream');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'requirements'))
+        cb(null, path.join(__dirname, '../requirements'))
     },
 
     filename: (req, file, cb) =>  {
