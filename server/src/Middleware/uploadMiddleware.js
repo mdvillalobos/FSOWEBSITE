@@ -35,20 +35,18 @@ const multerErrorHandler = (req, res, next) => {
         { name: 'requirement_6', maxCount: 1}, { name: 'requirement_7', maxCount: 1 }, { name: 'requirement_8', maxCount: 1}, 
         { name: 'requirement_9', maxCount: 1}, { name: 'requirement_10', maxCount: 1}, 
     ])(req, res, (err) => {
+        if (err.message === 'Error: File type not supported!') {
+            console.log(`Sending Invalid File Type Error: ${err.message}`);
+            return res.status(400).json({ error: 'invalid file type' });
+            console.log(`General Error Sended: ${ err.message }`);
+        }
+
         if(err instanceof multer.MulterError) {
             console.log(`Sending Multer Error: ${err.message}`);
             res.json({ error: err.message })
             console.log(`Multer Error Sended: ${ err.message }`);
             console.log(`MUlter Error Timeout at: ${ Date.now() - start }ms`)
             return;
-        }
-        
-        if(err) {
-            console.log(`Sending General Error: ${err.message}`);;
-            res.json({ error: err.message})
-            console.log(`General Error Sended: ${ err.message }`);
-            console.log(`General Error Timeout at: ${ Date.now() - start }ms`)
-            return
         }
     
         console.log('Go to the next Step');
