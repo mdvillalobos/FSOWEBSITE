@@ -46,15 +46,12 @@ router.get('/api/getApplications', authorizationMiddleware('director'), getAppli
 router.post('/api/checkApplication', authorizationMiddleware('director'), checkApplication);
 
 //Application for re-ranking
-const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 
+/* const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 
     { name: 'requirement_3', maxCount: 1}, { name: 'requirement_4', maxCount: 1 }, { name: 'requirement_5', maxCount: 1}, 
     { name: 'requirement_6', maxCount: 1}, { name: 'requirement_7', maxCount: 1 }, { name: 'requirement_8', maxCount: 1}, 
     { name: 'requirement_9', maxCount: 1}, { name: 'requirement_10', maxCount: 1}, 
-]);
+]); */
 
-router.post('/api/submitApplicationEntry',uploadFiles, (req, res) => {
-    console.log('Request received at: ', Date.now())
-    next();
-}, multerErrorHandler, submitApplicationEntry,);
+router.post('/api/submitApplicationEntry', multerErrorHandler, submitApplicationEntry);
 
 module.exports = router
