@@ -193,6 +193,7 @@
     .rankInputs {
         @apply px-2 py-2 text-sm border-2 outline-none w-full duration-300
     }
+
 }
 
 td:first-child{
