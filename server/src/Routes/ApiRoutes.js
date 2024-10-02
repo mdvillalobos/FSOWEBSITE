@@ -52,6 +52,9 @@ const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name
     { name: 'requirement_9', maxCount: 1}, { name: 'requirement_10', maxCount: 1}, 
 ]);
 
-router.post('/api/submitApplicationEntry',uploadFiles, multerErrorHandler, submitApplicationEntry,);
+router.post('/api/submitApplicationEntry',uploadFiles, (req, res) => {
+    console.log('Request received at: ', Date.now())
+    next();
+}, multerErrorHandler, submitApplicationEntry,);
 
 module.exports = router
