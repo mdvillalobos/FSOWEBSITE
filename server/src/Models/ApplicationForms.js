@@ -13,17 +13,17 @@ const ApplicationFormsSchema = new Schema({
     requirement_1: String,
     isApproved_requrement_1: {
         type: String,
-        default: 'Pending'
+        default: null
     },
     requirement_2: String,
     isApproved_requrement_2: {
         type: String,
-        default: 'Pending'
+        default: null
     },
     requirement_3: String,
     isApproved_requrement_3: {
         type: String,
-        default: 'Pending'
+        default: null
     },    
     requirement_4: {
         type: String,

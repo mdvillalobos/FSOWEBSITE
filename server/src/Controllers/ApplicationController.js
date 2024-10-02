@@ -32,7 +32,7 @@ const getRankRequirement = async (req, res) => {
 }
 
 const submitApplicationEntry = async (req, res) => {
-    console.log('Function Running!')
+    const start = Date.now();
     const { loginToken } = req.cookies;
     const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack } = req.body;
 
@@ -41,10 +41,15 @@ const submitApplicationEntry = async (req, res) => {
     }
 
     try {
-        const requirements = Array.from({ length: 10 }, (_, i) => req.files[`requirement_${i + 1}`]?.[0]?.path || null);
+        const requirements = Object.values(req.files)
+            .map((file, i) => file?.[0]?.path || null)
+            .filter(path => path !== null)
+
+        const uploadPromises = requirements.map((path, i) => CloudinaryUpload(path, 'requirements', { concurrent: true }));
+        const uploadToCloudinary = await Promise.all(uploadPromises)
 
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const applicationForm = await ApplicationForms.create({
+        await ApplicationForms.create({
             name: name,
             email: email,
             college: college,
@@ -53,15 +58,10 @@ const submitApplicationEntry = async (req, res) => {
             academicYear: academicYear,
             applyingFor: ApplyingFor,
             track: userTrack,
-            ...Object.fromEntries(requirements.map((path, i) => [`requirement_${i + 1}`, path]))
+            ...Object.fromEntries(uploadToCloudinary.map((response, i) => [`requirement_${i + 1}`, response.secure_url]))
         });
-
-        const uploadPromises = requirements
-            .filter(path => path) // Filter out null paths
-            .map((path, i) => CloudinaryUpload(path, 'requirements'));
-
-        await Promise.all(uploadPromises); // Wait for all uploads to complete
         
+        console.log(`Estimated Time of Process: ${ Date.now() - start}`);
         return res.json('Success');
 
     } catch (error) {
@@ -75,8 +75,8 @@ const checkApplication = async (req, res) => {
     const { formID, decision, ...checkedRequirements } = req.body;
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userInfo = await Account.findOne({ email: decode.email });
+        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userInfo = await Account.findOne({ email: email });
 
         const updateData = {
             prevApprover: userInfo.approver,
@@ -91,8 +91,6 @@ const checkApplication = async (req, res) => {
             isApproved_requrement_9: checkedRequirements.checkedReq9,
             isApproved_requrement_10: checkedRequirements.checkedReq10,
         };
-
-
 
         if(decision === 'Approved') {
             updateData.approvedBy = { $concat: ['$approvedBy', userInfo.approver, ', '] };

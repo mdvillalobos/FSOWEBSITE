@@ -77,7 +77,7 @@ const verifyEmail = async (req,res) => {
     const { otp } = req.body;
 
     if(!otp) {
-        return res.json({ error: 'Required all fields'});
+        return res.json({ error: 'Required all fields!' });
     }
 
     if(!verificationToken) {
@@ -85,8 +85,8 @@ const verifyEmail = async (req,res) => {
     }
 
     try {
-        const decode = jwt.verify(verificationToken, process.env.JWT_SECRET);
-        const userOTP = await EmailVerification.findOne({ owner: decode.email });
+        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const userOTP = await EmailVerification.findOne({ owner: email });
 
         if(!userOTP) {
             return res.json({ error: 'Please resend your One-Time-Pin' });
@@ -98,7 +98,7 @@ const verifyEmail = async (req,res) => {
             return res.json({ error: 'Incorrect One-Time-Pin!' });
         }
 
-        await EmailVerification.deleteOne({ owner: decode.email })
+        await EmailVerification.deleteOne({ owner: email })
         return res.json({ success: true, message: 'OTP verified successfully.' });
 
     } catch (error) {
@@ -179,7 +179,7 @@ const resetPassword = async (req, res) => {
     const { verificationToken } = req.cookies;
 
     if(!password || !confirmPassword) {
-        return res.json({ error: 'Required all fields' });
+        return res.json({ error: 'Required all fields!' });
     }
 
     if(!validator.isStrongPassword(password)) {
@@ -188,11 +188,11 @@ const resetPassword = async (req, res) => {
 
    
     try {
-        const decoded = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
 
         const hashedPassword = await hashPassword(password);
 
-        await Account.updateOne({ email: decoded.email }, { password: hashedPassword });
+        await Account.updateOne({ email: email }, { password: hashedPassword });
 
         res.clearCookie('verificationToken', { path: '/', sameSite: 'none', secure: true });
 
@@ -204,11 +204,6 @@ const resetPassword = async (req, res) => {
     }
 }
 
-const logout = (req, res) => {
-    res.clearCookie('loginToken', { path: '/', sameSite: 'none', secure: true });
-    return res.json({ message: 'Succesfully Logged Out' })
-}
-
 const resendOTP = (req, res) => {
     const { verificationToken } = req.cookies;
 
@@ -217,8 +212,8 @@ const resendOTP = (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(verificationToken, process.env.JWT_SECRET);
-        sendEmailVerification(decode.email);
+        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        sendEmailVerification(email);
 
         return res.json('Successfully resend your one time pin');
         
@@ -226,6 +221,11 @@ const resendOTP = (req, res) => {
         console.error(`Resend One Time Pin Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });;
     }
+}
+
+const logout = (req, res) => {
+    res.clearCookie('loginToken', { path: '/', sameSite: 'none', secure: true });
+    return res.json({ message: 'Succesfully Logged Out' })
 }
 
 module.exports = {

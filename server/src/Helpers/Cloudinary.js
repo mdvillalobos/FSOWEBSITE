@@ -11,11 +11,10 @@ cloudinary.config({
 
 const uploadImageToCloudinary = async (filePath, folderName) => {
     try {
-        const result = cloudinary.uploader.upload(filePath, {
+        return await cloudinary.uploader.upload(filePath, {
             folder: folderName
         });
 
-        return console.log(`Cloudinary response: ${result}`)
     }
 
     catch(error) {

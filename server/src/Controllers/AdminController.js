@@ -34,7 +34,7 @@ const createRank = async (req, res) => {
     const { rankName, track, ...requirements } = req.body;
 
     if(!rankName || !track) {
-        return res.json({ error: 'Required all fields.' });
+        return res.json({ error: 'Required all fields!' });
     }
 
     try {
@@ -63,8 +63,8 @@ const createRank = async (req, res) => {
 const getApplicationsForReRanking = async (req, res) => {
     const { loginToken } = req.cookies;
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userData = await Account.findOne({ email: decode.email });
+        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userData = await Account.findOne({ email: email });
 
         const approverMapping = {
             'Approver1': null,
