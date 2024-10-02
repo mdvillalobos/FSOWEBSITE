@@ -9,7 +9,7 @@ const app = express();
 //cors 
 app.use(
     cors({
-        origin: ['https://nufso.netlify.app', 'http://localhost:5173' ],
+        origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:5173' ],
         credentials: true
 }));
 
