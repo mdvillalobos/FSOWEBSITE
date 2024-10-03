@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
 import { AiOutlineFileSync } from "react-icons/ai";
 import { TbReport } from "react-icons/tb";
-import { RiSurveyLine } from "react-icons/ri";
+import { MdStorage } from "react-icons/md";
+
 
 const navigation = () => {
   return (
@@ -20,12 +21,12 @@ const navigation = () => {
             </p>
           </div>
         </Link>
-        <Link to="/survey" className="navigation">
+        <Link to="/repository" className="navigation">
           <div className="iconContainer">
-            <RiSurveyLine className="icon"/>
+            <MdStorage className="icon"/>
           </div>
           <div className="nameContainer">
-            <h1 className="nav-Name">Survey</h1>
+            <h1 className="nav-Name">Repository</h1>
             <p className="nav-Definition">Collection of documents forms and credentials.</p>
           </div>
         </Link>

@@ -63,7 +63,7 @@
         
     }
     .navigation {
-        @apply flex flex-col bg-[#4b538f] text-white text-center shadow-md w-72 h-80 mt-16 py-8 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
+        @apply flex flex-col bg-[#4b538f] text-white text-center font-Poppins shadow-md w-72 h-[19rem] mt-16 py-10 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
         max-[396px]:w-80 max-[396px]:pl-6
         /* min-width 640px*/
         max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0  
@@ -79,7 +79,7 @@
     }
 
     .icon {
-        @apply text-[6rem]
+        @apply text-[5.3rem]
         max-sm:text-5xl 
         max-md:text-7xl
         max-lg:text-7xl
@@ -90,14 +90,14 @@
     }
 
     .nav-Name {
-        @apply text-center text-xl mt-5 mb-5 font-Poppins font-medium
+        @apply text-xl my-6 font-medium 
         max-sm:mt-0 max-sm:mb-0 max-sm:text-left
         max-md:mb-2
         max-lg:mt-0 max-lg:text-left max-lg:mb-2
     }
 
     .nav-Definition {
-        @apply text-center mt-9 mx-2 text-sm font-Poppins
+        @apply text-sm mx-2
         max-sm:hidden  
         max-md:mt-0
         max-lg:text-xs max-lg:text-left max-lg:mx-0 max-lg:mt-0

@@ -6,10 +6,9 @@ import useGetApplicationData from '../../hooks/ApplicationHooks/useGetApplicatio
 import ReRankingFields from './ReRankingFields.jsx';
 import useToast from '../../hooks/Helpers/useToast.jsx';
 
-const ReRankingForm = ({ ApplyingFor, userTrack }) => {
+const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { getApplicationData } = useGetApplicationData();
     const { Toast } = useToast();
-    const [ isLoading, setIsLoading ] = useState(false);
     const [ requirement, setRequirement ] = useState([]);
     const [ data, setData ] = useState({
         name: "",
@@ -50,8 +49,8 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
 
-        setIsLoading(true);
         const hasEmptyFields = 
+            !data.name || !data.college || !data.department || !data.currentRank || !data.academicYear ||
             (requirement.requirement_1 !== '' && !requirement_1) ||
             (requirement.requirement_2 !== '' && !requirement_2) ||
             (requirement.requirement_3 !== '' && !requirement_3) ||
@@ -61,8 +60,8 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
             (requirement.requirement_7 !== '' && !requirement_7) ||
             (requirement.requirement_8 !== '' && !requirement_8) ||
             (requirement.requirement_9 !== '' && !requirement_9) ||
-            (requirement.requirement_10 !== '' && !requirement_10)
-        
+            (requirement.requirement_10 !== '' && !requirement_10) 
+            
         if(hasEmptyFields) {
             return Toast.fire({
                 icon: 'error',
@@ -79,9 +78,6 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
 
         catch (error) {
             console.error(`Front End Submittion Of Form Error: ${ error.message }`);
-        }
-        finally {
-            setIsLoading(false);
         }
     }
 
@@ -174,9 +170,18 @@ const ReRankingForm = ({ ApplyingFor, userTrack }) => {
                         />
                     }
 
-                    <div className="flex justify-end mt-4">
-                        <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                        <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Submit</button>
+                    <div className='flex justify-end mt-4'>
+                        {from === 'Application For Re-Ranking' ? (
+                            <>
+                                <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
+                                <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Submit</button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/repository" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
+                                <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Save</button>
+                            </>
+                        )}
                     </div>
             
                 </div>

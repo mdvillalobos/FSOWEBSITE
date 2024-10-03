@@ -56,6 +56,62 @@ const getRole = async (req, res) => {
     }
 }
 
+const getRankList = async (req, res) => {
+    const { loginToken } = req.cookies;
+
+    try {
+        const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
+
+        const userTrack = await User.findOne({ email: userEmail.email });
+
+        const rank = await Ranks.find({ track: userTrack.track });
+        return res.json(rank);
+        
+    } catch (error) {
+        console.error(`Fetching Ranklist Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+const getUserReports = async (req, res) => {
+    const { loginToken } = req.cookies;
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userReportsData = await Reports.find({ email: decode.email });
+        return res.json(userReportsData);
+        
+    } catch (error) {
+        console.error(`Fetching User Reports Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+const submitReport = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { subject, message, date } = req.body;
+
+    if(!subject || !message || !date) {
+        return res.json({ error: 'Required all fields!' });
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userReport = await Reports.create({
+            email: decode.email,
+            subject,
+            message,
+            date
+        });
+
+        return res.json({ message: 'Report successfully submitted!', data: userReport});
+        
+    } catch (error) {
+        console.error(`Report Submittion Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
 const updateProfile = async (req, res) => {
     const { loginToken } = req.cookies;
     const { firstName, lastName, middleName, department } = req.body;
@@ -122,62 +178,6 @@ const changePassword = async (req, res) => {
     }
 }
 
-const submitReport = async (req, res) => {
-    const { loginToken } = req.cookies;
-    const { subject, message, date } = req.body;
-
-    if(!subject || !message || !date) {
-        return res.json({ error: 'Required all fields!' });
-    }
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userReport = await Reports.create({
-            email: decode.email,
-            subject,
-            message,
-            date
-        });
-
-        return res.json({ message: 'Report successfully submitted!', data: userReport});
-        
-    } catch (error) {
-        console.error(`Report Submittion Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-const getUserReports = async (req, res) => {
-    const { loginToken } = req.cookies;
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userReportsData = await Reports.find({ email: decode.email });
-        return res.json(userReportsData);
-        
-    } catch (error) {
-        console.error(`Fetching User Reports Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-const getRankList = async (req, res) => {
-    const { loginToken } = req.cookies;
-
-    try {
-        const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-
-        const userTrack = await User.findOne({ email: userEmail.email });
-
-        const rank = await Ranks.find({ track: userTrack.track });
-        return res.json(rank);
-        
-    } catch (error) {
-        console.error(`Fetching Ranklist Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
 const updateProfilePicture = async (req, res) => {
     const { loginToken } = req.cookies;
 
@@ -187,7 +187,9 @@ const updateProfilePicture = async (req, res) => {
 
     try {
         const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const update = await User.updateOne({ email: decode.email }, {$set: { profilePicture: req.files['profilePicture'][0].path }})
+        await User.updateOne({ email: userEmail.email }, {$set: { profilePicture: req.files['profilePicture'][0].path }})
+
+        return res.json('Profile Picture Successfully Changed');
     }
 
     catch(e) {
@@ -199,9 +201,9 @@ const updateProfilePicture = async (req, res) => {
 module.exports = {
     getUserData,
     getRole,
-    updateProfile,
-    changePassword,
+    getRankList,
     submitReport,
     getUserReports,
-    getRankList,
+    updateProfile,
+    changePassword,
 }

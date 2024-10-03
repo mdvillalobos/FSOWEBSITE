@@ -8,18 +8,19 @@ import ReRankingForm from '../../components/ReRankingFormComponents/ReRankingFor
 const ApplicationForm = () => {
     const location = useLocation();
     const { user } = useContext(UserContext);
-    const { selectedForm } = location.state || {};
+    const { selectedForm, from } = location.state || {};
     const track = user.track;
     
     return (
         <div className='bg-[#f4f7fa] h-[100dvh]'>
-            <Header location={selectedForm}/>
+            <Header location={ selectedForm }/>
             <div className="px-14 py-2">
               <BackBtn/>
-                <div className='bg-white py-4 px-8 shadow-md rounded-xl overflow-hidden'>
+                <div className='bg-white py-8 px-10 shadow-md rounded-xl overflow-hidden'>
                     <ReRankingForm 
-                        ApplyingFor={selectedForm}
-                        userTrack={track}
+                        ApplyingFor={ selectedForm }
+                        userTrack={ track } 
+                        from ={ from }
                     />
                 </div>
             </div>  

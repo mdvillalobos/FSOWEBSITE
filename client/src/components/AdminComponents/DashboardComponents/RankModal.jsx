@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
 import useCreateRank from '../../../hooks/AdminHooks/useCreateRank.jsx';
 
-
 const RankModal = (props) => {
   const [data, setData] = useState({
     rankName: '',
@@ -24,10 +23,6 @@ const RankModal = (props) => {
     e.preventDefault();
     const { rankName, track, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10 } = data;
     await createRank(rankName, track, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10, props);
-  }
-
-  const addRequirementField = () => {
-    console.log('tae')
   }
 
   return (

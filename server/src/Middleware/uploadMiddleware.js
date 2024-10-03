@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: function(req, file, cb) {
-        const fileTypes = /jpeg|jpg|png|gif/;
+        const fileTypes = /jpeg|jpg|png|gif|pdf/;
         const isFileTypeValid = fileTypes.test(file.mimetype) && fileTypes.test(file.originalname.split('.').pop().toLowerCase());
         
         if (isFileTypeValid) {

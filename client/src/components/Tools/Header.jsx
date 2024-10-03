@@ -22,7 +22,7 @@ const header = ({location}) => {
   }
 
   return (
-    <div className='flex py-6 px-16 shadow bg-white justify-between max-sm:px-8'>
+    <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8'>
       <div className='flex space-x-6'>
           <div className="flex my-auto mx-0 after:border-r-2 after:ml-5">
             <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>

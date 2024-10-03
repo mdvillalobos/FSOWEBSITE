@@ -1,6 +1,25 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+const requirementSchema = new Schema({
+    requirement: {
+        type: String,
+        default: null
+    },
+    isApproved: {
+        type: String,
+        default: null
+    },
+    imagePath: {
+        type: String,
+        default: null
+    },
+    requirementNumber: {
+        type: Number,
+        required: true
+    }
+})
+
 const ApplicationFormsSchema = new Schema({
     name: String,
     email: String,
@@ -10,77 +29,7 @@ const ApplicationFormsSchema = new Schema({
     currentRank: String,
     applyingFor: String,
     track: String,
-    requirement_1: String,
-    isApproved_requrement_1: {
-        type: String,
-        default: null
-    },
-    requirement_2: String,
-    isApproved_requrement_2: {
-        type: String,
-        default: null
-    },
-    requirement_3: String,
-    isApproved_requrement_3: {
-        type: String,
-        default: null
-    },    
-    requirement_4: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_4: {
-        type: String,
-        default: null
-    },
-    requirement_5: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_5: {
-        type: String,
-        default: null
-    },
-    requirement_6: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_6: {
-        type: String,
-        default: null
-    },
-    requirement_7: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_7: {
-        type: String,
-        default: null
-    },
-    requirement_8: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_8: {
-        type: String,
-        default: null
-    },
-    requirement_9: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_9: {
-        type: String,
-        default: null
-    },
-    requirement_10: {
-        type: String,
-        default: null
-    },
-    isApproved_requrement_10: {
-        type: String,
-        default: null
-    },
+    requirements: [requirementSchema],
     prevApprover: {
         type: String,
         default: null

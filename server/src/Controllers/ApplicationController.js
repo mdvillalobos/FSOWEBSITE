@@ -31,6 +31,19 @@ const getRankRequirement = async (req, res) => {
     }
 }
 
+const filterAndUploadRequirements = async (files) => {
+    const userSubmittedRequirements = Object.values(files).map(file => file?.[0]?.path)
+    
+    const uploadPromises = userSubmittedRequirements.map(path => CloudinaryUpload(path, 'requirements', { concurrent: true }));
+    const uploadResponses = await Promise.all(uploadPromises);
+    
+    return uploadResponses.map((response, i) => ({
+        requirement: `Requirement ${i + 1}`,
+        imagePath: response.secure_url,
+        requirementNumber: i + 1
+    }));
+};
+
 const submitApplicationEntry = async (req, res) => {
     const start = Date.now();
     const { loginToken } = req.cookies;
@@ -41,13 +54,7 @@ const submitApplicationEntry = async (req, res) => {
     }
 
     try {
-        const requirements = Object.values(req.files)
-            .map((file, i) => file?.[0]?.path || null)
-            .filter(path => path !== null)
-
-        const uploadPromises = requirements.map((path, i) => CloudinaryUpload(path, 'requirements', { concurrent: true }));
-        const uploadToCloudinary = await Promise.all(uploadPromises)
-
+        const requirements = await filterAndUploadRequirements(req.files)
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
         await ApplicationForms.create({
             name: name,
@@ -58,7 +65,7 @@ const submitApplicationEntry = async (req, res) => {
             academicYear: academicYear,
             applyingFor: ApplyingFor,
             track: userTrack,
-            ...Object.fromEntries(uploadToCloudinary.map((response, i) => [`requirement_${i + 1}`, response.secure_url]))
+            requirements
         });
         
         console.log(`Estimated Time of Process: ${ Date.now() - start}`);
@@ -109,6 +116,45 @@ const checkApplication = async (req, res) => {
 
     } catch (error) {
         console.error(`Checking Application Error ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+
+const createPreApplication = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack } = req.body;
+
+    if(!name || !college || !department || !currentRank || !academicYear || !ApplyingFor || !userTrack) {
+        return res.json({ error: 'Required all fields.'})
+    }
+
+    try {
+        const userSubmittedRequirements = Object.values(req.files)
+            .map((file, i) => file?.[0]?.path || null)
+            .filter(path => path !== null)
+
+        const uploadPromises = userSubmittedRequirements.map((path, i) => CloudinaryUpload(path, 'PreApplyFiles', { concurrent: true }));
+        const uploadToCloudinary = await Promise.all(uploadPromises);
+
+        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        await ApplicationForms.create({
+            name: name,
+            email: email,
+            college: college,
+            department: department,
+            currentRank: currentRank,
+            academicYear: academicYear,
+            applyingFor: ApplyingFor,
+            track: userTrack,
+            ...Object.fromEntries(uploadToCloudinary.map((response, i) => [`requirement_${i + 1}`, response.secure_url]))
+        });
+        
+        console.log(`Estimated Time of Process: ${ Date.now() - start}`);
+        return res.json('Success');
+
+    } catch (error) {
+        console.error(`Submiiton Of Pre-Application For Re-Ranking Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

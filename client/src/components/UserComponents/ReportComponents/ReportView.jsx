@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoMdArrowRoundBack } from "react-icons/io";
 
-const ReportView = ({handleExit, rest}) => {
+const ReportView = ({ handleExit, rest }) => {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
       <div className="relative h-2/3 w-2/4 bg-white shadow-lg rounded-lg overflow-hidden">

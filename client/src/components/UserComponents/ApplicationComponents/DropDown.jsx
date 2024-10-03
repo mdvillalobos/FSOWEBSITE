@@ -13,10 +13,10 @@ import Associate3Requirement from './Requirements/AssociateProfessor/Associate3R
 import Associate4Requirement from './Requirements/AssociateProfessor/Associate4Requirement.jsx';
 
 
-const Requirements = () => {
+const Requirements = ({ from }) => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState('Instructor 1');
+  const [ data, setData ] = useState([]);
+  const [ selected, setSelected ] = useState('Instructor 1');
 
   useEffect(() => {
     axios.get('/api/getRankList')
@@ -26,7 +26,14 @@ const Requirements = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    navigate('/application/form', { state: { selectedForm: selected}})
+    if(from === 'Application For Re-Ranking') {
+      return navigate('/application/form', { state: { selectedForm: selected, from: from }})
+    }
+
+    if(from === 'Repository') {
+      return navigate('/application/form', { state: { selectedForm: selected, from: from }}) 
+    }
+
   }
   return (
     <div>
