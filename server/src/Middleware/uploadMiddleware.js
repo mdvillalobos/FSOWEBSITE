@@ -17,7 +17,8 @@ const upload = multer({
     storage: storage,
     fileFilter: function(req, file, cb) {
         const fileType = path.extname(file.originalname)
-        if(fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'pdf') {
+        console.log(fileType)
+        if(fileType === '.png' || fileType === '.jpg' || fileType === '.jpeg' || fileType === '.pdf') {
             return cb(null, true);
         }
        
