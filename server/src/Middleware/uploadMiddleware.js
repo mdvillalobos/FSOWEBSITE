@@ -16,14 +16,15 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: function(req, file, cb) {
-        const fileTypes = /jpeg|jpg|png|gif|pdf/;
-        const isFileTypeValid = fileTypes.test(file.mimetype) && fileTypes.test(file.originalname.split('.').pop().toLowerCase());
-        
-        if (isFileTypeValid) {
+        const fileType = path.extname(file.originalname)
+        if(fileType === 'png' || fileType === 'jpg' || fileType === 'jpeg' || fileType === 'pdf') {
             return cb(null, true);
         }
-        console.log(file.originalname)
-        return cb(new Error('Error: File type not supported!'));
+       
+        else {
+            console.log(file.originalname)
+            return cb(new Error('Error: File type not supported!'));
+        }
     },
     limits: { fileSize: 50 * 1024 * 1024 }
 });
