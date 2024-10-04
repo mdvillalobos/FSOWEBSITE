@@ -10,10 +10,12 @@ const ApplicationTable = () => {
         axios.get('/api/getApplications')
         .then(res => setData(res.data))
         .catch(error => console.log(error))
-    }, [])
+    }, []);
 
-    const handleView = (id) => {
-        navigate('/admin/viewapplication', { state: { data: id } })
+    console.log(data);
+
+    const handleView = (userData) => {
+        navigate('/admin/viewapplication', { state: { data: userData } })
     }
 
     return (

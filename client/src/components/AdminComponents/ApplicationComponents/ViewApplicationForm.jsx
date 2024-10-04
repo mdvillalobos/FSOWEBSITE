@@ -35,8 +35,8 @@ const ViewApplicationForm = ({ rest }) => {
         setShowImage({ show: false });
     }
 
-    const handleViewImage = (image) => {
-        setShowImage({ show: true, image: image });
+    const handleViewImage = (imagePath) => {
+        setShowImage({ show: true, image: imagePath });
     }
 
     const handleSubmitReview = async (decision) => {
@@ -69,94 +69,17 @@ const ViewApplicationForm = ({ rest }) => {
                 <div className='py-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-4'>Qualification</h1>
                     <div>
-                        <ApplicationInput
-                            requirement={requirement.requirement_1}
-                            imagePath={rest.requirement_1}
-                            checkedValue={checkedReq1}
-                            setCheckedValue={setCheckedReq1}
-                            handleViewImage={handleViewImage}
-                        />
-                        <ApplicationInput
-                            requirement={requirement.requirement_2}
-                            imagePath={rest.requirement_2}
-                            checkedValue={checkedReq2}
-                            setCheckedValue={setCheckedReq2}
-                            handleViewImage={handleViewImage}
-                        />
-                        <ApplicationInput
-                            requirement={requirement.requirement_3}
-                            imagePath={rest.requirement_3}
-                            checkedValue = {checkedReq3}
-                            setCheckedValue={setCheckedReq3}
-                            handleViewImage={handleViewImage}
-                        />
-
-                        {requirement.requirement_4 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_4}
-                                imagePath={rest.requirement_4}
-                                checkedValue = {checkedReq4}
-                                setCheckedValue={setCheckedReq4}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-
-                        {requirement.requirement_5 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_5}
-                                imagePath={rest.requirement_5}
-                                checkedValue = {checkedReq5}
-                                setCheckedValue={setCheckedReq5}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-
-                        {requirement.requirement_6 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_6}
-                                imagePath={rest.requirement_6}
-                                checkedValue = {checkedReq6}
-                                setCheckedValue={setCheckedReq6}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-                        {requirement.requirement_7 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_7}
-                                imagePath={rest.requirement_7}
-                                checkedValue = {checkedReq7}
-                                setCheckedValue={setCheckedReq7}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-                        {requirement.requirement_8 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_8}
-                                rimagePathest={rest.requirement_8}
-                                checkedValue = {checkedReq8}
-                                setCheckedValue={setCheckedReq8}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-                        {requirement.requirement_9 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_9}
-                                imagePath={rest.requirement_9}
-                                checkedValue = {checkedReq9}
-                                setCheckedValue={setCheckedReq9}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-                        {requirement.requirement_10 != '' && 
-                            <ApplicationInput
-                                requirement={requirement.requirement_10}
-                                imagePath={rest.requirement_10}
-                                checkedValue = {checkedReq10}
-                                setCheckedValue={setCheckedReq10}
-                                handleViewImage={handleViewImage}
-                            />
-                        }
-  
+                        {rest.requirements.map((data, i) => (
+                            <div key={data._id}>
+                                <ApplicationInput
+                                    requirement={`${requirement[`requirement_${ i + 1 }`]}`}
+                                    imagePath={data.imagePath}
+                                    checkedValue={checkedReq1}
+                                    setCheckedValue={setCheckedReq1}
+                                    handleViewImage={handleViewImage}
+                                />
+                            </div>
+                        ))}
                         <div className="flex justify-end space-x-4 mt-8">
                             {(checkedReq1 === 'Declined' || 
                             checkedReq2 === 'Declined' || 
