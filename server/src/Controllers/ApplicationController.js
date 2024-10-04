@@ -38,9 +38,8 @@ const filterAndUploadRequirements = async (files) => {
     const uploadResponses = await Promise.all(uploadPromises);
     
     return uploadResponses.map((response, i) => ({
-        requirement: `Requirement ${i + 1}`,
+        requirementNumber: i + 1,
         imagePath: response.secure_url,
-        requirementNumber: i + 1
     }));
 };
 
@@ -79,40 +78,37 @@ const submitApplicationEntry = async (req, res) => {
 
 const checkApplication = async (req, res) => {
     const { loginToken } = req.cookies;
-    const { formID, decision, ...checkedRequirements } = req.body;
+    const { formID, decision, ...checkedReq } = req.body;
 
     try {
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userInfo = await Account.findOne({ email: email });
+        const [userInfo, userApplicationForm] = await Promise.all([
+            Account.findOne({ email }),
+            ApplicationForms.findById(formID)
+        ])
 
-        const updateData = {
-            prevApprover: userInfo.approver,
-            isApproved_requrement_1: checkedRequirements.checkedReq1,
-            isApproved_requrement_2: checkedRequirements.checkedReq2,
-            isApproved_requrement_3: checkedRequirements.checkedReq3,
-            isApproved_requrement_4: checkedRequirements.checkedReq4,
-            isApproved_requrement_5: checkedRequirements.checkedReq5,
-            isApproved_requrement_6: checkedRequirements.checkedReq6,
-            isApproved_requrement_7: checkedRequirements.checkedReq7,
-            isApproved_requrement_8: checkedRequirements.checkedReq8,
-            isApproved_requrement_9: checkedRequirements.checkedReq9,
-            isApproved_requrement_10: checkedRequirements.checkedReq10,
-        };
+        userApplicationForm.requirements.forEach((requirement) => {
+            requirement.isApproved =  checkedReq[`checkedReq${requirement.requirementNumber}`];
+        });
+
+        userApplicationForm.status = decision;
 
         if(decision === 'Approved') {
-            updateData.approvedBy = { $concat: ['$approvedBy', userInfo.approver, ', '] };
-            await ApplicationForms.updateOne({ _id: formID }, [{ $set: updateData }]);
+            userApplicationForm.prevApprover = userInfo.approver
+            userApplicationForm.approvedBy = userApplicationForm.approvedBy
+                ? `${ userApplicationForm.approvedBy }, ${ userInfo.approver }`
+                : userInfo.approver;
+            await userApplicationForm.save();
             return res.json({ message: 'Succesfully Approved' });
         }
 
         if (decision === 'Declined') {
-            updateData.declinedBy = userInfo.approver;
-            updateData.status = decision;
-            await ApplicationForms.updateOne({ _id: formID }, [{ $set: updateData }]);
+            userApplicationForm.declinedBy = userInfo.approver;
+            await userApplicationForm.save();
             return res.json({ message: 'Declined Application' });
         }
 
-        return res.json({ error: 'Invalid decision provided' });
+        return res.json({ error: 'Invalid decision!' });
 
     } catch (error) {
         console.error(`Checking Application Error ${ error.message }`);

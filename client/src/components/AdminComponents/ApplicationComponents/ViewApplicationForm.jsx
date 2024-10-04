@@ -40,7 +40,6 @@ const ViewApplicationForm = ({ rest }) => {
     }
 
     const handleSubmitReview = async (decision) => {
-        console.log(decision)
         await submitReview(rest._id, decision, checkedReq1, checkedReq2, checkedReq3, checkedReq4, checkedReq5, checkedReq6, checkedReq7, checkedReq8, checkedReq9, checkedReq10);
     }
     return (
@@ -69,17 +68,44 @@ const ViewApplicationForm = ({ rest }) => {
                 <div className='py-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-4'>Qualification</h1>
                     <div>
-                        {rest.requirements.map((data, i) => (
-                            <div key={data._id}>
+                        {rest.requirements.map((data, i) => {
+                            const stateValues = {
+                                checkedReq1: checkedReq1,
+                                checkedReq2: checkedReq2,
+                                checkedReq3: checkedReq3,
+                                checkedReq4: checkedReq4,
+                                checkedReq5: checkedReq5,
+                                checkedReq6: checkedReq6,
+                                checkedReq7: checkedReq7,
+                                checkedReq8: checkedReq8,
+                                checkedReq9: checkedReq9,
+                                checkedReq10: checkedReq10,
+                                setCheckedReq1: setCheckedReq1,
+                                setCheckedReq2: setCheckedReq2,                            
+                                setCheckedReq3: setCheckedReq3,
+                                setCheckedReq4: setCheckedReq4,
+                                setCheckedReq5: setCheckedReq5,
+                                setCheckedReq6: setCheckedReq6,
+                                setCheckedReq7: setCheckedReq7,
+                                setCheckedReq8: setCheckedReq8,
+                                setCheckedReq9: setCheckedReq9,
+                                setCheckedReq10: setCheckedReq10,
+                            };
+                            const checkedReq = [`checkedReq${i + 1}`];
+                            const setCheckedReq = [`setCheckedReq${i+1}`]
+                            const checkedValue = stateValues[checkedReq]
+                            const setCheckedValue = stateValues[setCheckedReq]
+
+                            return <div key={data._id}>
                                 <ApplicationInput
                                     requirement={`${requirement[`requirement_${ i + 1 }`]}`}
                                     imagePath={data.imagePath}
-                                    checkedValue={checkedReq1}
-                                    setCheckedValue={setCheckedReq1}
+                                    checkedValue={checkedValue}
+                                    setCheckedValue={setCheckedValue}
                                     handleViewImage={handleViewImage}
                                 />
                             </div>
-                        ))}
+                        })}
                         <div className="flex justify-end space-x-4 mt-8">
                             {(checkedReq1 === 'Declined' || 
                             checkedReq2 === 'Declined' || 

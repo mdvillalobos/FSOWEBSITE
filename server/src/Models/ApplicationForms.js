@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const requirementSchema = new Schema({
-    requirement: {
-        type: String,
+    requirementNumber: {
+        type: Number,
         default: null
     },
     isApproved: {
@@ -14,10 +14,6 @@ const requirementSchema = new Schema({
         type: String,
         default: null
     },
-    requirementNumber: {
-        type: Number,
-        required: true
-    }
 })
 
 const ApplicationFormsSchema = new Schema({
