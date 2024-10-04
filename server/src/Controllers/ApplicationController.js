@@ -85,7 +85,7 @@ const checkApplication = async (req, res) => {
         const [userInfo, userApplicationForm] = await Promise.all([
             Account.findOne({ email }),
             ApplicationForms.findById(formID)
-        ])
+        ]);
 
         userApplicationForm.requirements.forEach((requirement) => {
             requirement.isApproved =  checkedReq[`checkedReq${requirement.requirementNumber}`];
