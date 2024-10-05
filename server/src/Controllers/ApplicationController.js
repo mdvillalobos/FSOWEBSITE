@@ -134,7 +134,7 @@ const createPreApplication = async (req, res) => {
         const uploadToCloudinary = await Promise.all(uploadPromises);
 
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        await ApplicationForms.create({
+        const submitted = await ApplicationForms.create({
             name: name,
             email: email,
             college: college,
@@ -147,7 +147,7 @@ const createPreApplication = async (req, res) => {
         });
         
         console.log(`Estimated Time of Process: ${ Date.now() - start}`);
-        return res.json('Success');
+        return res.json(submitted);
 
     } catch (error) {
         console.error(`Submiiton Of Pre-Application For Re-Ranking Error: ${ error.message }`);

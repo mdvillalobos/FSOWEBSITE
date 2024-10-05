@@ -15,7 +15,7 @@ const login = async (req, res) => {
     }
 
     try {
-        const [user, userData ] = await Promise.all([
+        const [ user, userData ] = await Promise.all([
             Account.findOne({ email: email }),
             User.findOne({ email: email })
         ])
