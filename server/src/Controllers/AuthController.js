@@ -81,6 +81,7 @@ const register = async (req, res) => {
 const verifyEmail = async (req,res) => {
     const { verificationToken } = req.cookies;
     const { otp } = req.body;
+    const start = Date.now();
 
     if(!otp) {
         return res.json({ error: 'Required all fields!' });
@@ -146,6 +147,7 @@ const registerProfile = async (req, res) => {
             res.clearCookie('verificationToken', { path: '/home', sameSite: 'None', secure: true });
             const userAccount = await Account.findOne({ email: decode.email });
             const loginToken = jwt.sign({ email: userAccount.email, role: userAccount.role }, process.env.JWT_SECRET);
+            console.log(`${Date.now() - start}`)
             return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ user: userData, role: userAccount.role });
         }
 
