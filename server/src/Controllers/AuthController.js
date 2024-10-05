@@ -94,7 +94,7 @@ const verifyEmail = async (req,res) => {
         const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
         const [userOTP, isOTPCorrect] = await Promise.all([
             EmailVerification.findOne({ owner: email }),
-            await compareHashed(otp, userOTP.Otp)
+            compareHashed(otp, userOTP.Otp)
         ]);
 
         if(!userOTP) {
