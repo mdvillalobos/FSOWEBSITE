@@ -49,12 +49,15 @@ const register = async (req, res) => {
     }
 
     try {
-        const isEmailExist = await Account.findOne({ email });
+        const [ isEmailExist, hashedPassword ] = await Promise.all([
+            Account.findOne({ email }),
+            hashPassword( password )
+        ]);
+        
         if(isEmailExist) {
             return res.json({ error: 'Email already existed' });
         }
 
-        const hashedPassword = await hashPassword(password);
         const userAccount = await Account.create({
             employeeID,  
             email, 
