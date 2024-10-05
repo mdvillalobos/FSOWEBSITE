@@ -147,7 +147,7 @@ const createPreApplication = async (req, res) => {
         });
         
         console.log(`Estimated Time of Process: ${ Date.now() - start}`);
-        return res.json({ message: 'Success'});
+        return res.json('Success');
 
     } catch (error) {
         console.error(`Submiiton Of Pre-Application For Re-Ranking Error: ${ error.message }`);
