@@ -81,7 +81,6 @@ const register = async (req, res) => {
 const verifyEmail = async (req,res) => {
     const { verificationToken } = req.cookies;
     const { otp } = req.body;
-    const start = Date.now();
 
     if(!otp) {
         return res.json({ error: 'Required all fields!' });
@@ -93,9 +92,7 @@ const verifyEmail = async (req,res) => {
 
     try {
         const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
-        const [ userOTP ] = await Promise.all([
-            EmailVerification.findOne({ owner: email }),
-        ]);
+        const userOTP = await EmailVerification.findOne({ owner: email });
 
         if(!userOTP) {
             return res.json({ error: 'Please resend your One-Time-Pin' });
@@ -108,7 +105,6 @@ const verifyEmail = async (req,res) => {
         }
 
         await EmailVerification.deleteOne({ owner: email })
-        console.log(`${Date.now() - start}`)
         return res.json({ success: true, message: 'OTP verified successfully.' });
 
     } catch (error) {
