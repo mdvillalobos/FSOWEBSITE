@@ -10,7 +10,7 @@ const app = express();
 //cors 
 app.use(
     cors({
-        origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:5173' ],
+        origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:5173', 'http://localhost:49297' ],
         credentials: true
 }));
 
