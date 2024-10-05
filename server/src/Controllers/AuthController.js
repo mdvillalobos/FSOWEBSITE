@@ -108,6 +108,7 @@ const verifyEmail = async (req,res) => {
         }
 
         await EmailVerification.deleteOne({ owner: email })
+        console.log(`${Date.now() - start}`)
         return res.json({ success: true, message: 'OTP verified successfully.' });
 
     } catch (error) {
