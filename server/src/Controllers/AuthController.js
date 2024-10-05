@@ -53,7 +53,7 @@ const register = async (req, res) => {
             Account.findOne({ email }),
             hashPassword( password )
         ]);
-
+        
         if(isEmailExist) {
             return res.json({ error: 'Email already existed' });
         }
@@ -92,16 +92,14 @@ const verifyEmail = async (req,res) => {
 
     try {
         const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
-        const [userOTP, isOTPCorrect] = await Promise.all([
-            EmailVerification.findOne({ owner: email }),
-            compareHashed(otp, userOTP.Otp)
-        ]);
+        const userOTP = await EmailVerification.findOne({ owner: email });
 
         if(!userOTP) {
             return res.json({ error: 'Please resend your One-Time-Pin' });
         }
 
-        
+        const isOTPCorrect = await compareHashed(otp, userOTP.Otp);
+
         if(!isOTPCorrect) {
             return res.json({ error: 'Incorrect One-Time-Pin!' });
         }
