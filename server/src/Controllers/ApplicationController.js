@@ -147,10 +147,34 @@ const createPreApplication = async (req, res) => {
         });
         
         console.log(`Estimated Time of Process: ${ Date.now() - start}`);
-        return res.json('Success');
+        return res.json({ message: 'Success'});
 
     } catch (error) {
         console.error(`Submiiton Of Pre-Application For Re-Ranking Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+const countDeclinedApplicationRequirements = async (rankName) => {
+    try {
+        const application = await ApplicationForms({ applyingFor: rankName })
+        const declinedCount = {};
+
+        application.forEach(applicationData => {
+            applicationData.requirements.forEach(requirementData => {
+                const requirementNumber = requirement.requirementNumber;
+                if(!declinedCount[requirementNumber]) {
+                    declinedCount[requirementNumber] = 0;
+                }
+
+                if(requirementData.isApproved === 'Declined') { 
+                   declinedCount[requirementNumber]++;
+                }
+            })
+        })
+    }
+    catch (error) {
+        console.error(`Fetching Declined Requirements Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

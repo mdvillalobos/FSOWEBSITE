@@ -15,13 +15,16 @@ const login = async (req, res) => {
     }
 
     try {
-        const user = await Account.findOne({ email: email });
+        const [user, userData ] = Promise.all([
+            Account.findOne({ email: email }),
+            User.findOne({ email: email })
+        ])
+
         if(!user || !await compareHashed(password, user.password)) {
             return res.json({ error: 'Incorrect Email or Password.' });
         }
 
-        const userData = await User.findOne({ email: user.email });
-        const loginToken = jwt.sign({ email: user.email, role: user.role }, process.env.JWT_SECRET);
+        const loginToken = jwt.sign({ email: email, role: user.role }, process.env.JWT_SECRET);
         return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ user: userData, role: user.role });
 
     } catch (error) {
