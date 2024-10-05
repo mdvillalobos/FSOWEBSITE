@@ -68,7 +68,7 @@ const submitApplicationEntry = async (req, res) => {
         });
         
         console.log(`Estimated Time of Process: ${ Date.now() - start}`);
-        return res.json('Success');
+        return res.json({ message: 'Success'});
 
     } catch (error) {
         console.error(`Submiiton Of Application For Re-Ranking Error: ${ error.message }`);
