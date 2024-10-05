@@ -49,7 +49,7 @@ const register = async (req, res) => {
     }
 
     try {
-        const isEmailExist = await Account.findOne({email});
+        const isEmailExist = await Account.findOne({ email });
         if(isEmailExist) {
             return res.json({ error: 'Email already existed' });
         }
@@ -64,7 +64,7 @@ const register = async (req, res) => {
         if (userAccount) {
             sendEmailVerification(userAccount.email);
             const verificationToken = jwt.sign({ email: email, employeeID: employeeID }, process.env.JWT_SECRET);
-            return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).send('Registered'); 
+            return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered' }); 
         }
 
         return res.json({ error: 'There is an error at the moment. Pleas try again later.'});
