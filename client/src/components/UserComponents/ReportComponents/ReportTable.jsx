@@ -19,8 +19,8 @@ const ReportTable = () => {
 
   useEffect(() => {
     axios.get('/api/getreport')
-    .then(data => setData(data.data))
-    .catch(error => console.log(error))
+    .then(response => setData(response.data))
+    .catch(error => console.error(`Fetching User Report Error: ${ error.message }`))
   }, []);
 
   return (

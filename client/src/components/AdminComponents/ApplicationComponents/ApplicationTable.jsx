@@ -11,9 +11,7 @@ const ApplicationTable = () => {
         .then(res => setData(res.data))
         .catch(error => console.log(error))
     }, []);
-
-    console.log(data);
-
+    
     const handleView = (userData) => {
         navigate('/admin/viewapplication', { state: { data: userData } })
     }

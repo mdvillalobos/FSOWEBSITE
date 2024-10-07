@@ -31,6 +31,8 @@ const useSubmitReview = () => {
                     requestBody[`checkedReq${index + 1}`] = req;
                 }
             });
+
+            console.log(requestBody)
             
             const { data } = await axios.post('/api/checkApplication', requestBody);
 

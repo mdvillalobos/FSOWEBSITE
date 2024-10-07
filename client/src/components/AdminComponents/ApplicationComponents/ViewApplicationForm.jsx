@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { RankContext } from '../../../../context/rankContext.jsx'
 import axios from 'axios'
 import { FocusOn } from 'react-focus-on'
 import ApplicationMaster from './ViewFormComponents/UserDetails.jsx'
@@ -7,8 +8,8 @@ import ApplicationInput from './ViewFormComponents/ApplicationInputs.jsx';
 import useSubmitReview from '../../../hooks/AdminHooks/useSubmitReview.jsx';
 
 const ViewApplicationForm = ({ rest }) => {
+    const { ranks } = useContext(RankContext);
     const { submitReview } = useSubmitReview();
-    const [ requirement, setRequirement ] = useState([]);
     const [ showImage, setShowImage ] = useState({
         show: false,
         image: null
@@ -25,11 +26,11 @@ const ViewApplicationForm = ({ rest }) => {
     const [ checkedReq9, setCheckedReq9 ] = useState(null);
     const [ checkedReq10, setCheckedReq10 ] = useState(null);
 
-    useEffect(() => {
+ /*    useEffect(() => {
         axios.get(`/api/getRequirement?rank=${rest.applyingFor}`)
         .then(res => setRequirement(res.data))
         .catch(err => console.log(err))
-    }, []);
+    }, []); */
 
     const handleExit = () => {
         setShowImage({ show: false });
@@ -42,6 +43,9 @@ const ViewApplicationForm = ({ rest }) => {
     const handleSubmitReview = async (decision) => {
         await submitReview(rest._id, decision, checkedReq1, checkedReq2, checkedReq3, checkedReq4, checkedReq5, checkedReq6, checkedReq7, checkedReq8, checkedReq9, checkedReq10);
     }
+
+    const selectedRank = ranks.find(requirement => requirement.rankName === rest.applyingFor);
+
     return (
         <div>
             {showImage.show && (
@@ -69,6 +73,7 @@ const ViewApplicationForm = ({ rest }) => {
                     <h1 className='text-base font-semibold text-[#35408E] mb-4'>Qualification</h1>
                     <div>
                         {rest.requirements.map((data, i) => {
+                            const requirement = selectedRank.requirements[i];
                             const stateValues = {
                                 checkedReq1: checkedReq1,
                                 checkedReq2: checkedReq2,
@@ -91,6 +96,7 @@ const ViewApplicationForm = ({ rest }) => {
                                 setCheckedReq9: setCheckedReq9,
                                 setCheckedReq10: setCheckedReq10,
                             };
+                            
                             const checkedReq = [`checkedReq${i + 1}`];
                             const setCheckedReq = [`setCheckedReq${i+1}`]
                             const checkedValue = stateValues[checkedReq]
@@ -98,7 +104,7 @@ const ViewApplicationForm = ({ rest }) => {
 
                             return <div key={data._id}>
                                 <ApplicationInput
-                                    requirement={`${requirement[`requirement_${ i + 1 }`]}`}
+                                    requirement={requirement.requirement}
                                     imagePath={data.imagePath}
                                     checkedValue={checkedValue}
                                     setCheckedValue={setCheckedValue}

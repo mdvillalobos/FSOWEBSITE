@@ -1,50 +1,16 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+const RequirementSchema = new Schema({
+    requirementNumber: Number,
+    requirement: String
+});
+
 const RankSchema = new Schema ({
     rankName: String,
     track: String,
-    requirement_1: {
-        type: String,
-        default: null,
-    },
-    requirement_2: {
-        type: String,
-        default: null 
-    },
-    requirement_3: {
-        type: String,
-        default: null 
-    },
-    requirement_4:  {
-        type: String,
-        default: null 
-    },
-    requirement_5: {
-        type: String,
-        default: null 
-    },
-    requirement_6: {
-        type: String,
-        default: null 
-    },
-    requirement_7: {
-        type: String,
-        default: null 
-    },
-    requirement_8: {
-        type: String,
-        default: null 
-    },
-    requirement_9: {
-        type: String,
-        default: null 
-    },
-    requirement_10: {
-        type: String,
-        default: null 
-    },
-})
+    requirements: [RequirementSchema]
+});
 
 const RankModel = mongoose.model('rank', RankSchema)
 

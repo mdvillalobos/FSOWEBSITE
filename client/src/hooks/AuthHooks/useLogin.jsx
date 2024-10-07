@@ -2,9 +2,13 @@ import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/userContext.jsx';
+import { RankContext } from '../../../context/rankContext.jsx';
+import { AnalyticsContext } from '../../../context/analyticsContext.jsx';
 
 const useLogin = () => {
-    const { setUser, setRole } = useContext(UserContext);
+    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { getDataOnLogin } = useContext(AnalyticsContext);
+    const { getProfileOnLogin } = useContext(UserContext);
     const { Toast, LoadingToast } = useToast();
 
     const Login = async (email, password) => {
@@ -32,8 +36,9 @@ const useLogin = () => {
     
             else {
                 LoadingToast.close();
-                setUser(data.user);
-                setRole(data.role);
+                getProfileOnLogin();
+                fetchRanksOnLogin();
+                getDataOnLogin();
             }
 
         } catch (error) {

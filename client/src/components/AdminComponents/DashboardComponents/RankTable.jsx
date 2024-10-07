@@ -4,11 +4,11 @@ import axios from 'axios';
 const RankTable = () => {
     const [data, setData] = useState([]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         axios.get('/api/getAllRank')
         .then(res => setData(res.data))
         .catch(error => console.log(error))
-    }, []);
+    }, []); */
     return (
         <div>
             <table className='border-2 shadow-lg'>

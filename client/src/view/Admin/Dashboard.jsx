@@ -1,6 +1,6 @@
 import Header from "../../components/Tools/Header.jsx";
 import BackBtn from '../../components/Tools/AdminBack.jsx';
-import Table from '../../components/AdminComponents/DashboardComponents/DashboardTable.jsx'
+import Graph from '../../components/AdminComponents/DashboardComponents/DashboardGraph.jsx';
 import TableBTN from '../../components/AdminComponents/DashboardComponents/TableBtn.jsx';
 import RankTable from '../../components/AdminComponents/DashboardComponents/RankTable.jsx'
 
@@ -12,7 +12,6 @@ const Dashboard = () => {
               <BackBtn/>
               <Graph/>
               <TableBTN/>
-              <Table/>
               <RankTable/>
           </div>
       </div>

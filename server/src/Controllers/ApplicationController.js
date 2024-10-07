@@ -5,25 +5,20 @@ const Ranks = require('../Models/Ranks');
 const Account = require('../Models/Account');
 const CloudinaryUpload = require('../Helpers/Cloudinary');
 
-const getRankRequirement = async (req, res) => {
-    const { rank } = req.query;
+const getRanks = async (req, res) => {
     const { loginToken } = req.cookies;
 
     if(!loginToken) {
-        return res.json({ error: 'Access denied!'});
-    }
-
-    if(!rank) {
-        return res.json({ error: 'Rank is required.' });
+        return res.json({ error: 'Access denied!' });
     }
 
     try {
-        const rankRequirement = await Ranks.findOne({ rankName: rank });
-        if(!rankRequirement) {
-            return res.json({ error: 'Rank not found.' });
+        const rankData = await Ranks.find();
+        if(!rankData) {
+            return res.json({ error: 'Ranks are currently empty.' });
         }  
         
-        return res.json(rankRequirement);
+        return res.json(rankData)
 
     } catch (error) {
         console.error(`Fetching Rank Requirement Error: ${ error.message }`);
@@ -31,8 +26,8 @@ const getRankRequirement = async (req, res) => {
     }
 }
 
-const filterAndUploadRequirements = async (files) => {
-    const userSubmittedRequirements = Object.values(files).map(file => file?.[0]?.path)
+const filterAndUploadedRequirements = async (files) => {
+    const userSubmittedRequirements = Object.values(files).map(file => file[0].path); 
     
     const uploadPromises = userSubmittedRequirements.map(path => CloudinaryUpload(path, 'requirements', { concurrent: true }));
     const uploadResponses = await Promise.all(uploadPromises);
@@ -40,11 +35,10 @@ const filterAndUploadRequirements = async (files) => {
     return uploadResponses.map((response, i) => ({
         requirementNumber: i + 1,
         imagePath: response.secure_url,
-    }));
-};
+    }))
+}
 
 const submitApplicationEntry = async (req, res) => {
-    const start = Date.now();
     const { loginToken } = req.cookies;
     const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack } = req.body;
 
@@ -53,7 +47,7 @@ const submitApplicationEntry = async (req, res) => {
     }
 
     try {
-        const requirements = await filterAndUploadRequirements(req.files)
+        const requirements = await filterAndUploadedRequirements(req.files)
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
         await ApplicationForms.create({
             name: name,
@@ -66,8 +60,7 @@ const submitApplicationEntry = async (req, res) => {
             track: userTrack,
             requirements
         });
-        
-        console.log(`Estimated Time of Process: ${ Date.now() - start}`);
+
         return res.json({ message: 'Success'});
 
     } catch (error) {
@@ -82,7 +75,7 @@ const checkApplication = async (req, res) => {
 
     try {
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const [userInfo, userApplicationForm] = await Promise.all([
+        const [ userInfo, userApplicationForm ] = await Promise.all([
             Account.findOne({ email }),
             ApplicationForms.findById(formID)
         ]);
@@ -116,72 +109,45 @@ const checkApplication = async (req, res) => {
     }
 }
 
-
-const createPreApplication = async (req, res) => {
-    const { loginToken } = req.cookies;
-    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack } = req.body;
-
-    if(!name || !college || !department || !currentRank || !academicYear || !ApplyingFor || !userTrack) {
-        return res.json({ error: 'Required all fields.'})
-    }
+const countDeclinedApplicationRequirements = async (req, res) => {
 
     try {
-        const userSubmittedRequirements = Object.values(req.files)
-            .map((file, i) => file?.[0]?.path || null)
-            .filter(path => path !== null)
-
-        const uploadPromises = userSubmittedRequirements.map((path, i) => CloudinaryUpload(path, 'PreApplyFiles', { concurrent: true }));
-        const uploadToCloudinary = await Promise.all(uploadPromises);
-
-        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const submitted = await ApplicationForms.create({
-            name: name,
-            email: email,
-            college: college,
-            department: department,
-            currentRank: currentRank,
-            academicYear: academicYear,
-            applyingFor: ApplyingFor,
-            track: userTrack,
-            ...Object.fromEntries(uploadToCloudinary.map((response, i) => [`requirement_${i + 1}`, response.secure_url]))
-        });
-        
-        console.log(`Estimated Time of Process: ${ Date.now() - start}`);
-        return res.json(submitted);
-
-    } catch (error) {
-        console.error(`Submiiton Of Pre-Application For Re-Ranking Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-const countDeclinedApplicationRequirements = async (rankName) => {
-    try {
-        const application = await ApplicationForms({ applyingFor: rankName })
+        const application = await ApplicationForms.find()
         const declinedCount = {};
 
         application.forEach(applicationData => {
-            applicationData.requirements.forEach(requirementData => {
-                const requirementNumber = requirement.requirementNumber;
-                if(!declinedCount[requirementNumber]) {
-                    declinedCount[requirementNumber] = 0;
-                }
+            const rankName = applicationData.applyingFor;
 
+            if(!declinedCount[rankName]) {
+                declinedCount[rankName] = {}
+                declinedCount[rankName]['rankName'] = rankName
+            }
+
+            applicationData.requirements.forEach(requirementData => {
+                const requirementNumber = requirementData.requirementNumber;
+                if(!declinedCount[rankName][requirementNumber]) {
+                    declinedCount[rankName][requirementNumber] = 0;
+                }
+    
                 if(requirementData.isApproved === 'Declined') { 
-                   declinedCount[requirementNumber]++;
+                   declinedCount[rankName][requirementNumber]++;
                 }
             })
         })
+        const result = Object.values(declinedCount).map(obj => {
+            return { ...obj };
+        });
+        return res.json(result)
     }
     catch (error) {
-        console.error(`Fetching Declined Requirements Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
+        console.error(`Fetching Declined Requirements Error: ${ error }`);
     }
 }
 
 
 module.exports = {
+    getRanks,
     submitApplicationEntry,
-    getRankRequirement,
     checkApplication,
+    countDeclinedApplicationRequirements
 }

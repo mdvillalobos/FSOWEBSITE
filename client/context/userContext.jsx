@@ -7,32 +7,34 @@ export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [role, setRole] = useState();
     
+    const checkAuth = async () => {
+        try {
+            const [ getProfile, getRole ] = await Promise.all([
+                axios.get('/api/getProfile'),
+                axios.get('/api/getRole'),
+            ]);
+            setUser(getProfile.data);
+            setRole(getRole.data)
+
+
+        } catch (error) {
+            console.error(`Fetching User Information Error: ${ error.message }`);
+            setUser(null);
+            setRole(null);
+        }
+    };
+
+
     useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const [ getProfile, getRole ] = await Promise.all([
-                    axios.get('/api/getProfile'),
-                    axios.get('/api/getRole'),
-                ]);
-                setUser(getProfile.data);
-                setRole(getRole.data)
-
-
-            } catch (error) {
-                console.error(`Fetching User Information Error: ${ error.message }`);
-                setUser(null);
-                setRole(null);
-            }
-        };
-
         checkAuth();
     }, []);
 
-    /* console.log(`User: ${user}`)
-    console.log(`Role: ${role}`) */
+    const getProfileOnLogin = () => {
+        checkAuth();
+    }
 
     return (
-        <UserContext.Provider value={{ user, setUser, role, setRole }}>
+        <UserContext.Provider value={{ user, setUser, role, setRole, getProfileOnLogin }}>
             {children}
         </UserContext.Provider>
     )

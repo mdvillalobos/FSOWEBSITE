@@ -56,22 +56,6 @@ const getRole = async (req, res) => {
     }
 }
 
-const getRankList = async (req, res) => {
-    const { loginToken } = req.cookies;
-
-    try {
-        const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-
-        const userTrack = await User.findOne({ email: userEmail.email });
-
-        const rank = await Ranks.find({ track: userTrack.track });
-        return res.json(rank);
-        
-    } catch (error) {
-        console.error(`Fetching Ranklist Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
 
 const getUserReports = async (req, res) => {
     const { loginToken } = req.cookies;
@@ -201,7 +185,6 @@ const updateProfilePicture = async (req, res) => {
 module.exports = {
     getUserData,
     getRole,
-    getRankList,
     submitReport,
     getUserReports,
     updateProfile,

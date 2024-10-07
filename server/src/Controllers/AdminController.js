@@ -19,17 +19,6 @@ const getAllReports = async (req, res) => {
     }
 }
 
-const getAllRanks = async (req, res) => {
-    try {
-        const rankList = await Ranks.find();
-        return res.json(rankList);
-        
-    } catch (error) {
-        console.error(`Fetching Ranks Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!'});
-    }
-}
-
 const createRank = async (req, res) => {
     const { rankName, track, ...requirements } = req.body;
 
@@ -40,15 +29,20 @@ const createRank = async (req, res) => {
     try {
         const isRankExisting = await Ranks.findOne({ rankName: rankName, track: track });
 
-        if(isRankExisting) {
-            return res.json({ error: `Rank is already existed from ${track}` })
-        }
+        if(isRankExisting) { 
+            return res.json({ error: `Rank is already existed from ${track}` }) 
+        } 
 
-        const newRank = await Ranks.create({
-            rankName,
-            track,
-            ...requirements
-        })
+        const rankRequirements = Object.values(requirements).map((data, i) => ({
+            requirementNumber: i + 1,
+            requirement: data,
+        }))
+
+        const newRank = await Ranks.create({ 
+            rankName: rankName, 
+            track: track, 
+            requirements: rankRequirements 
+        }) 
 
         return res.json({ success: true, message: 'Rank successfully created.', data: newRank });
 
@@ -75,10 +69,10 @@ const getApplicationsForReRanking = async (req, res) => {
 
         const previousApprover = approverMapping[userData.approver];
         if(previousApprover !== undefined) {
-            const applications = await ApplicationForms.find({ prevApprover: previousApprover });
-            return res.json(applications);
+            const applications = await ApplicationForms.find({ prevApprover: previousApprover, status: 'For Approval' });
+            return res.json(applications)
         }
-
+        
         return res.json(null)
 
 
@@ -91,6 +85,5 @@ const getApplicationsForReRanking = async (req, res) => {
 module.exports = {
     getAllReports,
     createRank,
-    getAllRanks,
     getApplicationsForReRanking,
 }
