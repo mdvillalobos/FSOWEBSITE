@@ -6,7 +6,6 @@ const User = require('../Models/User');
 const EmailVerification = require('../Models/VerificationToken');
 const { sendEmailVerification } = require('../Helpers/SendEmail')
 const { hashPassword, compareHashed } = require('../Helpers/Auth');
-const { countDeclinedApplicationRequirements } = require('../Controllers/ApplicationController')
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -23,7 +22,6 @@ const login = async (req, res) => {
         }
 
         const loginToken = jwt.sign({ email: email, role: user.role }, process.env.JWT_SECRET);
-        /* countDeclinedApplicationRequirements() */
         return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully' });
 
     } catch (error) {

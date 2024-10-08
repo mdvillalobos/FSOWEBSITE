@@ -109,50 +109,108 @@ const checkApplication = async (req, res) => {
     }
 }
 
-const countDeclinedApplicationRequirements = async (req, res) => {
+const countRankIsApproved = async () => {
 
     try {
         const application = await ApplicationForms.find()
-        const declinedCount = {};
+        const dataCount = {};
 
         application.forEach(applicationData => {
             const rankName = applicationData.applyingFor;
 
-            if(!declinedCount[rankName]) {
-                declinedCount[rankName] = {}
-                declinedCount[rankName]['rankName'] = rankName
+            if(!dataCount[rankName]) {
+                dataCount[rankName] = {}
+                dataCount[rankName]['rankName'] = rankName
             }
 
             applicationData.requirements.forEach((requirementData, i) => {
-                if(!declinedCount[rankName]['requirementsCount']) {
-                    declinedCount[rankName]['requirementsCount'] = []
+                if(!dataCount[rankName]['requirementsCount']) {
+                    dataCount[rankName]['requirementsCount'] = []
                 }
 
-                if(!declinedCount[rankName]['requirementsCount'][i]) {
-                    declinedCount[rankName]['requirementsCount'][i] = {};
+                if(!dataCount[rankName]['requirementsCount'][i]) {
+                    dataCount[rankName]['requirementsCount'][i] = {};
                 }
 
-                if(!declinedCount[rankName]['requirementsCount'][i]['declined']) {
-                    declinedCount[rankName]['requirementsCount'][i]['declined'] = 0;
+                if(!dataCount[rankName]['requirementsCount'][i]['declined']) {
+                    dataCount[rankName]['requirementsCount'][i]['declined'] = 0;
                 }
 
-                if(!declinedCount[rankName]['requirementsCount'][i]['approved']) {
-                    declinedCount[rankName]['requirementsCount'][i]['approved'] = 0;
+                if(!dataCount[rankName]['requirementsCount'][i]['approved']) {
+                    dataCount[rankName]['requirementsCount'][i]['approved'] = 0;
                 }
                 
                 if(requirementData.isApproved === 'Declined') { 
-                   declinedCount[rankName]['requirementsCount'][i]['declined']++;
+                   dataCount[rankName]['requirementsCount'][i]['declined']++;
                 }
 
                 if(requirementData.isApproved === 'Approved') {
-                    declinedCount[rankName]['requirementsCount'][i]['approved']++;
+                    dataCount[rankName]['requirementsCount'][i]['approved']++;
                 }
             })
         })
-        const result = Object.values(declinedCount).map(obj => {
+        const result = Object.values(dataCount).map(obj => {
             return { ...obj };
         });
-        return res.json(result)
+        return result
+    }
+    catch (error) {
+        console.error(`Fetching Data Analytics isApproved Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
+    }
+}
+
+const countApplicationStatus = async () => {
+    try {
+        const application = await ApplicationForms.find()
+        const dataCount = {};
+
+        application.forEach(applicationData => {
+
+            if(!dataCount['count']) {
+                dataCount['count'] = []
+            }
+
+            if(!dataCount['count']['approved']) {
+                dataCount['count']['approved'] = 0;
+            }
+
+            if(applicationData.status === 'Approved') {
+                dataCount['count']['approved']++;
+            }
+
+            if(!dataCount['count']['declined']) {
+                dataCount['count']['declined'] = 0;
+            }
+            
+            if(applicationData.status === 'Declined') {
+                dataCount['count']['declined']++;
+            }
+        })
+
+        const result = Object.values(dataCount).map(obj => {
+            return { ...obj };
+        });
+        return result
+
+    }
+    catch (error) {
+        console.error(`Fetching Data Analytics For Status Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
+    }
+}
+
+const count = async (req ,res) => {
+    try {
+        const [ isApprovedCount, statusCount ] = await Promise.all([
+            countRankIsApproved(),
+            countApplicationStatus()
+        ])
+
+        console.log(isApprovedCount) 
+        console.log(statusCount)
+
+        return res.json({ isApprovedCount: isApprovedCount, statusCount: statusCount})
     }
     catch (error) {
         console.error(`Fetching Data Analytics Error: ${ error.message }`);
@@ -165,5 +223,5 @@ module.exports = {
     getRanks,
     submitApplicationEntry,
     checkApplication,
-    countDeclinedApplicationRequirements
+    count
 }

@@ -4,16 +4,19 @@ import axios from 'axios';
 export const AnalyticsContext = createContext({});
 
 export const AnalyticsContextProvider = ({ children }) => {
-    const [ analyticsData, setAnalyticsData ] = useState();
+    const [ isApprovedData, setIsApprovedData ] = useState();
+    const [ statusData, setStatusData ] = useState();
     
     const getDataAnalytics = async () => {
         try {
             const response = await axios.get('/api/getDataAnalytics');
-            setAnalyticsData(response.data)
+            setIsApprovedData(response.data.isApprovedCount);
+            setStatusData(response.data.statusCount);
         }
 
         catch {
-            setAnalyticsData(null);
+            setIsApprovedData(null);
+            setStatusData(null);
             console.error(`Fetching Ranks Error: ${ error.message }`);
         }
     };
@@ -27,7 +30,7 @@ export const AnalyticsContextProvider = ({ children }) => {
     }
 
     return (
-        <AnalyticsContext.Provider value={{ analyticsData, setAnalyticsData, getDataOnLogin }}>
+        <AnalyticsContext.Provider value={{ isApprovedData, statusData, setIsApprovedData, setStatusData, getDataOnLogin }}>
             {children}
         </AnalyticsContext.Provider>
     )

@@ -9,12 +9,19 @@ import ReactMarkdown from 'react-markdown';
 
 const DashboardGraph = () => {
   const { ranks } = useContext(RankContext);
-  const { analyticsData } = useContext(AnalyticsContext);
+  const { isApprovedData, statusData } = useContext(AnalyticsContext);
   const [ selected, setSelected ] = useState('Instructor 1');
   const [ isOpen, setIsOpen ] = useState(false);
 
-  const toDisplayData = analyticsData?.find(rankName => rankName.rankName === selected);
+  const toDisplayData = isApprovedData?.find(rankName => rankName.rankName === selected);
   const rankRequirements = ranks?.find(requirement => requirement.rankName === selected);
+
+  const pieData = statusData ? statusData.map(data => ({
+    approved: data.approved,
+    declined: data.declined
+  })) : []
+
+  console.log(pieData)
 
   const chartData = toDisplayData 
     ? toDisplayData.requirementsCount.map((data, index) => ({

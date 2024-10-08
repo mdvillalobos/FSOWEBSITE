@@ -4,7 +4,7 @@ const router = Router();
 const { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP} = require('../Controllers/AuthController');
 const { getUserData, getRole, updateProfile, submitReport, getUserReports, changePassword, updateProfilePicture } = require('../Controllers/UserController');
 const { getAllReports, createRank, getApplicationsForReRanking} = require('../Controllers/AdminController');
-const { submitApplicationEntry, getRanks, checkApplication , countDeclinedApplicationRequirements } = require('../Controllers/ApplicationController');
+const { submitApplicationEntry, getRanks, checkApplication , count} = require('../Controllers/ApplicationController');
 
 //middleware functionalities
 const { authorizationMiddleware } = require('../Middleware/authorizationMiddleware');
@@ -31,7 +31,7 @@ router.post('/api/updateprofile', updateProfile);
 router.post('/api/changepassword', changePassword);
 
 //user
-router.post('/api/updateProfile', updateProfilePicture)
+router.post('/api/updateProfilePicture', upload.single('profilePicture'), updateProfilePicture)
 router.post('/api/submitreport', authorizationMiddleware('faculty'), submitReport);
 router.get('/api/getreport', authorizationMiddleware('faculty'), getUserReports);
 router.get('/api/getProfile', getUserData);
@@ -43,7 +43,7 @@ router.get('/api/getAllReports', authorizationMiddleware('director'), getAllRepo
 router.get('/api/getApplications', authorizationMiddleware('director'), getApplicationsForReRanking);
 router.post('/api/createRank', authorizationMiddleware('director'), createRank);
 router.post('/api/checkApplication', authorizationMiddleware('director'), checkApplication);
-router.get('/api/getDataAnalytics', authorizationMiddleware('director'), countDeclinedApplicationRequirements);
+router.get('/api/getDataAnalytics', authorizationMiddleware('director'), count);
 
 //Application for re-ranking
 const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 
