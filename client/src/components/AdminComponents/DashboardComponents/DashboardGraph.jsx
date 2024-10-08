@@ -82,7 +82,7 @@ const DashboardGraph = () => {
           >
             <CartesianGrid vertical={false} stroke="#ECECEC" />
             <XAxis dataKey='requirementNumber' stroke="none" tick={{ fill: '#6a6a6a', dy: 5, }} />
-            <YAxis tickFormatter={(value) => Math.round(value)} domain={[0, 'dataMax + 3']} stroke="none" tick={{ fill: '#6a6a6a' }}  />
+            <YAxis tickFormatter={(tick) => (tick % 1 === 0 ? tick : '')} domain={[0, 'dataMax + 1']} stroke="none" tick={{ fill: '#6a6a6a' }}  />
             <Tooltip content={<CustomTooltip />} /* position={{ x: 170, y: 0 }} */ />
             <Bar dataKey="approved" fill="#293241" radius={[ 5, 5, 5, 5 ]} />
             <Bar dataKey="declined" fill="#ee6c4d" radius={[ 5, 5, 5, 5 ]} />

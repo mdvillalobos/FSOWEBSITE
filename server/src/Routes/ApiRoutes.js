@@ -2,7 +2,7 @@ const Router = require('express');
 const router = Router();
 
 const { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP} = require('../Controllers/AuthController');
-const { getUserData, getRole, updateProfile, submitReport, getUserReports, changePassword} = require('../Controllers/UserController');
+const { getUserData, getRole, updateProfile, submitReport, getUserReports, changePassword, updateProfilePicture } = require('../Controllers/UserController');
 const { getAllReports, createRank, getApplicationsForReRanking} = require('../Controllers/AdminController');
 const { submitApplicationEntry, getRanks, checkApplication , countDeclinedApplicationRequirements } = require('../Controllers/ApplicationController');
 
@@ -31,6 +31,7 @@ router.post('/api/updateprofile', updateProfile);
 router.post('/api/changepassword', changePassword);
 
 //user
+router.post('/api/updateProfile', updateProfilePicture)
 router.post('/api/submitreport', authorizationMiddleware('faculty'), submitReport);
 router.get('/api/getreport', authorizationMiddleware('faculty'), getUserReports);
 router.get('/api/getProfile', getUserData);

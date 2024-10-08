@@ -198,4 +198,5 @@ module.exports = {
     getUserReports,
     updateProfile,
     changePassword,
+    updateProfilePicture
 }
