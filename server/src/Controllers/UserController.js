@@ -21,7 +21,7 @@ const getUserData = async (req, res) => {
 
         if (userCredentials) {
             const userData = userCredentials.toObject()
-            return res.json(userData);
+            return res.json({ user: userData });
         }
 
         return res.json('No data found'); 

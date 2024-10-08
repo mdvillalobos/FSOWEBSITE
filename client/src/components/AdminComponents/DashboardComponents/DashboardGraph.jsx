@@ -3,8 +3,8 @@ import { RankContext } from '../../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../../context/analyticsContext.jsx';
 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid  } from 'recharts';
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { RiArrowDropUpLine } from "react-icons/ri";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";
 import ReactMarkdown from 'react-markdown';
 
 const DashboardGraph = () => {
@@ -51,12 +51,12 @@ const DashboardGraph = () => {
       <div className="flex justify-between z-10 mx-10 mb-2">
         <p className='text-3xl font-medium'>Analytics</p>
         <div className="relative">
-          <button  className="relative flex justify-center border-2 py-2 px-2 w-48 text-sm rounded-md" onClick={() => setIsOpen(!isOpen)}>
+          <button  className="relative flex justify-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium" onClick={() => setIsOpen(!isOpen)}>
             {selected}
             {!isOpen ? (
-              <RiArrowDropDownLine size={'1.5rem'} className='absolute right-0 top-1.5'/>
+              <TiArrowSortedDown size={'1.1rem'} className='absolute right-1 top-[9px]'/>
             ) : (
-              <RiArrowDropUpLine size={'1.5rem'} className='absolute right-0 top-1.5'/>
+              <TiArrowSortedUp size={'1.1rem'} className='absolute right-1 top-[9px]'/>
             )}
           </button>
           {isOpen && (
