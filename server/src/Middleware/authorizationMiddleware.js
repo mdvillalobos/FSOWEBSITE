@@ -12,7 +12,7 @@ const authorizationMiddleware = (userRole) => {
             return next();
         }
 
-        return res.json({ error: "Access Denied!." })
+        return res.json({ error: "Access Denied!.", data: null})
         
     }
 }

@@ -118,7 +118,7 @@ const RankModal = (props) => {
             />
 
             <div className="flex mt-4">
-              <input type="submit" value="Submit" className='py-3 px-10 text-sm bg-[#4b538f] text-white hover:bg-[#5d69c6] duration-300 rounded-lg cursor-pointer shadow-lg hover:shadow-lg w-full'/>
+              <input type="submit" value="Submit" className='py-3 px-10 text-sm bg-[#41518d] text-white hover:bg-[#5d69c6] duration-300 rounded-lg cursor-pointer shadow-lg hover:shadow-lg w-full'/>
             </div>
           </form>
         </div>

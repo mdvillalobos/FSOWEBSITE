@@ -49,11 +49,11 @@ const loginForm = () => {
                 </div>
         
                 <div className="flex flex-col font-Poppins">
-                    <Link to="/forgotpassword" className='flex self-end text-sm mb-4 text-blue-900 font-medium hover:underline max-[396px]:text-[0.8rem] max-[396px]:mt-2'>Forgot Password?</Link>
+                    <Link to="/forgotpassword" className='flex self-end text-sm mb-4 text-[#41518d] font-medium hover:underline max-[396px]:text-[0.8rem] max-[396px]:mt-2'>Forgot Password?</Link>
                     <input type="submit" value="Login" className='formBtn'/>
-                    <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem]">
+                    <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] space-x-1.5" >
                         <p className='r-2 max-[396px]:mr-0'>Dont Have Account?</p> 
-                        <Link to="/register" className="no-underline text-blue-900 font-medium hover:underline">Create an Account</Link>
+                        <Link to="/register" className="no-underline text-[#41518d] font-medium hover:underline">Create an Account</Link>
                     </span>
                 </div>
             </form>

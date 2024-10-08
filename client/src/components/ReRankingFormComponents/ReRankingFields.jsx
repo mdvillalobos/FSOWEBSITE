@@ -1,10 +1,11 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown';
 
 const ReRankingFields = ({requirement, setData}) => {
     return (
         <div>
             <div className="w-full flex justify-between border-b-2 border-[#35408E] py-5">
-                <p className='text-[0.9rem]  w-[33vw]'>{requirement}</p>
+                <ReactMarkdown className='text-[0.9rem] w-[33vw]'>{requirement}</ReactMarkdown>
                 <div>
                     <div className="inputContainer">
                         <p className='text-sm font-normal'>Attached Image:</p>

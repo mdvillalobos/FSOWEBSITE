@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RankContext } from '../../../../context/rankContext';
 import { UserContext } from '../../../../context/userContext';
+import ReactMarkdown from 'react-markdown';
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();
@@ -34,14 +35,17 @@ const Requirements = ({ from }) => {
             <p>No Available Rank</p>
           )}
         </select>
-
         <input type="submit" value='submit' className='py-2 px-6 my-4 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer'/>
       </form>
 
       <div className="bg-white text-black p-4">
-        {selectedRank.requirements.map((requirement, i) => (
-          <li key={requirement._id} className='requirements'>{requirement.requirement}</li>
-        ))}
+        {selectedRank? (
+          selectedRank.requirements.map((requirement, i) => (
+            <ReactMarkdown key={requirement._id} className='font-Poppins mb-2'>{`&#8211; ${String(requirement.requirement)}`}</ReactMarkdown>
+          ))
+        ): (
+          <p>No data</p>
+        )}
       </div>
     </div>
   )

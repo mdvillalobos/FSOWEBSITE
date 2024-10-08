@@ -26,7 +26,7 @@ const header = ({location}) => {
       <div className='flex space-x-6'>
           <div className="flex my-auto mx-0 after:border-r-2 after:ml-5">
             <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>
-            <div className="text-[#4b538f] font-semibold font-Poppins max-[396px]:hidden">
+            <div className="text-[#41518d] font-semibold font-Poppins max-[396px]:hidden">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
             </div>
@@ -35,7 +35,7 @@ const header = ({location}) => {
       </div>
 
 
-      <div className="flex border-l-2 before:mr-5">
+      <div className="flex border-l-2 before:mr-5 z-20">
         <div className="relative duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center '>
             {!!user && user.gender === 'Male' ? (

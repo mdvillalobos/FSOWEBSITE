@@ -4,7 +4,7 @@ import axios from "axios";
 export const RankContext = createContext({});
 
 export const RankContextProvider = ({ children }) => {
-    const [ ranks, setRanks ] = useState([]);
+    const [ ranks, setRanks ] = useState(null);
     
     const getRank = async () => {
         await axios.get('/api/getAllRank')

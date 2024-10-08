@@ -132,14 +132,20 @@ const countDeclinedApplicationRequirements = async (req, res) => {
                     declinedCount[rankName]['requirementsCount'][i] = {};
                 }
 
-                if(!declinedCount[rankName]['requirementsCount'][i]['total']) {
-                    declinedCount[rankName]['requirementsCount'][i]['total'] = 0;
+                if(!declinedCount[rankName]['requirementsCount'][i]['declined']) {
+                    declinedCount[rankName]['requirementsCount'][i]['declined'] = 0;
                 }
 
+                if(!declinedCount[rankName]['requirementsCount'][i]['approved']) {
+                    declinedCount[rankName]['requirementsCount'][i]['approved'] = 0;
+                }
                 
-    
                 if(requirementData.isApproved === 'Declined') { 
-                   declinedCount[rankName]['requirementsCount'][i]['total']++;
+                   declinedCount[rankName]['requirementsCount'][i]['declined']++;
+                }
+
+                if(requirementData.isApproved === 'Approved') {
+                    declinedCount[rankName]['requirementsCount'][i]['approved']++;
                 }
             })
         })
@@ -149,7 +155,8 @@ const countDeclinedApplicationRequirements = async (req, res) => {
         return res.json(result)
     }
     catch (error) {
-        console.error(`Fetching Declined Requirements Error: ${ error }`);
+        console.error(`Fetching Data Analytics Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
 }
 

@@ -66,9 +66,9 @@ const registrationForm = () => {
 
                 <div className="flex flex-col">
                     <input type="submit" value="Register" className='formBtn'/>
-                    <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem]    ">
+                    <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] space-x-1.5">
                         <p className='mr-2 font-Poppins'>Already Have An Account?</p>
-                        <Link to="/" className="no-underline text-blue-900 font-medium font-Poppins hover:underline">Login</Link>
+                        <Link to="/" className="no-underline text-[#41518d] font-medium font-Poppins hover:underline">Login</Link>
                     </span>
                 </div>
             </form>
