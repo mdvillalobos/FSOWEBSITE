@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const ApplicationForms = require('../Models/ApplicationForms');
 const Ranks = require('../Models/Ranks');
 const Account = require('../Models/Account');
-const CloudinaryUpload = require('../Helpers/Cloudinary');
+const { uploadImageToCloudinary } = require('../Helpers/Cloudinary');
 
 const getRanks = async (req, res) => {
     const { loginToken } = req.cookies;
@@ -29,12 +29,12 @@ const getRanks = async (req, res) => {
 const filterAndUploadedRequirements = async (files) => {
     const userSubmittedRequirements = Object.values(files).map(file => file[0].path); 
     
-    const uploadPromises = userSubmittedRequirements.map(path => CloudinaryUpload(path, 'requirements', { concurrent: true }));
+    const uploadPromises = userSubmittedRequirements.map(path => uploadImageToCloudinary(path, 'requirements', { concurrent: true }));
     const uploadResponses = await Promise.all(uploadPromises);
     
     return uploadResponses.map((response, i) => ({
         requirementNumber: i + 1,
-        imagePath: response.secure_url,
+        imagePath: response,
     }))
 }
 

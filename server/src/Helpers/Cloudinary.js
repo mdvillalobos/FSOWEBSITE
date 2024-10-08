@@ -11,10 +11,15 @@ cloudinary.config({
 
 const uploadImageToCloudinary = async (filePath, folderName) => {
     try {
-        return await cloudinary.uploader.upload(filePath, {
-            folder: folderName
-        });
+        if(filePath) {
+            const upload = await cloudinary.uploader.upload(filePath, {
+                folder: folderName
+            });
 
+            return upload.secure_url
+        }
+
+        return null;
     }
 
     catch(error) {
@@ -22,4 +27,21 @@ const uploadImageToCloudinary = async (filePath, folderName) => {
     }
 }
 
-module.exports = uploadImageToCloudinary
+
+const DestroyImageInCloudinary = async (secureURL) => {
+    try {
+        if(secureURL) {
+            const publicID = secureURL.split('/').join().split('.')[0];
+            return await cloudinary.uploader.destroy(publicID)
+        }
+
+        return null;
+    } catch (error) {
+        console.log(`Deleting Image From Cloudinary Error: ${ error.message }`);
+    }
+}
+
+module.exports = {
+    uploadImageToCloudinary, 
+    DestroyImageInCloudinary
+}

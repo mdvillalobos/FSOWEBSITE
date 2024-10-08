@@ -2,10 +2,9 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const Account = require('../Models/Account');
-const Ranks = require('../Models/Ranks');
 const User = require('../Models/User');
 const Reports = require('../Models/Reports');
-
+const { CloudinaryUpload, DestroyImageInCloudinary } = require('../Helpers/Cloudinary');
 const { hashPassword, compareHashed } = require('../Helpers/Auth');
 
 const getUserData = async (req, res) => {
@@ -171,13 +170,23 @@ const updateProfilePicture = async (req, res) => {
 
     try {
         const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-        await User.updateOne({ email: userEmail.email }, {$set: { profilePicture: req.files['profilePicture'][0].path }})
+        const uploadedPicture = req.file['profilePicture'] ? req.file['profilePicture'].path : null;
+        const userData = await User.findOne({ email: userEmail.email });
 
-        return res.json('Profile Picture Successfully Changed');
+        const [ deleteFromCloudinary, uploadToCloudinary ] = await Promise.all([
+            DestroyImageInCloudinary(userData.profilePicture),
+            CloudinaryUpload(uploadedPicture, 'profilepictures'),
+        ])
+
+        profilePicture = uploadToCloudinary;
+        await userData.save();
+        return res.json({ message: 'Profile Picture Successfully Changed' });
+
     }
 
-    catch(e) {
-        console.error(`Update Profile Picture Error: ${ error.message}`);
+    catch(error) {
+        console.error(`Update Profile Picture Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
