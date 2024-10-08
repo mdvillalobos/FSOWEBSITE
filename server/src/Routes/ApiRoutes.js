@@ -42,7 +42,7 @@ router.get('/api/getAllReports', authorizationMiddleware('director'), getAllRepo
 router.get('/api/getApplications', authorizationMiddleware('director'), getApplicationsForReRanking);
 router.post('/api/createRank', authorizationMiddleware('director'), createRank);
 router.post('/api/checkApplication', authorizationMiddleware('director'), checkApplication);
-router.get('/api/getDataAnalytics', countDeclinedApplicationRequirements);
+router.get('/api/getDataAnalytics', authorizationMiddleware('director'), countDeclinedApplicationRequirements);
 
 //Application for re-ranking
 const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 

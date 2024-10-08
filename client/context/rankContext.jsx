@@ -20,8 +20,6 @@ export const RankContextProvider = ({ children }) => {
         getRank();
     };
 
-    console.log(ranks)
-
     return (
         <RankContext.Provider value={{ ranks, setRanks, fetchRanksOnLogin}}>
             {children}

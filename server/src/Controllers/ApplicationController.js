@@ -123,14 +123,23 @@ const countDeclinedApplicationRequirements = async (req, res) => {
                 declinedCount[rankName]['rankName'] = rankName
             }
 
-            applicationData.requirements.forEach(requirementData => {
-                const requirementNumber = requirementData.requirementNumber;
-                if(!declinedCount[rankName][requirementNumber]) {
-                    declinedCount[rankName][requirementNumber] = 0;
+            applicationData.requirements.forEach((requirementData, i) => {
+                if(!declinedCount[rankName]['requirementsCount']) {
+                    declinedCount[rankName]['requirementsCount'] = []
                 }
+
+                if(!declinedCount[rankName]['requirementsCount'][i]) {
+                    declinedCount[rankName]['requirementsCount'][i] = {};
+                }
+
+                if(!declinedCount[rankName]['requirementsCount'][i]['total']) {
+                    declinedCount[rankName]['requirementsCount'][i]['total'] = 0;
+                }
+
+                
     
                 if(requirementData.isApproved === 'Declined') { 
-                   declinedCount[rankName][requirementNumber]++;
+                   declinedCount[rankName]['requirementsCount'][i]['total']++;
                 }
             })
         })

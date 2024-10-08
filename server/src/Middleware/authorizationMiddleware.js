@@ -7,7 +7,7 @@ const authorizationMiddleware = (userRole) => {
         if(loginToken) {
             const decodeToken = jwt.verify(loginToken, process.env.JWT_SECRET);
             if(decodeToken.role != userRole) { 
-                return res.status(403).json({ error: "Permission Denied!" })
+                return res.json({ error: "Permission Denied!" })
             }
             return next();
         }

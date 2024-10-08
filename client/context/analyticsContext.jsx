@@ -21,7 +21,7 @@ export const AnalyticsContextProvider = ({ children }) => {
     const getDataOnLogin = () => {
         getDataAnalytics();
     }
-    
+
     return (
         <AnalyticsContext.Provider value={{ analyticsData, setAnalyticsData, getDataOnLogin }}>
             {children}
