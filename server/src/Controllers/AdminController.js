@@ -5,7 +5,6 @@ const User = require('../Models/User');
 const Reports = require('../Models/Reports');
 const Ranks = require('../Models/Ranks');
 const ApplicationForms = require('../Models/ApplicationForms');
-const { hashPassword, comparePassword } = require('../Helpers/Auth');
 
 const getAllReports = async (req, res) => {
     try {
@@ -13,6 +12,18 @@ const getAllReports = async (req, res) => {
         return res.json(reports);
     }
 
+    catch (error) {
+        console.error(`Fetching Reports Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
+    }
+}
+
+const getAllApprovers = async (req, res) => {
+    try {
+        const approvers = await User.find({ approver: { $ne: null }}, { email: 1, _id: 1, approver: 1, lastName: 1, firstName: 1, profilePicture: 1, sex: 1 }).sort({ approver: 1})
+        console.log(approvers)
+        return res.json(approvers)
+    }
     catch (error) {
         console.error(`Fetching Reports Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!'});
@@ -58,13 +69,13 @@ const getApplicationsForReRanking = async (req, res) => {
     const { loginToken } = req.cookies;
     try {
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userData = await Account.findOne({ email: email });
+        const userData = await User.findOne({ email: email });
 
         const approverMapping = {
-            'Approver1': null,
-            'Approver2': 'Approver1',
-            'Approver3': 'Approver2',
-            'Approver4': 'Approver3'
+            'Approver 1': null,
+            'Approver 2': 'Approver 1',
+            'Approver 3': 'Approver 2',
+            'Approver 4': 'Approver 3'
         };
 
         const previousApprover = approverMapping[userData.approver];
@@ -84,6 +95,7 @@ const getApplicationsForReRanking = async (req, res) => {
 
 module.exports = {
     getAllReports,
+    getAllApprovers,
     createRank,
     getApplicationsForReRanking,
 }

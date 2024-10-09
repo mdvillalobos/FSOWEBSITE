@@ -2,11 +2,11 @@ import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/userContext.jsx';
-import { RankContext } from '../../../context/rankContext.jsx';
+import { ApplicationContext } from '../../../context/applicationContext.jsx';
 import { AnalyticsContext } from '../../../context/analyticsContext.jsx';
 
 const useLogin = () => {
-    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { fetchRanksOnLogin } = useContext(ApplicationContext);
     const { getDataOnLogin } = useContext(AnalyticsContext);
     const { getProfileOnLogin } = useContext(UserContext);
     const { Toast, LoadingToast } = useToast();

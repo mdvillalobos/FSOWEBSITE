@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown';
 
-const ReRankingFields = ({requirement, setData}) => {
+const ReRankingFields = ({ requirement, setData }) => {
     return (
         <div>
             <div className="w-full flex justify-between border-b-2 border-[#35408E] py-5">

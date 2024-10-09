@@ -1,25 +1,85 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import maleProfile from '../../../assets/images/male.webp';
+import femaleProfile from '../../../assets/images/female.webp';
+import { HiDotsHorizontal } from "react-icons/hi";
+import { FiEdit } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
+import ConfigImage from '../../../assets/images/config.png';
 
 const Config = () => {
+    const [ data, setData ] = useState();
+    const [ isOpen, setIsOpen ] = useState({})
+    const [ isChecked, setIsChecked ] = useState(false)
+
+    useEffect(() => {
+        axios.get('/api/getAllApprovers')
+        .then(res => setData(res.data))
+        .catch(error => console.error(`Error Fetching Approvers In Front End: ${ error.message }`))
+    }, [])
+
     return (
-        <div className="bg-white px-6 py-5 rounded-xl shadow-md font-Poppins w-[20vw]">
-            <p className='text-xl font-medium mb-4'>Application Approvers</p>
-            <div className="mt-5 space-y-0.5 border-b-2 text-sm">
-                <p>Approver 1</p>
-                <p>Mc Stalin Villalobos</p>
+        <div className='flex flex-col justify-between h-full'>
+            <div className="space-y-10">
+                <div>
+                    <p className='text-xl font-semibold mb-4'>APPROVERS</p>
+                    {data ?
+                        data?.map(approver => {
+                            if(approver.profilePicture === null) {
+                                if(approver.sex === 'Male') {
+                                    approver.profilePicture = maleProfile
+                                }
+                                else {
+                                    approver.profilePicture = femaleProfile
+                                }
+                            }
+                            return <div key={approver._id}className="flex justify-between mt-6">
+                                <div className="flex space-x-2">
+                                    <div className="w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center my-auto">
+                                        <img src={approver.profilePicture} alt={`${approver.lastName} Profile Picture`} className='w-full h-auto object-cover'/>
+                                    </div>
+                                    <div className="text-xs">
+                                        <p>{approver.firstName} {approver.lastName}</p>
+                                        <p className='text-gray-500'>{approver.approver}</p>
+                                    </div>
+                                </div>
+                                <div className="relative">
+                                    <button className='my-auto' onClick={() => setIsOpen(prev => ({...prev, [approver._id]: !prev[approver._id]}))}><HiDotsHorizontal/></button>
+                                    {isOpen[approver._id] && (
+                                        <div className='absolute right-0 bg-NuBlue rounded-xl p-4 text-sm space-y-2 z-10'>
+                                            <button className='flex'><FiEdit className='mr-1.5 my-auto'/> Edit </button>
+                                            <button className='flex'><MdOutlineDelete className='mr-1.5 my-auto'/> Delete </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        })     
+                        : (
+                            <p>No Data</p>
+                        )
+                    }
+                </div>
+
+                <div>
+                    <p className='text-xl font-semibold mb-4'>CONFIGURATION</p>
+                    <div className="space-y-4">
+                        <div className="flex text-sm justify-between">
+                            <p>Academic Yr. </p>
+                            <p>2022-2024</p>
+                        </div>
+                        <div className="flex text-sm justify-between">
+                            <p>Application For <br/> Re-Ranking</p>
+                            <label htmlFor="check" className='bg-gray-400 w-14 h-7 rounded-full relative cursor-pointer my-auto'>
+                                <input type="checkbox" id='check' className='sr-only peer' onChange={(e)=> setIsChecked(!isChecked)}/>
+                                <span className='w-2/5 h-4/5 bg-[#41518d] absolute rounded-full left-[3px] top-[2.9px] peer-checked:bg-rose-600 peer-checked:left-[30px] transition-all duration-500'></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="mt-5 space-y-0.5 border-b-2 text-sm">
-                <p className='text-md'>Approver 2</p>
-                <p>Mc Stalin Villalobos</p>
-            </div>
-            <div className="mt-5 space-y-0.5 border-b-2 text-sm">
-                <p className='text-md'>Approver 3</p>
-                <p>Mc Stalin Villalobos</p>
-            </div>
-            <div className="mt-5 space-y-0.5 border-b-2 text-sm">
-                <p className='text-md'>Approver 4</p>
-                <p>Mc Stalin Villalobos</p>
-            </div>
+
+            <img src={ConfigImage} alt="" />
+    
         </div>
     )
 }

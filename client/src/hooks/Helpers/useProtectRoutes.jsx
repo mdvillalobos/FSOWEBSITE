@@ -12,7 +12,7 @@ const useProtectRoutes = () => {
     }
 
     const AuthPageProtection = () => {
-        return user === null ? <Outlet/> : <>{role === 'faculty' ? <Navigate to='/home'/> : <>{role === 'director' && <Navigate to='/admin/home'/> }</>}</>
+        return user === null ? <Outlet/> : <>{role === 'user' ? <Navigate to='/home'/> : <>{role === 'admin' && <Navigate to='/admin/home'/> }</>}</>
     }
 
 

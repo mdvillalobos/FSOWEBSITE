@@ -10,12 +10,8 @@ const AccountSchema = new Schema ({
     password: String,
     role: {
         type: String,
-        default: 'faculty'
+        default: 'user'
     },
-    approver: {
-        type: String,
-        default: 'none'
-    }
 })
 
 const AccountModel = mongoose.model('accounts', AccountSchema)

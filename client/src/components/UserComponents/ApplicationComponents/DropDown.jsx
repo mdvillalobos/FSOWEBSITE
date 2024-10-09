@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RankContext } from '../../../../context/rankContext';
+import { ApplicationContext } from '../../../../context/applicationContext';
 import { UserContext } from '../../../../context/userContext';
 import ReactMarkdown from 'react-markdown';
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();
   const [ selected, setSelected ] = useState('Instructor 1');
-  const { ranks } = useContext(RankContext);
+  const { ranks } = useContext(ApplicationContext);
   const { user } = useContext(UserContext);
 
   const availableRank = ranks.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);

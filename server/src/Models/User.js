@@ -3,6 +3,10 @@ const { Schema } = mongoose
 
 const UserSchema = new Schema({
     employeeID: String,
+    approver: {
+        type: String,
+        default: null
+    },
     email: {
         type: String,
         unique: true
@@ -10,7 +14,7 @@ const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     middleName: String,
-    gender: String,
+    sex: String,
     track: String,
     rank: String,
     position: String,

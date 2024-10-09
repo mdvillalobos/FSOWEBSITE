@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { RankContext } from '../../../../context/rankContext.jsx'
-import axios from 'axios'
+import React, { useState, useContext } from 'react'
+import { ApplicationContext } from '../../../../context/applicationContext.jsx'
 import { FocusOn } from 'react-focus-on'
 import ApplicationMaster from './ViewFormComponents/UserDetails.jsx'
 import ViewImage from './ViewFormComponents/ViewImage.jsx';
@@ -8,7 +7,7 @@ import ApplicationInput from './ViewFormComponents/ApplicationInputs.jsx';
 import useSubmitReview from '../../../hooks/AdminHooks/useSubmitReview.jsx';
 
 const ViewApplicationForm = ({ rest }) => {
-    const { ranks } = useContext(RankContext);
+    const { ranks } = useContext(ApplicationContext);
     const { submitReview } = useSubmitReview();
     const [ showImage, setShowImage ] = useState({
         show: false,

@@ -167,31 +167,24 @@ const countApplicationStatus = async () => {
 
         application.forEach(applicationData => {
 
-            if(!dataCount['count']) {
-                dataCount['count'] = []
-            }
-
-            if(!dataCount['count']['approved']) {
-                dataCount['count']['approved'] = 0;
+            if(!dataCount['approved']) {
+                dataCount['approved'] = 0;
             }
 
             if(applicationData.status === 'Approved') {
-                dataCount['count']['approved']++;
+                dataCount['approved']++;
             }
 
-            if(!dataCount['count']['declined']) {
-                dataCount['count']['declined'] = 0;
+            if(!dataCount['declined']) {
+                dataCount['declined'] = 0;
             }
             
             if(applicationData.status === 'Declined') {
-                dataCount['count']['declined']++;
+                dataCount['declined']++;
             }
         })
 
-        const result = Object.values(dataCount).map(obj => {
-            return { ...obj };
-        });
-        return result
+        return dataCount
 
     }
     catch (error) {
@@ -206,9 +199,6 @@ const count = async (req ,res) => {
             countRankIsApproved(),
             countApplicationStatus()
         ])
-
-        console.log(isApprovedCount) 
-        console.log(statusCount)
 
         return res.json({ isApprovedCount: isApprovedCount, statusCount: statusCount})
     }

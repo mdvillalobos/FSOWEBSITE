@@ -58,7 +58,7 @@ function App() {
       </Route>
 
       {/* User */}
-      <Route element={<PageRouteProtection providedRole={'faculty'}/>}>
+      <Route element={<PageRouteProtection providedRole={'user'}/>}>
         <Route exact path="/home" element={ <Home/> }/>
         <Route exact path="/profile" element={ <Profile/> }/>
         <Route exact path="/report" element={ <Report/> }/>
@@ -72,7 +72,7 @@ function App() {
       </Route>
       
       {/* admin */}
-      <Route element={<PageRouteProtection providedRole={'director'}/>}>
+      <Route element={<PageRouteProtection providedRole={'admin'}/>}>
       <Route exact path="/admin/" element={ <AdminHome/> }/>
         <Route exact path="/admin/home" element={ <AdminHome/> }/>
         <Route exact path="/admin/profile" element={ <AdminProfile/> }/>

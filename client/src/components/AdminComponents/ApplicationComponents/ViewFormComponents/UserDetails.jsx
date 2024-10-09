@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ApplicationMaster = ({name, college, department, currentRank, status, academicYear}) => {
+const ApplicationMaster = ({ name, college, department, currentRank, status, academicYear }) => {
     return (
         <div className='border-t-2 border-b-2 border-[#35408E] py-4'>
             <h1 className='text-base font-semibold text-[#35408E] mb-5'>Personal Information</h1>

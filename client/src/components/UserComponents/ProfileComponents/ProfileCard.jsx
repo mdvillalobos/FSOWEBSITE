@@ -22,7 +22,7 @@ const ProfileCard = () => {
             </div>
             <div className="px-2.5 ">
               <h1 className='text-base font-medium mt-6 text-center w-[288px]'>{user.firstName} {user.lastName}</h1>
-              <p className='mx-auto w-[180px] text-center text-white py-1.5 font-medium rounded-lg text-sm mt-2 bg-[#35408e]'>Faculty Service Office</p>
+              <p className='mx-auto w-[180px] text-center text-white py-1.5 font-medium rounded-lg text-sm mt-2 bg-[#41518d]'>Faculty Service Office</p>
             </div>
         </div>
 
