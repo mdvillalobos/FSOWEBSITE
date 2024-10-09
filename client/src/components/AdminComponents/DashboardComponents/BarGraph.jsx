@@ -31,12 +31,12 @@ const DashboardGraph = () => {
       const { rankName, requirement, declined, approved } = payload[0].payload;
       return (
         <div className="custom-tooltip">
-          <div className="bg-[#41518d] w-[33vw] px-5 p-4 text-sm space-y-1.5 rounded-lg text-white">
-            <p className='font-medium border-b-2'>{rankName}</p>
+          <div className="bg-gray-200 w-[33vw] px-5 p-4 text-sm space-y-1.5 rounded-lg" >
+            <p>{rankName}</p>
             <ReactMarkdown >{requirement}</ReactMarkdown>
             <div>
-              <p>Approved: {approved}</p>
-              <p>Declined: {declined}</p>
+              <p className="font-medium">Approved: {approved}</p>
+              <p className="font-medium">Declined: {declined}</p>
             </div>
           </div>
         </div>
@@ -51,12 +51,12 @@ const DashboardGraph = () => {
       <div className="flex justify-between z-10 mx-7 mb-2">
         <p className='text-3xl font-medium'>Analytics</p>
         <div className="relative">
-          <button  className="relative flex justify-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium" onClick={() => setIsOpen(!isOpen)}>
+          <button  className="items-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
             {selected}
             {!isOpen ? (
-              <TiArrowSortedDown size={'1.1rem'} className='absolute right-1 top-[9px]'/>
+              <TiArrowSortedDown size={'1.1rem'} className='absolute right-1 top-[10px]'/>
             ) : (
-              <TiArrowSortedUp size={'1.1rem'} className='absolute right-1 top-[9px]'/>
+              <TiArrowSortedUp size={'1.1rem'} className='absolute right-1 top-[10px]'/>
             )}
           </button>
           {isOpen && (

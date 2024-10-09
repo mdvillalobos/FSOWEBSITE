@@ -33,8 +33,8 @@ import ErrorPage from './view/Error/ErrorPage.jsx';
 import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
-/* axios.defaults.baseURL = 'http://localhost:3001'; */
-axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3001';
+/* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */
 axios.defaults.withCredentials = true;
 
 function App() {

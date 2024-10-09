@@ -22,7 +22,7 @@ const Config = () => {
         <div className='flex flex-col justify-between h-full'>
             <div className="space-y-10">
                 <div>
-                    <p className='text-xl font-semibold mb-4'>APPROVERS</p>
+                    <p className='text-xl font-semibold mb-5'>APPROVERS</p>
                     {data ?
                         data?.map(approver => {
                             if(approver.profilePicture === null) {
@@ -33,7 +33,7 @@ const Config = () => {
                                     approver.profilePicture = femaleProfile
                                 }
                             }
-                            return <div key={approver._id}className="flex justify-between mt-6">
+                            return <div key={approver._id}className="flex justify-between mt-4">
                                 <div className="flex space-x-2">
                                     <div className="w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center my-auto">
                                         <img src={approver.profilePicture} alt={`${approver.lastName} Profile Picture`} className='w-full h-auto object-cover'/>
@@ -42,15 +42,6 @@ const Config = () => {
                                         <p>{approver.firstName} {approver.lastName}</p>
                                         <p className='text-gray-500'>{approver.approver}</p>
                                     </div>
-                                </div>
-                                <div className="relative">
-                                    <button className='my-auto' onClick={() => setIsOpen(prev => ({...prev, [approver._id]: !prev[approver._id]}))}><HiDotsHorizontal/></button>
-                                    {isOpen[approver._id] && (
-                                        <div className='absolute right-0 bg-NuBlue rounded-xl p-4 text-sm space-y-2 z-10'>
-                                            <button className='flex'><FiEdit className='mr-1.5 my-auto'/> Edit </button>
-                                            <button className='flex'><MdOutlineDelete className='mr-1.5 my-auto'/> Delete </button>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         })     
@@ -62,14 +53,14 @@ const Config = () => {
 
                 <div>
                     <p className='text-xl font-semibold mb-4'>CONFIGURATION</p>
-                    <div className="space-y-4">
-                        <div className="flex text-sm justify-between">
+                    <div className="space-y-4 text-xs">
+                        <div className="flex justify-between">
                             <p>Academic Yr. </p>
                             <p>2022-2024</p>
                         </div>
-                        <div className="flex text-sm justify-between">
+                        <div className="flex justify-between">
                             <p>Application For <br/> Re-Ranking</p>
-                            <label htmlFor="check" className='bg-gray-400 w-14 h-7 rounded-full relative cursor-pointer my-auto'>
+                            <label htmlFor="check" className='bg-gray-300 w-14 h-7 rounded-full relative cursor-pointer my-auto '>
                                 <input type="checkbox" id='check' className='sr-only peer' onChange={(e)=> setIsChecked(!isChecked)}/>
                                 <span className='w-2/5 h-4/5 bg-[#41518d] absolute rounded-full left-[3px] top-[2.9px] peer-checked:bg-rose-600 peer-checked:left-[30px] transition-all duration-500'></span>
                             </label>
@@ -78,7 +69,7 @@ const Config = () => {
                 </div>
             </div>
 
-            <img src={ConfigImage} alt="" />
+            <img src={ConfigImage} alt="" className='opacity-90'/>
     
         </div>
     )
