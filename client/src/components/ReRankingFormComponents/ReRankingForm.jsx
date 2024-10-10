@@ -12,10 +12,10 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { getApplicationData } = useGetApplicationData();
     
     const [ data, setData ] = useState({
-        name: user.firstName + ' ' + user.lastName,
+        name: user?.firstName + ' ' + user?.lastName,
         college: "",
-        department: user.department,
-        currentRank: user.rank,
+        department: user?.department,
+        currentRank: user?.rank,
         academicYear: "",
     });
     
@@ -32,14 +32,17 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
 
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
+        
+        const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
+
         console.log(data.name, data.college, data.department, data.currentRank, data.academicYear)
-        await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, 
+        await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
             requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
             requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
         );
     }
 
-    const selectedRank = ranks.find(rankRequirement => rankRequirement.rankName === ApplyingFor)
+    const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === ApplyingFor)
     return (
         <div>
             <form onSubmit={handleSubmitApplication} className='font-Poppins' encType='multipart/form-data' >
@@ -60,8 +63,18 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                 <div className='pt-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-1'>Qualification</h1>
                     
-                    {selectedRank.requirements.map((requirement, i) => {
+                    {selectedRank?.requirements.map((requirement, i) => {
                         const stateValues = {
+                            requirement_1: requirement_1,
+                            requirement_2: requirement_2,
+                            requirement_3: requirement_3,
+                            requirement_4: requirement_4,
+                            requirement_5: requirement_5,
+                            requirement_6: requirement_6,
+                            requirement_7: requirement_7,
+                            requirement_8: requirement_8,
+                            requirement_9: requirement_9,
+                            requirement_10: requirement_10,
                             setRequirement_1: setRequirement_1,
                             setRequirement_2: setRequirement_2,                            
                             setRequirement_3: setRequirement_3,
@@ -74,12 +87,15 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                             setRequirement_10: setRequirement_10,
                         };
 
-                        const setReq = [`setRequirement_${i+1}`]
-                        const checkSetReqValue = stateValues[setReq]
+                        const reqState = [`requirement_${i+1}`]
+                        const setReqState = [`setRequirement_${i+1}`]
+                        const checkReqStateValue = stateValues[reqState]
+                        const checkSetReqValue = stateValues[setReqState]
 
                         return <ReRankingFields
                             key={requirement._id}
                             requirement={requirement.requirement}
+                            data = {checkReqStateValue}
                             setData={checkSetReqValue}
                         />
                     })}

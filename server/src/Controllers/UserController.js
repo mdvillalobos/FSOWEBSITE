@@ -1,13 +1,15 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const validator = require('validator');
-const Account = require('../Models/Account');
-const User = require('../Models/User');
-const Reports = require('../Models/Reports');
-const { CloudinaryUpload, DestroyImageInCloudinary } = require('../Helpers/Cloudinary');
-const { hashPassword, compareHashed } = require('../Helpers/Auth');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const getUserData = async (req, res) => {
+import jwt from 'jsonwebtoken';
+import validator from 'validator';
+import Account from '../Models/Account.js';
+import User from '../Models/User.js';
+import Reports from '../Models/Reports.js';
+import { uploadImageToCloudinary, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
+import { hashPassword, compareHashed } from '../Helpers/Auth.js';
+
+export const getUserData = async (req, res) => {
     const { loginToken } = req.cookies;
 
     if(!loginToken) {
@@ -31,7 +33,7 @@ const getUserData = async (req, res) => {
     }
 }
 
-const getRole = async (req, res) => {
+export const getRole = async (req, res) => {
     const { loginToken } = req.cookies;
 
     if(!loginToken) {
@@ -56,7 +58,7 @@ const getRole = async (req, res) => {
 }
 
 
-const getUserReports = async (req, res) => {
+export const getUserReports = async (req, res) => {
     const { loginToken } = req.cookies;
 
     try {
@@ -70,7 +72,7 @@ const getUserReports = async (req, res) => {
     }
 }
 
-const submitReport = async (req, res) => {
+export const submitReport = async (req, res) => {
     const { loginToken } = req.cookies;
     const { subject, message, date } = req.body;
 
@@ -95,7 +97,7 @@ const submitReport = async (req, res) => {
     }
 }
 
-const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {
     const { loginToken } = req.cookies;
     const { firstName, lastName, middleName, department } = req.body;
 
@@ -119,7 +121,7 @@ const updateProfile = async (req, res) => {
     }
 }
 
-const changePassword = async (req, res) => {
+export const changePassword = async (req, res) => {
     const { loginToken } = req.cookies;
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
@@ -161,7 +163,7 @@ const changePassword = async (req, res) => {
     }
 }
 
-const updateProfilePicture = async (req, res) => {
+export const updateProfilePicture = async (req, res) => {
     const { loginToken } = req.cookies;
 
     if(!loginToken) {
@@ -175,7 +177,7 @@ const updateProfilePicture = async (req, res) => {
 
         const [ deleteFromCloudinary, uploadToCloudinary ] = await Promise.all([
             DestroyImageInCloudinary(userData.profilePicture),
-            CloudinaryUpload(uploadedPicture, 'profilepictures'),
+            uploadImageToCloudinary(uploadedPicture, 'profilepictures'),
         ])
 
         profilePicture = uploadToCloudinary;
@@ -188,15 +190,4 @@ const updateProfilePicture = async (req, res) => {
         console.error(`Update Profile Picture Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
-}
-
-
-module.exports = {
-    getUserData,
-    getRole,
-    submitReport,
-    getUserReports,
-    updateProfile,
-    changePassword,
-    updateProfilePicture
 }

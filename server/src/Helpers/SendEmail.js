@@ -1,7 +1,9 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config();
-const bcrypt = require('bcrypt');
-const EmailVerification = require('../Models/VerificationToken');
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import bcrypt from 'bcrypt';
+import EmailVerification from '../Models/VerificationToken.js';
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -44,8 +46,7 @@ const sendEmailVerification = async (email) => {
     }
 }
 
-module.exports = {
-    sendEmailVerification,
+export default sendEmailVerification
 
-}
+
 

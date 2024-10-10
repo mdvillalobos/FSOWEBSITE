@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const RequirementSchema = new Schema({
     requirementNumber: Number,
@@ -14,4 +14,4 @@ const RankSchema = new Schema ({
 
 const RankModel = mongoose.model('rank', RankSchema)
 
-module.exports = RankModel;
+export default RankModel;

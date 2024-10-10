@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const AccountSchema = new Schema ({
     employeeID: String,
@@ -16,4 +16,4 @@ const AccountSchema = new Schema ({
 
 const AccountModel = mongoose.model('accounts', AccountSchema)
 
-module.exports = AccountModel;
+export default AccountModel;

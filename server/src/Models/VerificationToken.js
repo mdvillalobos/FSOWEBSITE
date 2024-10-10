@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const VerificationTokenSchema = new Schema ({
@@ -20,4 +20,4 @@ const VerificationTokenSchema = new Schema ({
 
 const VerificationToken = mongoose.model("tokens", VerificationTokenSchema);
 
-module.exports = VerificationToken;
+export default VerificationToken;

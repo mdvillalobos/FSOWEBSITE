@@ -1,13 +1,15 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const validator = require('validator');
-const Account = require('../Models/Account');
-const User = require('../Models/User');
-const EmailVerification = require('../Models/VerificationToken');
-const { sendEmailVerification } = require('../Helpers/SendEmail')
-const { hashPassword, compareHashed } = require('../Helpers/Auth');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const login = async (req, res) => {
+import jwt from 'jsonwebtoken';
+import validator from 'validator';
+import Account from '../Models/Account.js';
+import User from '../Models/User.js';
+import EmailVerification from '../Models/VerificationToken.js';
+import sendEmailVerification from '../Helpers/SendEmail.js';
+import { hashPassword, compareHashed } from '../Helpers/Auth.js';
+
+export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if(!email || !password) {
@@ -30,7 +32,7 @@ const login = async (req, res) => {
     }
 }
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
     const { employeeID, email, password } = req.body;
 
     if(!employeeID || !email || !password) {
@@ -75,7 +77,7 @@ const register = async (req, res) => {
     }
 }
 
-const verifyEmail = async (req,res) => {
+export const verifyEmail = async (req,res) => {
     const { verificationToken } = req.cookies;
     const { otp } = req.body;
 
@@ -110,7 +112,7 @@ const verifyEmail = async (req,res) => {
     }
 }
 
-const registerProfile = async (req, res) => {
+export const registerProfile = async (req, res) => {
     const { verificationToken } = req.cookies;
     const {  firstName, lastName, middleName, track, rank, position, department } = req.body;
 
@@ -154,7 +156,7 @@ const registerProfile = async (req, res) => {
 }
 
 
-const forgotPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
     const { email } = req.body;
 
     if(!email) {
@@ -178,7 +180,7 @@ const forgotPassword = async (req, res) => {
     }
 }
 
-const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
     const { password , confirmPassword } = req.body
     const { verificationToken } = req.cookies;
 
@@ -208,7 +210,7 @@ const resetPassword = async (req, res) => {
     }
 }
 
-const resendOTP = (req, res) => {
+export const resendOTP = (req, res) => {
     const { verificationToken } = req.cookies;
 
     if(!verificationToken) {
@@ -227,18 +229,7 @@ const resendOTP = (req, res) => {
     }
 }
 
-const logout = (req, res) => {
+export const logout = (req, res) => {
     res.clearCookie('loginToken', { path: '/', sameSite: 'none', secure: true });
     return res.json({ message: 'Succesfully Logged Out' })
-}
-
-module.exports = {
-    login,
-    register,
-    verifyEmail,
-    registerProfile,
-    forgotPassword,
-    resetPassword, 
-    logout,
-    resendOTP,
 }

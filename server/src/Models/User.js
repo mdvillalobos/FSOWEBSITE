@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
     employeeID: String,
@@ -27,4 +27,4 @@ const UserSchema = new Schema({
 
 const UserModel = mongoose.model('users', UserSchema);
 
-module.exports = UserModel;
+export default UserModel;

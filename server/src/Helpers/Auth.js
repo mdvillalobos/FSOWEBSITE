@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
-const hashPassword = (password) => {
+export const hashPassword = (password) => {
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(12, (err, salt) => {
             if(err) {
@@ -16,11 +16,11 @@ const hashPassword = (password) => {
     })
 }
 
-const compareHashed = (plainText, hashedText) => {
+export const compareHashed = (plainText, hashedText) => {
     return bcrypt.compare(plainText, hashedText)
 }
 
-const OTPChecker = async (email, otp, res) => {
+export const OTPChecker = async (email, otp, res) => {
     try {
         const userOTP = await EmailVerification.findOne({owner: email});
         const isOTPCorrect = await comparePassword(otp, userOTP.Otp);
@@ -33,13 +33,4 @@ const OTPChecker = async (email, otp, res) => {
     } catch (error) {
         console.log(error)
     }
-}
-
-
-
-module.exports = {
-    hashPassword,
-    compareHashed,
-    OTPChecker
-
 }

@@ -1,14 +1,22 @@
-const Router = require('express');
+import { Router } from 'express';
 const router = Router();
 
-const { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP} = require('../Controllers/AuthController');
+import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
+import { getUserData, getRole, updateProfile, submitReport, getUserReports, changePassword, updateProfilePicture } from '../Controllers/UserController.js';
+import { getAllReports, getAllApprovers, createRank, getApplicationsForReRanking } from '../Controllers/AdminController.js';
+import { submitApplicationEntry, getRanks, checkApplication , countData } from '../Controllers/ApplicationController.js';
+
+import authorizationMiddleware from '../Middleware/authorizationMiddleware.js';
+import { upload, multerErrorHandler } from'../Middleware/uploadMiddleware.js';
+
+/* const { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP} = require('../Controllers/AuthController');
 const { getUserData, getRole, updateProfile, submitReport, getUserReports, changePassword, updateProfilePicture } = require('../Controllers/UserController');
 const { getAllReports, getAllApprovers, createRank, getApplicationsForReRanking} = require('../Controllers/AdminController');
-const { submitApplicationEntry, getRanks, checkApplication , count} = require('../Controllers/ApplicationController');
+const { submitApplicationEntry, getRanks, checkApplication , countData} = require('../Controllers/ApplicationController');
 
 //middleware functionalities
 const { authorizationMiddleware } = require('../Middleware/authorizationMiddleware');
-const { upload, multerErrorHandler }  = require('../Middleware/uploadMiddleware');
+const { upload, multerErrorHandler }  = require('../Middleware/uploadMiddleware'); */
 
 // login & logout
 router.post('/api/login', login);
@@ -44,7 +52,7 @@ router.get('/api/getAllApprovers', authorizationMiddleware('admin'), getAllAppro
 router.get('/api/getApplications', authorizationMiddleware('admin'), getApplicationsForReRanking);
 router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/checkApplication', authorizationMiddleware('admin'), checkApplication);
-router.get('/api/getDataAnalytics', authorizationMiddleware('admin'), count);
+router.get('/api/getDataAnalytics', authorizationMiddleware('admin'), countData);
 
 //Application for re-ranking
 const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 
@@ -55,4 +63,4 @@ const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name
 
 router.post('/api/submitApplicationEntry',uploadFiles, multerErrorHandler, submitApplicationEntry);
 
-module.exports = router
+export default router

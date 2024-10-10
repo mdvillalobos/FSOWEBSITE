@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const requirementSchema = new Schema({
     requirementNumber: {
@@ -46,4 +46,4 @@ const ApplicationFormsSchema = new Schema({
 
 const ApplicationForm = mongoose.model('applicationForms', ApplicationFormsSchema);
 
-module.exports = ApplicationForm;
+export default ApplicationForm;

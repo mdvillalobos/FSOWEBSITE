@@ -1,12 +1,20 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const Account = require('../Models/Account');
-const User = require('../Models/User');
-const Reports = require('../Models/Reports');
-const Ranks = require('../Models/Ranks');
-const ApplicationForms = require('../Models/ApplicationForms');
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import Account from '../Models/Account.js';
+import User from '../Models/User.js';
+import Reports from '../Models/Reports.js';
+import Ranks from '../Models/Ranks.js';
+import ApplicationForms from '../Models/ApplicationForms.js';
 
-const getAllReports = async (req, res) => {
+/* const jwt = require('jsonwebtoken');
+const Account = require('../Models/Account.js');
+const User = require('../Models/User.js');
+const Reports = require('../Models/Reports.js');
+const Ranks = require('../Models/Ranks.js');
+const ApplicationForms = require('../Models/ApplicationForms.js'); */
+
+dotenv.config();
+export const getAllReports = async (req, res) => {
     try {
         const reports = await Reports.find();
         return res.json(reports);
@@ -18,7 +26,7 @@ const getAllReports = async (req, res) => {
     }
 }
 
-const getAllApprovers = async (req, res) => {
+export const getAllApprovers = async (req, res) => {
     try {
         const approvers = await User.find({ approver: { $ne: null }}, { email: 1, _id: 1, approver: 1, lastName: 1, firstName: 1, profilePicture: 1, sex: 1 }).sort({ approver: 1})
         console.log(approvers)
@@ -30,7 +38,7 @@ const getAllApprovers = async (req, res) => {
     }
 }
 
-const createRank = async (req, res) => {
+export const createRank = async (req, res) => {
     const { rankName, track, ...requirements } = req.body;
 
     if(!rankName || !track) {
@@ -65,7 +73,7 @@ const createRank = async (req, res) => {
 } 
 
 
-const getApplicationsForReRanking = async (req, res) => {
+export const getApplicationsForReRanking = async (req, res) => {
     const { loginToken } = req.cookies;
     try {
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
@@ -91,11 +99,4 @@ const getApplicationsForReRanking = async (req, res) => {
         console.error(`Fetching Applications Error: ${ error.message }`);
         return res.json({ error: 'An internal server error occurred.' });
     }
-}
-
-module.exports = {
-    getAllReports,
-    getAllApprovers,
-    createRank,
-    getApplicationsForReRanking,
 }

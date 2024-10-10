@@ -1,11 +1,16 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const ApplicationForms = require('../Models/ApplicationForms');
-const Ranks = require('../Models/Ranks');
-const Account = require('../Models/Account');
-const { uploadImageToCloudinary } = require('../Helpers/Cloudinary');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const getRanks = async (req, res) => {
+import jwt from 'jsonwebtoken';
+
+import Ranks from '../Models/Ranks.js';
+import Account from '../Models/Account.js';
+import ApplicationForms from '../Models/ApplicationForms.js';
+import Repository from '../Models/Repository.js';
+
+import { filterAndUploadedRequirements } from '../Helpers/Cloudinary.js';
+
+export const getRanks = async (req, res) => {
     const { loginToken } = req.cookies;
 
     if(!loginToken) {
@@ -26,50 +31,49 @@ const getRanks = async (req, res) => {
     }
 }
 
-const filterAndUploadedRequirements = async (files) => {
-    const userSubmittedRequirements = Object.values(files).map(file => file[0].path); 
-    
-    const uploadPromises = userSubmittedRequirements.map(path => uploadImageToCloudinary(path, 'requirements', { concurrent: true }));
-    const uploadResponses = await Promise.all(uploadPromises);
-    
-    return uploadResponses.map((response, i) => ({
-        requirementNumber: i + 1,
-        imagePath: response,
-    }))
-}
-
-const submitApplicationEntry = async (req, res) => {
+export const submitApplicationEntry = async (req, res) => {
     const { loginToken } = req.cookies;
-    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack } = req.body;
+    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action } = req.body;
 
     if(!name || !college || !department || !currentRank || !academicYear || !ApplyingFor || !userTrack) {
         return res.json({ error: 'Required all fields.'})
     }
 
-    try {
-        const requirements = await filterAndUploadedRequirements(req.files)
-        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
-        await ApplicationForms.create({
-            name: name,
-            email: email,
-            college: college,
-            department: department,
-            currentRank: currentRank,
-            academicYear: academicYear,
-            applyingFor: ApplyingFor,
-            track: userTrack,
-            requirements
-        });
+    const folderPath = (action === 'submit') ? 'requirements' : (action === 'save' ? 'repository' : null);
+    if (!folderPath) {
+        return res.json({ error: 'Invalid process type.' });
+    }
 
-        return res.json({ message: 'Success'});
+    try {
+       
+        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const requirements = await filterAndUploadedRequirements(req.files, folderPath)
+        if(requirements) {
+            const dataToProcess = {
+                name,
+                email,
+                college,
+                department,
+                currentRank,
+                academicYear,
+                applyingFor: ApplyingFor,
+                track: userTrack,
+                requirements
+            };
+    
+            await (action === 'submit' ? ApplicationForms : Repository).create(dataToProcess);
+            return res.json({ message: 'Success'});
+        }
+
+        return res.json({ error: "There's an error at the moment please try again later!"})
 
     } catch (error) {
-        console.error(`Submiiton Of Application For Re-Ranking Error: ${ error.message }`);
+        console.log( error );
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
-const checkApplication = async (req, res) => {
+export const checkApplication = async (req, res) => {
     const { loginToken } = req.cookies;
     const { formID, decision, ...checkedReq } = req.body;
 
@@ -109,109 +113,54 @@ const checkApplication = async (req, res) => {
     }
 }
 
-const countRankIsApproved = async () => {
-
+export const countData = async (req, res) => {
     try {
-        const application = await ApplicationForms.find()
-        const dataCount = {};
+        const applications = await ApplicationForms.find();
 
-        application.forEach(applicationData => {
+        const countIsApproved = {};
+        const applicationStatus = {
+            approved: 0,
+            declined: 0
+        }
+
+        applications.forEach(applicationData => {
             const rankName = applicationData.applyingFor;
 
-            if(!dataCount[rankName]) {
-                dataCount[rankName] = {}
-                dataCount[rankName]['rankName'] = rankName
+            if (applicationData.status === 'Approved') {
+                applicationStatus.approved++;
+            } else if (applicationData.status === 'Declined') {
+                applicationStatus.declined++;
+            }
+
+            if (!countIsApproved[rankName]) {
+                dataCount[rankName] = {
+                    rankName: rankName,
+                    requirementsCount: []
+                };
             }
 
             applicationData.requirements.forEach((requirementData, i) => {
-                if(!dataCount[rankName]['requirementsCount']) {
-                    dataCount[rankName]['requirementsCount'] = []
+                if (!countIsApproved[rankName].requirementsCount[i]) {
+                    countIsApproved[rankName].requirementsCount[i] = {
+                        declined: 0,
+                        approved: 0
+                    };
                 }
 
-                if(!dataCount[rankName]['requirementsCount'][i]) {
-                    dataCount[rankName]['requirementsCount'][i] = {};
+                if (requirementData.isApproved === 'Declined') {
+                    countIsApproved[rankName].requirementsCount[i].declined++;
+                } else if (requirementData.isApproved === 'Approved') {
+                    countIsApproved[rankName].requirementsCount[i].approved++;
                 }
-
-                if(!dataCount[rankName]['requirementsCount'][i]['declined']) {
-                    dataCount[rankName]['requirementsCount'][i]['declined'] = 0;
-                }
-
-                if(!dataCount[rankName]['requirementsCount'][i]['approved']) {
-                    dataCount[rankName]['requirementsCount'][i]['approved'] = 0;
-                }
-                
-                if(requirementData.isApproved === 'Declined') { 
-                   dataCount[rankName]['requirementsCount'][i]['declined']++;
-                }
-
-                if(requirementData.isApproved === 'Approved') {
-                    dataCount[rankName]['requirementsCount'][i]['approved']++;
-                }
-            })
-        })
-        const result = Object.values(dataCount).map(obj => {
-            return { ...obj };
+            });
         });
-        return result
+
+        const dataOfIsApproved = Object.values(countIsApproved);
+        return res.json({ isApprovedData: dataOfIsApproved, statusData: applicationStatus })
+
     }
     catch (error) {
         console.error(`Fetching Data Analytics isApproved Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
-}
-
-const countApplicationStatus = async () => {
-    try {
-        const application = await ApplicationForms.find()
-        const dataCount = {};
-
-        application.forEach(applicationData => {
-
-            if(!dataCount['approved']) {
-                dataCount['approved'] = 0;
-            }
-
-            if(applicationData.status === 'Approved') {
-                dataCount['approved']++;
-            }
-
-            if(!dataCount['declined']) {
-                dataCount['declined'] = 0;
-            }
-            
-            if(applicationData.status === 'Declined') {
-                dataCount['declined']++;
-            }
-        })
-
-        return dataCount
-
-    }
-    catch (error) {
-        console.error(`Fetching Data Analytics For Status Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' })
-    }
-}
-
-const count = async (req ,res) => {
-    try {
-        const [ isApprovedCount, statusCount ] = await Promise.all([
-            countRankIsApproved(),
-            countApplicationStatus()
-        ])
-
-        return res.json({ isApprovedCount: isApprovedCount, statusCount: statusCount})
-    }
-    catch (error) {
-        console.error(`Fetching Data Analytics Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' })
-    }
-}
-
-
-module.exports = {
-    getRanks,
-    submitApplicationEntry,
-    checkApplication,
-    count
 }

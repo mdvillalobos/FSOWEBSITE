@@ -60,9 +60,9 @@ const Config = () => {
                         </div>
                         <div className="flex justify-between">
                             <p>Application For <br/> Re-Ranking</p>
-                            <label htmlFor="check" className='bg-gray-300 w-14 h-7 rounded-full relative cursor-pointer my-auto '>
+                            <label htmlFor="check" className='bg-gray-300 w-12 h-5 rounded-full relative cursor-pointer my-auto '>
                                 <input type="checkbox" id='check' className='sr-only peer' onChange={(e)=> setIsChecked(!isChecked)}/>
-                                <span className='w-2/5 h-4/5 bg-[#41518d] absolute rounded-full left-[3px] top-[2.9px] peer-checked:bg-rose-600 peer-checked:left-[30px] transition-all duration-500'></span>
+                                <span className='w-6 h-6 bg-[#41518d] absolute rounded-full left-0 top-[-2px] peer-checked:bg-rose-600 peer-checked:left-[25px] transition-all duration-500 '></span>
                             </label>
                         </div>
                     </div>

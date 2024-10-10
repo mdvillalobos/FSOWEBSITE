@@ -1,6 +1,10 @@
-const multer = require('multer');
-const path = require('path');
-const { errorMonitor } = require('stream');
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -13,7 +17,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({
+export const upload = multer({
     storage: storage,
     fileFilter: function(req, file, cb) {
         const fileType = path.extname(file.originalname)
@@ -31,7 +35,7 @@ const upload = multer({
 });
 
 
-const multerErrorHandler = (err, req, res, next) => {
+export const multerErrorHandler = (err, req, res, next) => {
     const start = Date.now();
     if(err instanceof multer.MulterError) {
         console.log(`Sending Multer Error: ${err.message}`);
@@ -52,9 +56,3 @@ const multerErrorHandler = (err, req, res, next) => {
     console.log(`Multer Error Handler run at: ${ Date.now() - start }ms`);
     next();
 }
-
-module.exports = {
-    upload,
-    multerErrorHandler
-}
- 

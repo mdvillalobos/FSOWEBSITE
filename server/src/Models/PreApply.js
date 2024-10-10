@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const PreApply = new Schema({
@@ -54,4 +54,4 @@ const PreApply = new Schema({
 
 const PreApplyForReRanking = mongoose.model('userapplication', PreApply);
 
-module.exports = PreApplyForReRanking;
+export default PreApplyForReRanking;

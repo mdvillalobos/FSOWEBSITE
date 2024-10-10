@@ -1,11 +1,19 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { mongoose } = require('mongoose');
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const path = require('path');
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import { mongoose } from 'mongoose';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+dotenv.config();
 const app = express();
+
+import apiRoutes from './src/Routes/ApiRoutes.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 //cors 
 app.use(
@@ -22,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/requirements', express.static(path.join(__dirname, 'requirements')));
 
 // router 
-app.use('/', require('./src/Routes/ApiRoutes'));
+app.use('/', apiRoutes);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('*', (req, res) => {

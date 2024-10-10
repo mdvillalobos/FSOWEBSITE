@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const ReportSchema = new Schema({
     email: String,
@@ -10,4 +10,4 @@ const ReportSchema = new Schema({
 
 const ReportModel = mongoose.model('reports', ReportSchema);
 
-module.exports = ReportModel;
+export default ReportModel;
