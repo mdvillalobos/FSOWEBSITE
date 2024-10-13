@@ -38,14 +38,20 @@ const header = ({location}) => {
       <div className="flex border-l-2 before:mr-5">
         <div className="relative duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center'>
-            {!!user && user.gender === 'Male' ? (
-              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
-                <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+            {!!user && user.profilePicture ? (
+              <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
+                <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
               </div>
             ) : (
-              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
-                <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
-              </div>
+              user.gender === 'Male' ? (
+                <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                  <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+                </div>
+              ) : (
+                <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                  <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+                </div>
+              )
             )}
             {!!user && (<p className='text-[0.8rem] ml-3 text-black font-medium font-Poppins max-sm:hidden'>{user.firstName} {user.lastName}</p>)}
             

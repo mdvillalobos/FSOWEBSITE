@@ -10,7 +10,7 @@ const Setting = () => {
             <Header/>
             <div className="px-16 py-2">
                 <Back/>
-                <div className="flex">
+                <div className="flex bg-white font-Poppins py-6 shadow-md rounded-xl">
                     <SettingNav/>
                     <PersonalDetails/>
                 </div>

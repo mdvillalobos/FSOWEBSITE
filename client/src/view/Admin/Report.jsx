@@ -6,7 +6,7 @@ import ReportButton from '../../components/AdminComponents/ReportComponents/Admi
 
 const Survey = () => {
     return (
-        <div className="bg-[#f4f7fa] h-[100dvh]">
+        <div className="background-gradient h-[100dvh]">
             <Header location={'Weekly Report'}/>
             <div className="px-14 py-2">
                 <BackBtn/>

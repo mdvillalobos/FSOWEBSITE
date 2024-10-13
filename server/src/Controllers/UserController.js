@@ -100,23 +100,7 @@ export const updateRepository = async (req, res) => {
                 });
             }
         }
-        /* cloudinaryResponse.forEach(async (requirement) => {
-            const dbData = userRepositoryFile.requirements.find(resRequirement => resRequirement.requirementNumber === requirement.requirementNumber);
-            console.log(dbData)
-
-            if(dbData) {
-                const deletedFile = await DestroyImageInCloudinary(dbData.filePath);
-                console.log(deletedFile)
-                dbData.fileName = requirement.fileName;
-                dbData.filePath = requirement.filePath
-            }
-            else {
-                dbData.requirementNumber = requirement.requirementNumber
-                dbData.fileName = requirement.fileName;
-                dbData.filePath = requirement.filePath
-            }
-        }) */
-
+        
         await userRepositoryFile.save();
         return res.json({ message: 'Updated Successfully'});
 

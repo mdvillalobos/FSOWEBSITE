@@ -3,12 +3,13 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
     employeeID: String,
-    approver: {
-        type: String,
-        default: null
-    },
     email: {
         type: String,
+        unique: true
+    },
+    approver: {
+        type: String,
+        default: null,
         unique: true
     },
     firstName: String,
@@ -17,12 +18,13 @@ const UserSchema = new Schema({
     sex: String,
     track: String,
     rank: String,
-    position: String,
     department: String,
+    position: String,
     profilePicture: {
         type: String,
         default: null
     }
+   
 })
 
 const UserModel = mongoose.model('users', UserSchema);

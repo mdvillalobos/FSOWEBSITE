@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'NuButton': '#4b538f',
+        'NuButton': '#41518d',
         'NuButtonHover': '#5d69c6',
         'NuBlue': '#35408e',
         'NuYellow': '#ffd41c',

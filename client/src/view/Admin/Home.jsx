@@ -4,7 +4,7 @@ import Header from "../../components/Tools/Header.jsx";
 
 const Home = () => {
     return (
-        <div className="bg-[#f4f7fa] h-screen max-2xl:h-full max-sm:h-screen max-md:h-auto max-lg:h-screen"> 
+        <div className="background-gradient h-screen max-2xl:h-full max-sm:h-screen max-md:h-auto max-lg:h-screen"> 
             <Header location='Home' />
             <div className="block place-items-center mt-[2%]">
                 <div className="w-full flex flex-col items-center">

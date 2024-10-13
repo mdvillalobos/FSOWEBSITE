@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ApplicationContext } from '../../../../context/applicationContext.jsx';
+import {RankContext } from '../../../../context/rankContext.jsx';
 import ModalBtn from './ModalBtn.jsx';
 
 import { FiEdit } from "react-icons/fi";
@@ -9,13 +9,11 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { RiArrowLeftDoubleFill } from "react-icons/ri";
 import { RiArrowRightDoubleFill } from "react-icons/ri";
 
-
-
 const RankTable = () => {
-    const { ranks } = useContext(ApplicationContext)
+    const { ranks } = useContext(RankContext)
     const [ isOpen, setIsOpen ] = useState(false);
     const [ currentPage, setCurrentPage ] = useState(1);
-    const [ selectedTrack, setSelectedTrack ] = useState()
+    const [ selectedTrack, setSelectedTrack ] = useState();
 
     const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
 

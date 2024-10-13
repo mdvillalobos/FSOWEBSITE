@@ -10,27 +10,6 @@ import Repository from '../Models/Repository.js';
 
 import { filterAndUploadedRequirements } from '../Helpers/Cloudinary.js';
 
-export const getRanks = async (req, res) => {
-    const { loginToken } = req.cookies;
-
-    if(!loginToken) {
-        return res.json({ error: 'Access denied!' });
-    }
-
-    try {
-        const rankData = await Ranks.find();
-        if(!rankData) {
-            return res.json({ error: 'Ranks are currently empty.' });
-        }  
-        
-        return res.json(rankData)
-
-    } catch (error) {
-        console.error(`Fetching Rank Requirement Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
 export const submitApplicationEntry = async (req, res) => {
     const { loginToken } = req.cookies;
     const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action } = req.body;

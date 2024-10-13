@@ -3,8 +3,8 @@ const router = Router();
 
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
 import { getUserData, getRole, getUserRepository, updateRepository, getUserReports, submitReport, changePassword, updateProfile,  updateProfilePicture } from '../Controllers/UserController.js';
-import { getAllReports, getAllApprovers, createRank, getApplicationsForReRanking } from '../Controllers/AdminController.js';
-import { submitApplicationEntry, getRanks, checkApplication , countData } from '../Controllers/ApplicationController.js';
+import { getAllReports, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
+import { submitApplicationEntry, checkApplication , countData } from '../Controllers/ApplicationController.js';
 
 import authorizationMiddleware from '../Middleware/authorizationMiddleware.js';
 import { upload, multerErrorHandler } from'../Middleware/uploadMiddleware.js';
@@ -21,7 +21,7 @@ router.post('/api/logout', logout);
 
 //registration process
 router.post('/api/register', register);
-router.post('/api/registeProfile', registerProfile);
+router.post('/api/registeProfile', upload.single('profilePicture'), registerProfile);
 
 //email verification 
 router.post('/api/verifyEmail', verifyEmail);

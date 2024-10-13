@@ -30,6 +30,27 @@ export const getAllApprovers = async (req, res) => {
     }
 }
 
+export const getRanks = async (req, res) => {
+    const { loginToken, verificationToken } = req.cookies;
+
+    if(!loginToken && !verificationToken) {
+        return res.json({ error: 'Access denied!' });
+    }
+
+    try {
+        const rankData = await Ranks.find();
+        if(!rankData) {
+            return res.json({ error: 'Ranks are currently empty.' });
+        }  
+        
+        return res.json(rankData)
+
+    } catch (error) {
+        console.error(`Fetching Rank Requirement Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
 export const createRank = async (req, res) => {
     const { rankName, track, ...requirements } = req.body;
 

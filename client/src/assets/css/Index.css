@@ -48,7 +48,7 @@
     }
 
     .profile-registration-container {
-        @apply flex flex-wrap gap-14 font-Poppins
+        @apply flex flex-col items-center space-y-4 font-Poppins
         max-sm:flex-col max-sm:w-full max-sm:gap-0 
         max-md:gap-0 
         max-lg:gap-0
@@ -146,16 +146,12 @@
     }
 
     /* SETTINGS */
-    .settingNav {
-        @apply text-[1rem] font-Poppins flex py-3 px-4 duration-300 mb-1 hover:bg-[#bbc1ee] rounded-xl
+    .settingNavActive {
+        @apply bg-NuButton text-white rounded-md
     }
-
-    .setting-column-container {
-        @apply flex justify-between w-full space-x-2
-    }
-
+    
     .setting-input-container {
-        @apply relative rounded-lg mt-4 w-[47%]
+        @apply relative rounded-lg w-full
     }
 
     .setting-input-label {
@@ -234,5 +230,5 @@ td:last-child{
 }
 
 .background-gradient {
-    background: linear-gradient(to bottom right, #f4f7fa, #e0e5ec);
-  }
+    background: linear-gradient(to bottom, #fbfbfd, #f8f8fd);
+}

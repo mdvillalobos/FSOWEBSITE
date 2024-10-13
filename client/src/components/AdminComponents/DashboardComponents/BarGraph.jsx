@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ApplicationContext } from '../../../../context/applicationContext.jsx';
+import { RankContext } from '../../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../../context/analyticsContext.jsx';
 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid  } from 'recharts';
@@ -8,7 +8,7 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import ReactMarkdown from 'react-markdown';
 
 const DashboardGraph = () => {
-  const { ranks } = useContext(ApplicationContext);
+  const { ranks } = useContext(RankContext);
   const { isApprovedData } = useContext(AnalyticsContext);
   const [ selected, setSelected ] = useState('Instructor 1');
   const [ isOpen, setIsOpen ] = useState(false);

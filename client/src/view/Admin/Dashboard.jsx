@@ -1,19 +1,13 @@
 import Header from "../../components/Tools/Header.jsx";
 import BackBtn from '../../components/Tools/AdminBack.jsx';
-
 import BarGraph from '../../components/AdminComponents/DashboardComponents/BarGraph.jsx';
 import PieGraph from "../../components/AdminComponents/DashboardComponents/PieGraph.jsx";
-
 import Config from '../../components/AdminComponents/DashboardComponents/Config.jsx';
-
 import RankTable from '../../components/AdminComponents/DashboardComponents/RankTable.jsx'
-
-
-
 
 const Dashboard = () => {
     return (
-      <div className="bg-[#f4f7fa] h-full pb-4 font-Poppins">
+      <div className="background-gradient h-full pb-4 font-Poppins">
         <Header location={'Dashboard'} />
           <div className="px-16 py-2">
             <BackBtn/>

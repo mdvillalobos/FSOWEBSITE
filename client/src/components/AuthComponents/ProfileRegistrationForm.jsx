@@ -1,133 +1,133 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import useRegisterProfile from '../../hooks/AuthHooks/useRegisterProfile';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import { FormControl } from '@mui/material';
+import { RankContext } from '../../../context/rankContext';
+import { HiMiniPencil } from "react-icons/hi2";
 
 const ProfileRegistrationForm = () => {
+  const { ranks } = useContext(RankContext)
   const { registerProfile } = useRegisterProfile();
-  const [data, setData] = useState({
+
+  const [ data, setData ] = useState({
+    profilePicture: null,
     lastName: '', 
     firstName: '',
     middleName: '',
+    sex: '',
+    track: '', 
+    rank: '',
     department: '', 
     position: '', 
-    track: '', 
-    rank: ''
   });
+
+  const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
+  const filteredRank = ranks?.filter(rank =>
+    data.track ? rank.track === data.track : false
+  );
 
   const RegisterUserInfo = async (e) => {
     e.preventDefault();
-    await registerProfile(data.lastName, data.firstName, data.middleName, data.department, data.position, data.track, data.rank);
+    console.log(data.profilePicture)
+    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.sex, data.track, data.rank, data.department, data.position);
   }
 
   return (
-    <div>
+    <div className='bg-white shadow-md flex justify-center rounded-lg text-sm'>
       <Box component="form" autoComplete='off' noValidate onSubmit={RegisterUserInfo}> 
-        <div className="flex flex-col mt-16 max-sm:mt-10">
-          <div>
-            <h1 className='text-[#35408E] font-Poppins font-semibold text-2xl'>Personal Information</h1>
-            <div className="profile-registration-container">
-              <TextField
-                required
-                label="Last Name" 
-                value={data.lastName}
-                onChange={(e) => setData({...data, lastName: e.target.value})}
-                variant="outlined"
-                style={{ margin: '1.3rem 0 0'}}
-                sx={{width: {sm:'100%', md: '30%', xl: '30%'}}}>
-              </TextField>
+        <div className='space-y-4 py-8 px-10 w-full'>
+          <div className="flex justify-center mx-auto mb-5">
+            <label className='flex justify-center items-center overflow-hidden rounded-full h-36 w-36 bg-gray-200 cursor-pointer relative'>
+              <input type='file' className='hidden' onChange={(e) => setData({ ...data, profilePicture: e.target.files[0]})}/>
+              {data.profilePicture ? (
+                <img src={URL.createObjectURL(data.profilePicture)} alt="" className='w-full h-full object-fill' />
+              ) : (
+                <p className='absolute bottom-0'><HiMiniPencil size={'1.5rem'} /></p>              
+              )}
+            </label>
+          </div>
 
-              <TextField
-                required
-                label="First Name" 
-                value={data.firstName}
-                onChange={(e) => setData({...data, firstName: e.target.value})}
-                variant="outlined"
-                style={{ margin: '1.3rem 0 0'}}
-                sx={{width: {sm:'100%', md: '30%', xl: '30%'}}}>
-              </TextField>
+          <h1 className='text-[#35408E] font-Poppins font-semibold text-2xl'>Personal Information</h1>
 
-              <TextField
-                label="Middle Name"
-                value={data.middleName}
-                onChange={(e) => setData({...data, middleName: e.target.value})}
-                variant="outlined"
-                style={{ margin: '1.3rem 0 0'}}
-                sx={{width: {sm:'100%', md: '30%', xl: '30%'}}}>
-              </TextField>
+          <div className="profile-registration-container">
+            <div className="flex gap-16">
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="firstName">First Name</label>
+                <input type="text" id='firstName' name='firstName' className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, firstName: e.target.value})}/>
+              </div>
+
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="lastName">Last Name</label>
+                <input type="text" id='lastName' name='lastName' className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, lastName: e.target.value})}/>
+              </div>
             </div>
 
-            <div className="profile-registration-container">
-              <FormControl sx={{width: {sm: '100%', md: '30%', xl:'30%'}}} style={{ margin: '1.3rem 0 0'}}>
-                <InputLabel id="department">Department</InputLabel>
-                <Select
-                  labelId='department'
-                  label="Department"
-                  value={data.department}
-                  onChange={(e) => setData({...data, department: e.target.value})}
-                >
-                  <MenuItem value="College of Allied Health">College of Allied Health</MenuItem>
-                  <MenuItem value="College of Architecture">College of Architecture</MenuItem>
-                  <MenuItem value="College of Business and Accountancy">College of Business and Accountancy</MenuItem>
-                  <MenuItem value="College of Computing and Information Technologies">College of Computing and Information Technologies</MenuItem>
-                  <MenuItem value="College of Education, Arts and Science">College of Education, Arts and Science</MenuItem>
-                  <MenuItem value="College of Engineering">College of Engineering</MenuItem>
-                  <MenuItem value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</MenuItem>
-                </Select>
-              </FormControl>
+            <div className="flex gap-16">
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="middleInitial">Middle Name</label>
+                <input type="text" id='middleInitial' name='middleInitial' className='border-2 px-3 py-3 rounded-md w-[35vw]  text-sm' onChange={(e) => setData({ ...data, middleName: e.target.value})}/>
+              </div>
+
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="sex">Sex</label>
+                <select name="sex" id="sex" className='border-2 px-3 py-3 rounded-md w-[35vw]  text-sm' onChange={(e) => setData({ ...data, sex: e.target.value})}>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
             </div>
 
-            <div className="profile-registration-container">
-              <FormControl  sx={{width: {sm: '100%', md: '30%', xl:'30%'}}} style={{ margin: '1.3rem 0 0'}}>
-                <InputLabel id="position">Employee Position</InputLabel>
-                <Select
-                  inputProps={{style: {fontSize: 14, fontFamily: 'Poppins', fontWeight:"500" }}}
-                  labelId='position'
-                  label="Track"
-                  value={data.position}
-                  onChange={(e) => setData({...data, position: e.target.value})}
-                >
-                  <MenuItem value="faculty">Faculty Member</MenuItem>
-                  <MenuItem value="director">Director</MenuItem>
-                  <MenuItem value="fso">Faculty Service Office</MenuItem>
-                </Select>
-              </FormControl>
+            <div className="flex gap-16">
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="firstName">Track</label>
+                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, track: e.target.value})}>
+                  <option value="">Select a track</option>
+                  {trackOptions.map(track => (
+                    <option key={track} value={track}>{track}</option>
+                  ))}
+                </select>
+              </div>
 
-              <FormControl  sx={{width: {sm: '100%', md: '30%', xl:'30%'}}} style={{ margin: '1.3rem 0 0'}}>
-                <InputLabel id="track">Track</InputLabel>
-                <Select
-                  labelId='track'
-                  label="Track"
-                  value={data.track}
-                  onChange={(e) => setData({...data, track: e.target.value})}
-                >
-                  <MenuItem value="Academic Track">Academic Track</MenuItem>
-                  <MenuItem value="Industry Practitioner Track">Industry Practitioner Track</MenuItem>
-                </Select>
-              </FormControl>
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="firstName">Current Rank</label>
+                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, rank: e.target.value})}>
+                  <option value='None'>None</option>
+                  {filteredRank?.map(rank => (
+                    <option key={rank._id} value={rank.rankName}>{rank.rankName}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-              <FormControl  sx={{width: {sm: '100%', md: '30%', xl:'30%'}}} style={{ margin: '1.3rem 0 0'}}>
-                <InputLabel id="Rank">Curren Rank</InputLabel>
-                <Select
-                  labelId='Rank'
-                  label="Current Rank"
-                  value={data.rank}
-                  onChange={(e) => setData({...data, rank: e.target.value})}
-                >
-                  <MenuItem value="Instructor 1">Instructor 1</MenuItem>
-                  <MenuItem value="Instructor 2">Instructor 2</MenuItem>
-                </Select>
-              </FormControl>
+            <div className="flex gap-16">
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="firstName">Department</label>
+                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({...data, department: e.target.value})}>
+                  <option value="College of Allied Health">College of Allied Health</option>
+                  <option value="College of Architecture">College of Architecture</option>
+                  <option value="College of Business and Accountancy">College of Business and Accountancy</option>
+                  <option value="College of Computing and Information Technologies">College of Computing and Information Technologies</option>
+                  <option value="College of Education, Arts and Science">College of Education, Arts and Science</option>
+                  <option value="College of Engineering">College of Engineering</option>
+                  <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col space-y-0.5">
+                <label htmlFor="firstName">Last Name</label>
+                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({...data, position: e.target.value})}>
+                  <option value="Faculty">Faculty</option>
+                  <option value="Director">Director</option>
+                  <option value="FSO">Faculty Service Office</option>
+                  
+                </select>
+              </div>
             </div>
           </div>
-          <div className="flex justify-end mt-4 max-sm:justify-normal">
-              <input type="submit" value="Skip" className='font-medium text-sm mt-4 cursor-pointer text-black  bg-[#d5d5d5] py-2 px-10 mr-6 duration-300 hover:bg-[#7c7c7c] rounded-sm'/> 
-              <input type="submit" value="Submit" className='font-medium text-sm mt-4 cursor-pointer text-white bg-[#35408e] py-2 px-10 mr-6 duration-300 hover:bg-[#7881ca] rounded-sm'/>
+          
+          <div className="flex justify-end max-sm:justify-normal">
+            <input type="submit" value="Submit" className='font-medium cursor-pointer mt-4 text-white bg-[#41518d] py-2.5 px-16 duration-300 hover:bg-NuButtonHover rounded-md'/>
           </div>
+
         </div>
       </Box>
     </div>

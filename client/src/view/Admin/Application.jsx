@@ -5,7 +5,7 @@ import ApplicationTable from '../../components/AdminComponents/ApplicationCompon
 
 const Application = () => {
     return (
-        <div className="bg-[#f4f7fa] h-screen">
+        <div className="background-gradient h-screen">
             <Header location={'Applications For Re-Ranking'}/>
             <div className="px-16 py-2">
                 <BackBtn/>

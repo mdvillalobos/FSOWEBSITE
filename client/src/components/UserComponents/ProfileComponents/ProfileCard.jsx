@@ -10,14 +10,20 @@ const ProfileCard = () => {
     <div className='min-w-fit w-[20vw]'>
         <div className="py-6 rounded-xl overflow-hidden bg-white shadow-lg font-Poppins"> 
             <div className="flex justify-center select-none">
-              {!!user && user.gender === 'Male' ? (
-                <div className="overflow-hidden h-52 w-52 flex justify-center rounded-full pointer-events-none">
-                  <img src={maleProfile} alt="" className='h-auto w-full object-contain'/>
+              {!!user && user.profilePicture ? (
+                <div className="flex items-center justify-center w-52 h-52 overflow-hidden rounded-full">
+                  <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
                 </div>
               ) : (
-                <div className="overflow-hidden h-52 w-52 flex justify-center rounded-full pointer-events-none">
-                  <img src={femaleProfile} alt="" className='h-auto w-full object-contain'/>
-                </div>
+                user.gender === 'Male' ? (
+                  <div className="w-52 h-52overflow-hidden rounded-full flex items-center justify-center">
+                    <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+                  </div>
+                ) : (
+                  <div className="w-52 h-52 overflow-hidden rounded-full flex items-center justify-center">
+                    <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+                  </div>
+                )
               )}
             </div>
             <div className="px-2.5 ">

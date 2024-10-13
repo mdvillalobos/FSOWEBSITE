@@ -1,10 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { RankContext } from '../../../context/rankContext.jsx';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 
 const useVerifyEmail = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
+    const { fetchRanksOnLogin } = useContext(RankContext);
 
     const verifyEmail = async (otp) => {
         if(!otp) {
@@ -30,10 +33,11 @@ const useVerifyEmail = () => {
             }
             else {
                 LoadingToast.close();
+                await fetchRanksOnLogin();
                 navigate('/profileregistration');
             }
         } catch (error) {
-            console.error(`EMail Verification Error: ${ error.message }`);
+            console.error(`Email Verification Error: ${ error.message }`);
         }
     }
     return { verifyEmail }

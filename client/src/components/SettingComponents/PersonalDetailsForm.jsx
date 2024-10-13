@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useEditProfile from '../../hooks/UserHooks/useEditProfile.jsx'
+import useEditProfile from '../../hooks/UserHooks/useEditProfile.jsx';
+
 
 const PersonalDetailsForm = () => {
   
@@ -28,7 +29,7 @@ const PersonalDetailsForm = () => {
   }
 
   return (
-    <div className='bg-white py-8 px-12 w-full shadow-lg font-Poppins'>
+    <div className='w-full px-6'>
       <h1 className='text-4xl font-Montserrat font-semibold text-NuBlue'>Edit Personal Details</h1>
       <form onSubmit={updateProfile} className='flex flex-col font-Poppins'>
         <h1 className='mt-4 text-xl font-medium'>Personal Information</h1>

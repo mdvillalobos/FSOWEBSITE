@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-export const ApplicationContext = createContext({});
+export const RankContext = createContext({});
 
-export const ApplicationContextProvider = ({ children }) => {
+export const RankContextProvider = ({ children }) => {
     const [ ranks, setRanks ] = useState(null);
     
     const getRank = async () => {
@@ -16,13 +16,13 @@ export const ApplicationContextProvider = ({ children }) => {
         getRank();
     }, [])
 
-    const fetchRanksOnLogin = () => {
-        getRank();
+    const fetchRanksOnLogin = async () => {
+        await getRank();
     };
 
     return (
-        <ApplicationContext.Provider value={{ ranks, setRanks, fetchRanksOnLogin}}>
+        <RankContext.Provider value={{ ranks, setRanks, fetchRanksOnLogin}}>
             {children}
-        </ApplicationContext.Provider>
+        </RankContext.Provider>
     )
 }

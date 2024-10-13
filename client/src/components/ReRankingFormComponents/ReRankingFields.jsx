@@ -60,7 +60,6 @@ const ReRankingFields = ({ requirement, data, setData }) => {
                             <p className='text-sm'>Browse Files</p>
                         </label>
                     )}
-                    {/* <button className='bg-[#41518d] px-6 py-2 text-white rounded-md h-[5.3vh]'>Browse Files</button> */}
                 </div>
             </div>
         </div>

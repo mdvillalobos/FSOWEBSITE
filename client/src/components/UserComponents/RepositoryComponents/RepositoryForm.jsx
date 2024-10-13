@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect }from 'react';
 import { Link } from 'react-router-dom';
-import { ApplicationContext } from '../../../../context/applicationContext.jsx';
+import { RankContext } from '../../../../context/rankContext.jsx';
 import PersonalInformation from '../../ReRankingFormComponents/PersonalInformation.jsx';
 import ReRankingFields from '../../ReRankingFormComponents/ReRankingFields.jsx';
 import useUpdateRepository from '../../../hooks/UserHooks/useUpdateRepository.jsx';
 
 const RepositoryForm = ({ files }) => {
-    const { ranks } = useContext(ApplicationContext);
+    const { ranks } = useContext(RankContext);
     const { updateRepository } = useUpdateRepository();
 
     const [ data, setData ] = useState({

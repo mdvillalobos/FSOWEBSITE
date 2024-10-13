@@ -8,6 +8,7 @@ import User from '../Models/User.js';
 import EmailVerification from '../Models/VerificationToken.js';
 import sendEmailVerification from '../Helpers/SendEmail.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
+import { uploadImageToCloudinary } from '../Helpers/Cloudinary.js'
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -33,7 +34,7 @@ export const login = async (req, res) => {
 }
 
 export const register = async (req, res) => {
-    const { employeeID, email, password } = req.body;
+    const { employeeID, email, password, role } = req.body;
 
     if(!employeeID || !email || !password) {
         return res.json({ error: 'Required all fields!' });
@@ -48,6 +49,15 @@ export const register = async (req, res) => {
     }
 
     try {
+
+        var userRole = ''
+        if(!role) {
+            userRole = 'user'
+        }
+        else {
+            userRole = role
+        }
+ 
         const [ isEmailExist, hashedPassword ] = await Promise.all([
             Account.findOne({ email }),
             hashPassword( password )
@@ -65,7 +75,7 @@ export const register = async (req, res) => {
 
         if (userAccount) {
             sendEmailVerification(userAccount.email);
-            const verificationToken = jwt.sign({ email: email, employeeID: employeeID }, process.env.JWT_SECRET);
+            const verificationToken = jwt.sign({ email: email, employeeID: employeeID, role: userRole }, process.env.JWT_SECRET);
             return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered' }); 
         }
 
@@ -114,9 +124,10 @@ export const verifyEmail = async (req,res) => {
 
 export const registerProfile = async (req, res) => {
     const { verificationToken } = req.cookies;
-    const {  firstName, lastName, middleName, track, rank, position, department } = req.body;
+    const {  firstName, lastName, middleName, sex, track, rank, department, position } = req.body;
 
-    if(!firstName || !lastName || !track || !rank || !position || !department) {
+    const start = Date.now();
+    if(!firstName || !lastName || !sex || !track || !rank || !department || !position) {
         return res.json({ error: 'Required all fields!' });
     }
 
@@ -126,31 +137,40 @@ export const registerProfile = async (req, res) => {
 
     try {
         const decode = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        console.log(decode.role)
+
+        const profilePicture = req.file ? req.file.path  : null;
+        var cloudinaryResponse = '';
+
+        if(profilePicture) {
+            cloudinaryResponse =  await uploadImageToCloudinary(profilePicture, 'ProfilePictures')
+        }
 
         const userData = await User.create({
             employeeID: decode.employeeID,
             email: decode.email,
-            firstName,
-            lastName,
-            middleName,
-            track,
-            rank,
-            position,
-            department,
+            firstName: firstName,
+            lastName: lastName,
+            middleName: middleName,
+            sex: sex,
+            track: track,
+            rank: rank,
+            department: department,
+            position: position,
+            profilePicture: cloudinaryResponse
         });
 
         if(userData) {
-            res.clearCookie('verificationToken', { path: '/home', sameSite: 'None', secure: true });
-            const userAccount = await Account.findOne({ email: decode.email });
-            const loginToken = jwt.sign({ email: userAccount.email, role: userAccount.role }, process.env.JWT_SECRET);
+            res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
+            const loginToken = jwt.sign({ email: decode.email, role: decode.role }, process.env.JWT_SECRET);
             console.log(`${Date.now() - start}`)
-            return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ user: userData, role: userAccount.role });
+            return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully' });
         }
 
         return res.json({ error: 'There is a problem at the moment please try again later' });
         
     } catch (error) {
-        console.error(`Profile Registration Error: ${ error.message }`);
+        console.log(error);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

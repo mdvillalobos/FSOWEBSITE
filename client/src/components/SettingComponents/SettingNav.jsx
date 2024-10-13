@@ -1,20 +1,22 @@
 import React from 'react'
 import { Link, useResolvedPath, useMatch } from 'react-router-dom';
-import { CiUser } from "react-icons/ci";
-import { FiShield } from "react-icons/fi";
+import { TbShieldCog } from "react-icons/tb";
+import { GoPerson } from "react-icons/go";
+
 
 const SettingNav = () => {
   return (
-    <div className='flex flex-col bg-white p-4 mr-8 min-w-fit w-[30%] shadow-lg h-[40vh]'>
-      <ul>
-        <ActiveLink to="/settings/personaldetails" className='settingNav'>
-          <CiUser className="text-2xl mr-2 font-bold"/>
+    <div className='flex flex-col border-r-2 w-80 px-6 font-medium'>
+      <p className='font-semibold text-lg text-gray-400 ml-2 mb-2'>My Profile</p>
+      <ul className='space-y-1.5'>
+        <ActiveLink to="/settings/personaldetails" className='flex hover:bg-NuButtonHover hover:text-white py-2.5 px-1.5 rounded-md duration-200'>
+          <GoPerson className="text-2xl mr-2 font-bold"/>
           Profiles
         </ActiveLink>
 
-        <ActiveLink to="/settings/password&security" className='settingNav'>
-          <FiShield className="text-2xl mr-2"/>
-          Password and Security
+        <ActiveLink to="/settings/password&security" className='flex hover:bg-NuButtonHover hover:text-white py-2.5 px-1.5 rounded-md duration-200'>
+          <TbShieldCog className="text-2xl mr-2"/>
+          Security
         </ActiveLink>
       </ul>
     </div>
@@ -28,7 +30,7 @@ function ActiveLink({to, children, ...props}) {
     const isActive = useMatch({path: path.pathname, end: true});
 
     return (
-      <li className={isActive ? "active" : ""}>
+      <li className={isActive ? "settingNavActive" : ""}>
         <Link to = {to} {...props}>
           {children}
         </Link>

@@ -19,7 +19,7 @@ import Repository from './view/User/Repository.jsx';
 import PreApplyForm from "./view/User/PreApplyForm.jsx";
 import ApplicationForm from './view/User/ApplicationForm.jsx';
 import PersonalDetails from './view/User/PersonalDetails.jsx';
-import ChangePassword from './view/User/ChangePassword.jsx';
+import PassAndSecurity from './view/User/PassAndSecurity.jsx';
 
 //admin 
 import AdminHome from './view/Admin/Home.jsx';
@@ -34,8 +34,8 @@ import ErrorPage from './view/Error/ErrorPage.jsx';
 import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
-axios.defaults.baseURL = 'http://localhost:3001';
-/* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */
+/* axios.defaults.baseURL = 'http://localhost:3001'; */
+axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
         <Route exact path="/repository" element={ <Repository /> }/>
         <Route exact path="/application" element={ <ApplicationForReRanking /> }/>
         <Route exact path="/settings/personaldetails" element={ <PersonalDetails/> }/>
-        <Route exact path="/settings/password&security" element={ <ChangePassword/> }/>
+        <Route exact path="/settings/password&security" element={ <PassAndSecurity/> }/>
 
         {/* Application forms */}
         <Route exact path='/preapply/form' element={ <PreApplyForm/> }/>
