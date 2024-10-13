@@ -233,3 +233,6 @@ td:last-child{
     letter-spacing: -0.025em;
 }
 
+.background-gradient {
+    background: linear-gradient(to bottom right, #f4f7fa, #e0e5ec);
+  }

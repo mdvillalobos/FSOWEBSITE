@@ -10,8 +10,8 @@ const Requirements = ({ from }) => {
   const { ranks } = useContext(ApplicationContext);
   const { user } = useContext(UserContext);
 
-  const availableRank = ranks.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
-  const selectedRank = ranks.find(rankRequirement => rankRequirement.rankName === selected);
+  const availableRank = ranks?.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
+  const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === selected);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,10 +32,10 @@ const Requirements = ({ from }) => {
               <option key ={i._id} value={i.rankName}>{i.rankName}</option>
             ))
           ) : (
-            <p>No Available Rank</p>
+            <option>No Available Rank</option>
           )}
         </select>
-        <input type="submit" value='submit' className='py-2 px-6 my-4 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer'/>
+        <input type="submit" value='submit' className='py-2 px-6 my-4 text-sm bg-[#41518d] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer'/>
       </form>
 
       <div className="bg-white text-black p-4">

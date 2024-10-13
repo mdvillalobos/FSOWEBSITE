@@ -10,8 +10,8 @@ export const AnalyticsContextProvider = ({ children }) => {
     const getDataAnalytics = async () => {
         try {
             const response = await axios.get('/api/getDataAnalytics');
-            setIsApprovedData(response.data.isApprovedCount);
-            setStatusData(response.data.statusCount);
+            setIsApprovedData(response.data.isApprovedData);
+            setStatusData(response.data.statusData);
         }
 
         catch {

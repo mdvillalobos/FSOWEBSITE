@@ -34,6 +34,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
         e.preventDefault();
         
         const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
+        console.log(action)
 
         console.log(data.name, data.college, data.department, data.currentRank, data.academicYear)
         await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
@@ -104,12 +105,12 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                         {from === 'Application For Re-Ranking' ? (
                             <>
                                 <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                                <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Submit</button>
+                                <input type='submit' value='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'/>
                             </>
                         ) : (
                             <>
                                 <Link to="/repository" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                                <button type='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'>Save</button>
+                                <input type='submit' value='Save' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'/>
                             </>
                         )}
                     </div>

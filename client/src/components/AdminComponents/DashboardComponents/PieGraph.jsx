@@ -26,7 +26,7 @@ const PieGraph = () => {
                     colors={['#9DB6C9', '#324E66']}
                     series={[{
                         data: pieSegments,
-                        arcLabel: (pieSegments) => `${pieSegments.value}%`,
+                        arcLabel: (pieSegments) => `${Math.round(pieSegments.value * 100) / 100}%`,
                         highlightScope: { fade: 'global', highlight: 'item' },
                         faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                     }]} 

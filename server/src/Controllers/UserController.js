@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import Account from '../Models/Account.js';
 import User from '../Models/User.js';
 import Reports from '../Models/Reports.js';
-import { uploadImageToCloudinary, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
+import Repository from '../Models/Repository.js';
+import { uploadImageToCloudinary, filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 
 export const getUserData = async (req, res) => {
@@ -53,6 +53,76 @@ export const getRole = async (req, res) => {
 
     } catch (error) {
         console.error(`Fetching User Role Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const getUserRepository = async (req, res) => {
+    const { loginToken } = req.cookies;
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userRepositoryData = await Repository.find({ email: decode.email });
+        return res.json(userRepositoryData);
+    }
+    catch (error) {
+        console.error(`Fetching User Repository Data Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const updateRepository = async (req, res) => {
+    const { formID } = req.body;
+
+    if(!formID) {
+        return res.json({ error: 'Form ID is missing. Please try again later!'})
+    }
+
+    try {
+        const [ cloudinaryResponse, userRepositoryFile ] = await Promise.all([
+            filterAndUploadedRequirements(req.files, 'repository'),
+            Repository.findOne({ _id: formID })
+        ])
+
+        for( const requirement of cloudinaryResponse) {
+            const dbData = userRepositoryFile.requirements.find(resRequirement => resRequirement.requirementNumber === requirement.requirementNumber);
+            console.log(dbData)
+
+            if(dbData) {
+                const deletedFile = await DestroyImageInCloudinary(dbData.filePath);
+                console.log(deletedFile)
+                dbData.fileName = requirement.fileName;
+                dbData.filePath = requirement.filePath
+            }
+            else {
+                userRepositoryFile.requirements.push({
+                    requirement
+                });
+            }
+        }
+        /* cloudinaryResponse.forEach(async (requirement) => {
+            const dbData = userRepositoryFile.requirements.find(resRequirement => resRequirement.requirementNumber === requirement.requirementNumber);
+            console.log(dbData)
+
+            if(dbData) {
+                const deletedFile = await DestroyImageInCloudinary(dbData.filePath);
+                console.log(deletedFile)
+                dbData.fileName = requirement.fileName;
+                dbData.filePath = requirement.filePath
+            }
+            else {
+                dbData.requirementNumber = requirement.requirementNumber
+                dbData.fileName = requirement.fileName;
+                dbData.filePath = requirement.filePath
+            }
+        }) */
+
+        await userRepositoryFile.save();
+        return res.json({ message: 'Updated Successfully'});
+
+        
+    } catch (error) {
+        console.log(error);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

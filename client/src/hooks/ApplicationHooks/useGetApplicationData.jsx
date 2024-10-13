@@ -11,6 +11,7 @@ const useGetApplicationData = () => {
                 title: 'Required all fields!'
             })
         }
+
         try {
             const userSubmittedFields = [
                 requirement_1, 
@@ -38,10 +39,13 @@ const useGetApplicationData = () => {
             userSubmittedFields.forEach((field, i) => {
                 if(field !== null) {
                     formData.append(`requirement_${i+1}`, field)
-
                 }
             })
 
+          /*   for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+ */
             await submitForm(formData);
 
         } catch (error) {

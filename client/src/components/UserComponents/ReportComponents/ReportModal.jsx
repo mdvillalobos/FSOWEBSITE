@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LuPencil } from "react-icons/lu";
+import { IoChevronBackOutline } from "react-icons/io5";
 import useCreateReport from '../../../hooks/UserHooks/useCreateReport';
 
 const ReportModal = () => {
@@ -12,7 +13,7 @@ const ReportModal = () => {
   return (
     <div>
       <div className="flex font-Poppins">
-        <button className='flex items-center px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg py-2 shadow-md' onClick={togglePop}>
+        <button className='flex items-center px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg py-2 shadow-md duration-300 transform hover:scale-105' onClick={togglePop}>
           <LuPencil size={'0.9rem'} className='mr-2 relative top-[-0.5px]'/>
           Create Report
         </button>
@@ -25,12 +26,15 @@ const ReportModal = () => {
 export default ReportModal
 
 function CreateReport(props) {
+  const dateNow = new Date();
   const { createReport } = useCreateReport();
   const [ data, setData ] = useState({
     subject: '',
     message: '', 
-    date: '' 
+    date: dateNow.toLocaleDateString()
   });
+
+  console.log(data.date)
 
   const handleSubmitReport = async (e) =>{
     e.preventDefault();
@@ -39,22 +43,15 @@ function CreateReport(props) {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="relative h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-7 py-7  space-y-5 overflow-hidden font-Poppins">
-        <div className="flex justify-between">
-          <div className="space-y-1">
-            <h2 className='text-3xl font-bold font-Poppins'>REPORT FORM</h2>
-            <p className='text-[0.7rem] text-gray-400'>you can construct here your report regarding to your weekly achievements, about your day and your work.</p>
-          </div> 
-          <button onClick={props.toggle} className='absolute top-3 right-3 text-3xl px-2 duration-300 rounded-full hover:bg-[#eae7e7] text-[#3b3c3c]'>&times;</button>
-        </div>
+      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
         <div className="break-words text-sm">
           <form onSubmit={handleSubmitReport} className='flex flex-col'>
-            <input 
-              type="date" 
-              value={data.date} 
-              onChange={(e) => setData({...data, date: e.target.value})} 
-              className='rounded-lg px-2 mb-3 w-52 py-2 text-xs border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
-            />
+            <div className="flex justify-between">
+              <button className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
+                <IoChevronBackOutline size={'1.3rem'} />
+              </button>
+              <p className='border-2 px-10 py-2 rounded-lg'>{dateNow.toDateString()}</p>
+            </div>
 
             <input 
                 type="text" 

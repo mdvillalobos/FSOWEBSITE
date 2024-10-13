@@ -10,10 +10,14 @@ const requirementSchema = new Schema({
         type: String,
         default: null
     },
-    imagePath: {
+    filePath: {
         type: String,
         default: null
     },
+    fileName: {
+        type: String,
+        default: null
+    }
 })
 
 const ApplicationFormsSchema = new Schema({

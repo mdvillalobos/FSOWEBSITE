@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext.jsx";
 import { TbSettings } from "react-icons/tb";
-import { RiLogoutBoxRLine } from "react-icons/ri";
+import { LuLogOut } from "react-icons/lu";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
@@ -35,9 +35,9 @@ const header = ({location}) => {
       </div>
 
 
-      <div className="flex border-l-2 before:mr-5 z-20">
+      <div className="flex border-l-2 before:mr-5">
         <div className="relative duration-300 translate-y-1">
-          <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center '>
+          <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center'>
             {!!user && user.gender === 'Male' ? (
               <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
                 <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
@@ -71,7 +71,7 @@ const header = ({location}) => {
               <div className="w-full h-[1.5px] my-1 bg-[#e5e7eb]"></div>
 
               <button onClick={handleLogout} className='dropDownItem'>
-                <RiLogoutBoxRLine size={'1.1rem'} className='mr-2 translate-y-[1px]'/>
+                <LuLogOut size={'1.1rem'} className='mr-2 translate-y-[1px]'/>
                 Logout
               </button>
             </div>

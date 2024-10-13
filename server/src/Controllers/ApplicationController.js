@@ -45,7 +45,6 @@ export const submitApplicationEntry = async (req, res) => {
     }
 
     try {
-       
         const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
         const requirements = await filterAndUploadedRequirements(req.files, folderPath)
         if(requirements) {
@@ -133,7 +132,7 @@ export const countData = async (req, res) => {
             }
 
             if (!countIsApproved[rankName]) {
-                dataCount[rankName] = {
+                countIsApproved[rankName] = {
                     rankName: rankName,
                     requirementsCount: []
                 };

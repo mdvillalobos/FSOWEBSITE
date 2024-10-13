@@ -17,7 +17,7 @@ const DashboardGraph = () => {
   const rankRequirements = ranks?.find(requirement => requirement.rankName === selected);
 
   const chartData = toDisplayData 
-    ? toDisplayData.requirementsCount.map((data, index) => ({
+    ? toDisplayData?.requirementsCount?.map((data, index) => ({
         rankName: rankRequirements.rankName,
         requirement: rankRequirements.requirements[index].requirement,
         requirementNumber: `Requirement ${rankRequirements.requirements[index].requirementNumber}`,
@@ -48,19 +48,19 @@ const DashboardGraph = () => {
 
   return (
     <div className='flex flex-col bg-white px-1.5 py-5 rounded-xl shadow-md w-[72vw]'>
-      <div className="flex justify-between z-10 mx-7 mb-2">
+      <div className="flex justify-between mx-7 mb-2">
         <p className='text-3xl font-medium'>Analytics</p>
-        <div className="relative">
-          <button  className="items-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
+        <div>
+          <button  className="flex justify-center items-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
             {selected}
             {!isOpen ? (
-              <TiArrowSortedDown size={'1.1rem'} className='absolute right-1 top-[10px]'/>
+              <TiArrowSortedDown size={'1.1rem'} className=''/>
             ) : (
-              <TiArrowSortedUp size={'1.1rem'} className='absolute right-1 top-[10px]'/>
+              <TiArrowSortedUp size={'1.1rem'} className=''/>
             )}
           </button>
           {isOpen && (
-            <div className="absolute w-48 text-sm z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+            <div className="absolute w-48 text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10">
               {ranks.map((rank) => (
                 <div
                   key={rank._id}
@@ -74,7 +74,7 @@ const DashboardGraph = () => {
           )}
         </div>
       </div>
-      <div className="mr-10 z-0 text-xs select-none">
+      <div className="mr-10 text-xs select-none z-0">
         <ResponsiveContainer  width="100%" height={250}>
           <BarChart
             data={chartData}

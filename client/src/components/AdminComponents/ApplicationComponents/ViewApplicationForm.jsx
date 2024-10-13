@@ -104,7 +104,7 @@ const ViewApplicationForm = ({ rest }) => {
                             return <div key={data._id}>
                                 <ApplicationInput
                                     requirement={requirement.requirement}
-                                    imagePath={data.imagePath}
+                                    imagePath={data.filePath}
                                     checkedValue={checkedValue}
                                     setCheckedValue={setCheckedValue}
                                     handleViewImage={handleViewImage}

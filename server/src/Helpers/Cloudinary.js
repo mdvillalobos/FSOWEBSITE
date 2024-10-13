@@ -23,43 +23,56 @@ export const uploadImageToCloudinary = async (filePath, folderName) => {
     const cachedResponse = await cache.get(cacheKey);
     if (cachedResponse) return cachedResponse;
 
-    const upload = await cloudinaryInstance.uploader.upload(filePath, {
-      folder: folderName,
-    });
+    const upload = await cloudinaryInstance.uploader.upload(filePath, { folder: folderName });
 
     const secureUrl = upload.secure_url;
     await cache.set(cacheKey, secureUrl);
     return secureUrl;
 }
 
+export const updateFileToCloudinary = async(filePath) => {
+     const publicID = secureURL.split('/').join().split('.')[0];
+     const upload = await cloudinaryInstance.uploader.upload(filePath, { public_id: publicID });
+}
 
 export const filterAndUploadedRequirements = async (files, folderName) => {
     const start = Date.now();
-    const userSubmittedRequirements = Object.values(files).map(file => file[0].path); 
-    
-    const uploadPromises = userSubmittedRequirements.map(path => {
-        return uploadQueue.add(() => uploadImageToCloudinary(path, folderName, { concurrent: true }))
+
+    const userSubmittedRequirements = Object.values(files).map(fileArray => {
+        const file = fileArray[0];
+        return {
+            requirementNumber: parseInt(file.fieldname.split('_')[1], 10),
+            path: file.path,
+            filename: file.originalname 
+        };
+    });
+
+    const uploadPromises = userSubmittedRequirements.map(fileArray => {
+        return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, { concurrent: true }))
     })
     
     const uploadResponses = await Promise.all(uploadPromises);
     
-    const tae = uploadResponses?.map((response, i) => ({
-        requirementNumber: i + 1,
-        imagePath: response,
-    }))
-    console.log(`${Date.now() - start}ms`)
-    return tae
+    const response = uploadResponses?.map((response, i) => ({
+        requirementNumber: userSubmittedRequirements[i].requirementNumber,
+        filePath: response,
+        fileName: userSubmittedRequirements[i].filename
+    }));
+
+    console.log(`${Date.now() - start}ms`);
+    return response;
 }
 
-export const DestroyImageInCloudinary = async (secureURL) => {
-    try {
-        if(secureURL) {
-            const publicID = secureURL.split('/').join().split('.')[0];
-            return await cloudinary.uploader.destroy(publicID)
-        }
 
-        return null;
-    } catch (error) {
-        console.log(`Deleting Image From Cloudinary Error: ${ error.message }`);
+export const DestroyImageInCloudinary = async (secureURL, folderName) => {
+    if(secureURL) {
+        const parts = secureURL.split('/');
+        const publicIDWithExtension = parts[parts.length - 1];      
+
+        // Remove the file extension
+        const publicID = publicIDWithExtension.split('.')[0]; 
+        return await cloudinary.uploader.destroy(`repository/${publicID}`)
     }
+    return null;
+
 }

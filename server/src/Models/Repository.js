@@ -6,10 +6,14 @@ const requirementSchema = new Schema({
         type: Number,
         default: null
     },
-    imagePath: {
+    filePath: {
         type: String,
         default: null
     },
+    fileName: {
+        type: String,
+        default: null
+    }
 })
 
 const RepositorySchema = new Schema({
