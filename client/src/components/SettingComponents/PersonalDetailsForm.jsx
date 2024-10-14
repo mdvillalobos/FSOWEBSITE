@@ -33,6 +33,17 @@ const PersonalDetailsForm = () => {
 
       <div className='flex justify-between w-full py-4 border-b'>
         <span className="text-left space-y-1.5">
+          <p>Others</p>
+          <p className='text-sm text-gray-400'>Other informations about your account.</p>
+        </span>
+        <button className='flex my-auto border-2 rounded-md py-1.5 px-2 text-sm' onClick={() => setIsProfileOpen(!isProfileOpen)}>
+          Edit
+          <BiEditAlt className='ml-1.5 mt-0.5'/>
+        </button>
+      </div>
+
+      <div className='flex justify-between w-full py-4 border-b'>
+        <span className="text-left space-y-1.5">
           <p>Profile Picture</p>
           <p className='text-sm text-gray-400'>Set a unique password to protect your account.</p>
         </span>
