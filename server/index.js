@@ -33,7 +33,7 @@ app.use(helmet.hsts({
 const cspDirectives = {
     defaultSrc: ["'self'"], // Allow resources from the same origin
     scriptSrc: ["'self'", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
-    styleSrc: ["'self'", "'unsafe-inline'"], // Allow styles from the same origin and inline styles
+    styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"], // Allow styles from the same origin and inline styles
     imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz", "data:"], // Allow images from the same origin, data URIs, and a trusted source
     connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
     // Add other directives as needed
@@ -41,7 +41,6 @@ const cspDirectives = {
 
 app.use(helmet.contentSecurityPolicy({
     directives: cspDirectives,
-    setAllHeaders: false, // Prevents overwriting existing headers
 }));
 
 app.use(helmet.frameguard({
