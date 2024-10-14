@@ -10,7 +10,6 @@ const UserSchema = new Schema({
     approver: {
         type: String,
         default: null,
-        unique: true
     },
     firstName: String,
     lastName: String,

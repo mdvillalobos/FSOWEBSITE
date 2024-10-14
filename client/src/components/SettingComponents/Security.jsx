@@ -15,7 +15,7 @@ const Security = () => {
     <div className='px-6 w-full'>
       <h1 className='text-3xl font-medium mb-2 text-NuBlue'>Security</h1>
 
-      <button className='flex justify-between w-full py-4 border-b '>
+      <div className='flex justify-between w-full py-4 border-b '>
         <span className="text-left space-y-1.5">
           <p>Email Address</p>
           <p className='text-sm text-gray-400'>The email address associated with your account.</p>
@@ -30,7 +30,7 @@ const Security = () => {
             <BiEditAlt className='ml-1.5 mt-0.5'/>
           </button>
         </div>
-      </button>
+      </div>
 
       {seenEditEmail ? (role === 'user' ? <WarningMessage toggle={() => setSeenEditEmail(!seenEditEmail)}/> : (role === 'admin') && <ChangeEmailForm toggle={() => setSeenEditEmail(!seenEditEmail)}/>) : null}
 
