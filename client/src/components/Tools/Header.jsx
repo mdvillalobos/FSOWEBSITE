@@ -43,7 +43,7 @@ const header = ({location}) => {
                 <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
               </div>
             ) : (
-              user.gender === 'Male' ? (
+              user.sex === 'Male' ? (
                 <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
                   <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
                 </div>

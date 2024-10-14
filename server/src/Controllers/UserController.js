@@ -226,18 +226,15 @@ export const updateProfilePicture = async (req, res) => {
 
     try {
         const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const uploadedPicture = req.file['profilePicture'] ? req.file['profilePicture'].path : null;
+        const uploadedPicture = req.file ? req.file.path : null;
+
         const userData = await User.findOne({ email: userEmail.email });
 
-        const [ deleteFromCloudinary, uploadToCloudinary ] = await Promise.all([
-            DestroyImageInCloudinary(userData.profilePicture),
-            uploadImageToCloudinary(uploadedPicture, 'profilepictures'),
-        ])
-
-        profilePicture = uploadToCloudinary;
+        userData.profilePicture ? await DestroyImageInCloudinary(userData.profilePicture) : null;
+        userData.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'profilepictures') : uploadedPicture;
         await userData.save();
         return res.json({ message: 'Profile Picture Successfully Changed' });
-
+    
     }
 
     catch(error) {

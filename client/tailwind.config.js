@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         'NuButton': '#41518d',
-        'NuButtonHover': '#5d69c6',
+        'NuButtonHover': '#7784e1',
         'NuBlue': '#35408e',
         'NuYellow': '#ffd41c',
         'nav': '#4b538f',

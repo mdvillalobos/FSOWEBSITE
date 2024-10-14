@@ -25,12 +25,6 @@ const ViewApplicationForm = ({ rest }) => {
     const [ checkedReq9, setCheckedReq9 ] = useState(null);
     const [ checkedReq10, setCheckedReq10 ] = useState(null);
 
- /*    useEffect(() => {
-        axios.get(`/api/getRequirement?rank=${rest.applyingFor}`)
-        .then(res => setRequirement(res.data))
-        .catch(err => console.log(err))
-    }, []); */
-
     const handleExit = () => {
         setShowImage({ show: false });
     }
