@@ -43,7 +43,7 @@ const cspDirectives = {
 app.use(helmet.contentSecurityPolicy({
     directives: cspDirectives,
 }));
-A
+
 app.use(helmet.frameguard({
     action: 'Deny'
 }));
