@@ -39,16 +39,18 @@ const header = ({location}) => {
               <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
                 <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
               </div>
+            ) : user.sex === 'Male' ? (
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+              </div>
+            ) : user.sex === 'Female' ? (
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
+              </div>
             ) : (
-              user.sex === 'Male' ? (
-                <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
-                  <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
-                </div>
-              ) : (
-                <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
-                  <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
-                </div>
-              )
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+                <img src={maleProfile} alt="Default Profile Picture" className='w-full h-auto object-cover'/>
+              </div>
             )}
             {!!user && (<p className='text-[0.8rem] ml-3 text-black font-medium font-Poppins max-sm:hidden'>{user.firstName} {user.lastName}</p>)}
             
