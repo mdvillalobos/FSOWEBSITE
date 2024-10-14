@@ -5,11 +5,13 @@ import { UserContext } from '../../../context/userContext.jsx';
 import PersonalInformation from './PersonalInformation.jsx';
 import useGetApplicationData from '../../hooks/ApplicationHooks/useGetApplicationData.jsx';
 import ReRankingFields from './ReRankingFields.jsx';
+import useToast from '../../hooks/Helpers/useToast.jsx';
 
 const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { ranks } = useContext(RankContext);
     const { user } = useContext(UserContext);
     const { getApplicationData } = useGetApplicationData();
+    const { Toast } = useToast();
     
     const [ data, setData ] = useState({
         name: user?.firstName + ' ' + user?.lastName,
@@ -30,11 +32,32 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const [ requirement_9, setRequirement_9 ] = useState(null);
     const [ requirement_10, setRequirement_10 ] = useState(null);
 
+    const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === ApplyingFor);
+
+    console.log(selectedRank.requirements[0])
+
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
-        
+
         const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
-        console.log(action)
+
+        if(action === 'submit') {
+            if(selectedRank?.requirements[0] !== null && requirement_1 === null ||
+                selectedRank?.requirements[1] !== null && requirement_2 === null ||
+                selectedRank?.requirements[2] !== null && requirement_3 === null ||
+                selectedRank?.requirements[3] !== null && requirement_4 === null ||
+                selectedRank?.requirements[4] !== null && requirement_5 === null ||
+                selectedRank?.requirements[5] !== null && requirement_6 === null ||
+                selectedRank?.requirements[6] !== null && requirement_7 === null ||
+                selectedRank?.requirements[7] !== null && requirement_8 === null ||
+                selectedRank?.requirements[8] !== null && requirement_9 === null ||
+                selectedRank?.requirements[9] !== null && requirement_10 === null) {
+                    return Toast.fire({
+                        icon: 'error',
+                        title: 'Required all fields!'
+                    })
+            }
+        }
 
         console.log(data.name, data.college, data.department, data.currentRank, data.academicYear)
         await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
@@ -43,7 +66,6 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
         );
     }
 
-    const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === ApplyingFor)
     return (
         <div>
             <form onSubmit={handleSubmitApplication} className='font-Poppins' encType='multipart/form-data' >
