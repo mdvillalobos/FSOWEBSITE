@@ -51,7 +51,7 @@ app.use(helmet.frameguard({
 
 app.use(helmet.noSniff());
 
-app.use(helmet.referrerPolicy({ policy: 'no-referer' }));
+app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
 
 // middleware 
 app.use(compression());
