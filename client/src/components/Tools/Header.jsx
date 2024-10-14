@@ -39,11 +39,11 @@ const header = ({location}) => {
               <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
                 <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
               </div>
-            ) : user.sex === 'Male' ? (
+            ) : user?.sex === 'Male' ? (
               <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
                 <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
               </div>
-            ) : user.sex === 'Female' ? (
+            ) : user?.sex === 'Female' ? (
               <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
                 <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
               </div>
