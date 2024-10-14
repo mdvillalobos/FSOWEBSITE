@@ -41,21 +41,17 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
 
         const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
 
-        if(action === 'submit') {
-            if(selectedRank?.requirements[0] !== null && requirement_1 === null ||
-                selectedRank?.requirements[1] !== null && requirement_2 === null ||
-                selectedRank?.requirements[2] !== null && requirement_3 === null ||
-                selectedRank?.requirements[3] !== null && requirement_4 === null ||
-                selectedRank?.requirements[4] !== null && requirement_5 === null ||
-                selectedRank?.requirements[5] !== null && requirement_6 === null ||
-                selectedRank?.requirements[6] !== null && requirement_7 === null ||
-                selectedRank?.requirements[7] !== null && requirement_8 === null ||
-                selectedRank?.requirements[8] !== null && requirement_9 === null ||
-                selectedRank?.requirements[9] !== null && requirement_10 === null) {
+        if (action === 'submit') {
+            const requirements = selectedRank?.requirements || [];
+            const requirementsCount = requirements.length;
+        
+            for (let i = 0; i < requirementsCount; i++) {
+                if (requirements[i] !== null && eval(`requirement_${i + 1}`) === null) {
                     return Toast.fire({
                         icon: 'error',
                         title: 'Required all fields!'
-                    })
+                    });
+                }
             }
         }
 
