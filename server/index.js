@@ -34,7 +34,7 @@ const cspDirectives = {
     defaultSrc: ["'self'"], // Allow resources from the same origin
     scriptSrc: ["'self'","'unsafe-inline'", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
     styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"], // Allow styles from the same origin and inline styles
-    imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz", "data:"], // Allow images from the same origin, data URIs, and a trusted source
+    imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "data:"], // Allow images from the same origin, data URIs, and a trusted source
     connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
     scriptSrcAttr: ["'self'", "'unsafe-inline'"],
     // Add other directives as needed
