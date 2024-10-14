@@ -5,7 +5,7 @@ const useUpdateOtherInformation = () => {
 
   const updateOtherInformation = async (sex, department, position, props) => {
     try {
-      const { data } = await axios.post('/api/updateOtherInfo', { 
+      const { data } = await axios.post('/api/updateotherinfo', { 
         sex, department, position
       });
   

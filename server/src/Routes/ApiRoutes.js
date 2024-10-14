@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
-import { getUserData, getRole, getUserRepository, updateRepository, getUserReports, submitReport, changePassword, updateName,  updateProfilePicture } from '../Controllers/UserController.js';
+import { getUserData, getRole, getUserRepository, updateRepository, getUserReports, submitReport, changePassword, updateName,  updateOtherInfo, updateProfilePicture } from '../Controllers/UserController.js';
 import { getAllReports, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
 import { submitApplicationEntry, checkApplication , countData } from '../Controllers/ApplicationController.js';
 
@@ -33,6 +33,7 @@ router.post('/api/resetpassword', resetPassword);
 
 //edit profile
 router.post('/api/updatename', updateName);
+router.post('/api/updateotherinfo' , updateOtherInfo);
 router.post('/api/updateProfilePicture', upload.single('profilePicture'), updateProfilePicture);
 router.post('/api/changepassword', changePassword);
 

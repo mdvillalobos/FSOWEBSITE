@@ -76,7 +76,7 @@ export const register = async (req, res) => {
         if (userAccount) {
             sendEmailVerification(userAccount.email);
             const verificationToken = jwt.sign({ email: email, employeeID: employeeID, role: userRole }, process.env.JWT_SECRET);
-            return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered' }); 
+            return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered Successfully' }); 
         }
 
         return res.json({ error: 'There is an error at the moment. Pleas try again later.'});
@@ -114,7 +114,7 @@ export const verifyEmail = async (req,res) => {
         }
 
         await EmailVerification.deleteOne({ owner: email })
-        return res.json({ success: true, message: 'OTP verified successfully.' });
+        return res.json({ message: 'OTP verified successfully.' });
 
     } catch (error) {
         console.error(`Email Verification Error: ${ error.message }`);
@@ -125,7 +125,7 @@ export const verifyEmail = async (req,res) => {
 export const registerProfile = async (req, res) => {
     const { verificationToken } = req.cookies;
     const {  firstName, lastName, middleName, sex, track, rank, department, position } = req.body;
-    
+
     if(!firstName || !lastName || !sex || !track || !rank || !department || !position) {
         return res.json({ error: 'Required all fields!' });
     }
@@ -188,7 +188,7 @@ export const forgotPassword = async (req, res) => {
         
         sendEmailVerification(email);
         const verificationToken = jwt.sign({ email: email }, process.env.JWT_SECRET);
-        return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ email: email });
+        return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Email is valid' });
     
     } catch (error) {
         console.error(`Forgot Password Error: ${ error.message }`);
@@ -218,7 +218,7 @@ export const resetPassword = async (req, res) => {
 
         res.clearCookie('verificationToken', { path: '/', sameSite: 'none', secure: true });
 
-        return res.json({ success: true, message: 'Changed Password Successfully' });
+        return res.json({ success: true, message: 'User password reset successfully' });
 
     } catch (error) {
         console.error(`Reset Password Error: ${ error.message }`);
@@ -237,7 +237,7 @@ export const resendOTP = (req, res) => {
         const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
         sendEmailVerification(email);
 
-        return res.json('Successfully resend your one time pin');
+        return res.json({ message: 'OTP sent successfully!' });
         
     } catch (error) {
         console.error(`Resend One Time Pin Error: ${ error.message }`);
@@ -247,5 +247,5 @@ export const resendOTP = (req, res) => {
 
 export const logout = (req, res) => {
     res.clearCookie('loginToken', { path: '/', sameSite: 'none', secure: true });
-    return res.json({ message: 'Succesfully Logged Out' })
+    return res.json({ message: 'Logged out successfully' })
 }

@@ -76,7 +76,7 @@ export const createRank = async (req, res) => {
             requirements: rankRequirements 
         }) 
 
-        return res.json({ success: true, message: 'Rank successfully created.', data: newRank });
+        return res.json({ message: 'Rank successfully created.' });
 
 
     } catch (error) {

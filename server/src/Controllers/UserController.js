@@ -136,14 +136,14 @@ export const submitReport = async (req, res) => {
 
     try {
         const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userReport = await Reports.create({
+        await Reports.create({
             email: decode.email,
             subject,
             message,
             date
         });
 
-        return res.json({ message: 'Report successfully submitted!', data: userReport});
+        return res.json({ message: 'Report successfully submitted!' });
         
     } catch (error) {
         console.error(`Report Submittion Error: ${ error.message }`);
@@ -209,10 +209,39 @@ export const updateName = async (req, res) => {
             return res.json({ error: 'User data not found!' });
         }
 
-        return res.json(updateUserCredentials);
+        return res.json({ message: 'Successfully updated user name.' });
         
     } catch (error) {
         console.error(`Update User Details Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const updateOtherInfo = async(req, res) => {
+    const { loginToken } = req.cookies;
+    const { sex, department, position } = req.body;
+
+    if(!loginToken )  {
+        return res.json({ error: 'Access Denied!'});
+    }
+
+    if(!sex || !department || !position) {
+        return res.json({ error: 'Required all fields'});
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+
+        const updateOtherInfo = await User.updateOne({ email: decode.email }, { $set: { sex: sex, department: department, position: position}});
+
+        if(!updateOtherInfo) {
+            return res.json({ error: 'User data not found!' });
+        }
+
+        return res.json({ message:  'Successfully updated user other information.' });
+    }
+    catch (error) {
+        console.error(`Update Other Information Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
