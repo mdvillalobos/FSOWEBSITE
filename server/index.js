@@ -24,13 +24,47 @@ app.use(
         credentials: true
 }));
 
-/* app.use(helmet());
 app.use(helmet.hsts({
-    maxAge: 31536000,
-    includeSubDomains: true, //apply HSTS to subdomain
-    preload: true //Allow domain to be included in HSTS preload list
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true, // Apply HSTS to subdomains
+    preload: true, // Indicates that the domain should be preloaded into browsers
 }));
 
+const cspDirectives = {
+    defaultSrc: ["'self'"], // Allow resources from the same origin
+    scriptSrc: ["'self'", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
+    styleSrc: ["'self'", "'unsafe-inline'"], // Allow styles from the same origin and inline styles
+    imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz", "data:"], // Allow images from the same origin, data URIs, and a trusted source
+    connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
+    // Add other directives as needed
+};
+
+app.use(helmet.contentSecurityPolicy({
+    directives: cspDirectives,
+    setAllHeaders: false, // Prevents overwriting existing headers
+}));
+
+app.use(helmet.frameguard({
+    action: 'Deny'
+}));
+
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    next();
+});
+
+app.use((req, res, next) => {
+    res.setHeader('Referrer-Policy', 'no-referrer'); // Change this based on your needs
+    next();
+});
+
+app.use((req, res, next) => {
+    res.setHeader('Permissions-Policy', 'geolocation=(self), camera=(), microphone=()'); // Adjust as needed
+    next();
+});
+
+
+/* 
 app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self"],
@@ -43,10 +77,6 @@ app.use(helmet.contentSecurityPolicy({
         upgradeInsecureRequests: [], //automaticall upgrade HTTP to HTTPS
 
     }
-}));
-
-app.use(helmet.frameguard({
-    action: 'Deny'
 }));
 
 app.use(helmet.noSniff());
