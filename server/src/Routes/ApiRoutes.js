@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
-import { getUserData, getRole, getUserRepository, updateRepository, getUserReports, submitReport, changePassword, updateProfile,  updateProfilePicture } from '../Controllers/UserController.js';
+import { getUserData, getRole, getUserRepository, updateRepository, getUserReports, submitReport, changePassword, updateName,  updateProfilePicture } from '../Controllers/UserController.js';
 import { getAllReports, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
 import { submitApplicationEntry, checkApplication , countData } from '../Controllers/ApplicationController.js';
 
