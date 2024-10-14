@@ -1,15 +1,17 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { mongoose } from 'mongoose';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 dotenv.config();
 const app = express();
+
 
 import apiRoutes from './src/Routes/ApiRoutes.js';
 const __filename = fileURLToPath(import.meta.url);
@@ -21,6 +23,35 @@ app.use(
         origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:5173' ],
         credentials: true
 }));
+
+app.use(helmet());
+app.use(helmet.hsts({
+    maxAge: 31536000,
+    includeSubDomains: true, //apply HSTS to subdomain
+    preload: true //Allow domain to be included in HSTS preload list
+}));
+
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self"],
+        scriptSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'"],
+        connectSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"], //prevent this page from being loaded in a 
+        upgradeInsecureRequests: [], //automaticall upgrade HTTP to HTTPS
+
+    }
+}));
+
+app.use(helmet.frameguard({
+    action: 'Deny'
+}));
+
+app.use(helmet.noSniff());
+
+app.use(helmet.referrerPolicy({ policy: 'no-referer' }));
 
 // middleware 
 app.use(compression());
