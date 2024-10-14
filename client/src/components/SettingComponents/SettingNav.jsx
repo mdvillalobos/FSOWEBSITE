@@ -3,7 +3,6 @@ import { Link, useResolvedPath, useMatch } from 'react-router-dom';
 import { TbShieldCog } from "react-icons/tb";
 import { GoPerson } from "react-icons/go";
 
-
 const SettingNav = () => {
   return (
     <div className='flex flex-col border-r-2 w-80 px-6 font-medium'>

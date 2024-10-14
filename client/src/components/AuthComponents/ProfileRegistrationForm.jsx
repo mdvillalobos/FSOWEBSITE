@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState } from 'react'
 import useRegisterProfile from '../../hooks/AuthHooks/useRegisterProfile';
 import Box from '@mui/material/Box';
 import { RankContext } from '../../../context/rankContext';

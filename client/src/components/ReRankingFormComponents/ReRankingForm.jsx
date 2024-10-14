@@ -1,10 +1,10 @@
 import React, { useState, useContext }from 'react';
 import { Link } from 'react-router-dom';
 import { RankContext } from '../../../context/rankContext.jsx';
+import { UserContext } from '../../../context/userContext.jsx';
 import PersonalInformation from './PersonalInformation.jsx';
 import useGetApplicationData from '../../hooks/ApplicationHooks/useGetApplicationData.jsx';
 import ReRankingFields from './ReRankingFields.jsx';
-import { UserContext } from '../../../context/userContext.jsx';
 
 const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { ranks } = useContext(RankContext);

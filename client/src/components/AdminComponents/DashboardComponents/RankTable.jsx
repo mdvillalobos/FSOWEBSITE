@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react';
-import {RankContext } from '../../../../context/rankContext.jsx';
+import { RankContext } from '../../../../context/rankContext.jsx';
 import ModalBtn from './ModalBtn.jsx';
 
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
-import { TiArrowSortedDown } from "react-icons/ti";
-import { TiArrowSortedUp } from "react-icons/ti";
-import { RiArrowLeftDoubleFill } from "react-icons/ri";
-import { RiArrowRightDoubleFill } from "react-icons/ri";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 
 const RankTable = () => {
     const { ranks } = useContext(RankContext)

@@ -5,7 +5,6 @@ import { GoPaperclip } from "react-icons/go";
 import { FocusOn } from 'react-focus-on'
 import ViewImage from '../AdminComponents/ApplicationComponents/ViewFormComponents/ViewImage';
 
-
 const ReRankingFields = ({ requirement, data, setData }) => {
     const removeFile = () => {
         setData(null)

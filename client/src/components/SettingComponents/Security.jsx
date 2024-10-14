@@ -11,7 +11,6 @@ const Security = () => {
   const [ seenEditEmail, setSeenEditEmail ] = useState(false)
   const [ seenPasswordModal, setSeenPasswordModal ] = useState(false)
 
-
   return (
     <div className='px-6 w-full'>
       <h1 className='text-3xl font-medium mb-2 text-NuBlue'>Security</h1>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FcFile } from "react-icons/fc";
 import { FaFile } from "react-icons/fa";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 
 const SavedData = () => {

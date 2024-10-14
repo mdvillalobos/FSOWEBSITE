@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import maleProfile from '../../../assets/images/male.webp';
 import femaleProfile from '../../../assets/images/female.webp';
-import { HiDotsHorizontal } from "react-icons/hi";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineDelete } from "react-icons/md";
 import ConfigImage from '../../../assets/images/config.png';
 
 const Config = () => {

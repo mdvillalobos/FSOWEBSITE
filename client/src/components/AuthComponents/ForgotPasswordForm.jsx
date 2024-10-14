@@ -4,7 +4,6 @@ import { MdEmail } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import useFindEmail from '../../hooks/AuthHooks/useFindEmail';
 
-
 const ForgotPasswordForm = () => {
     const { findEmail } = useFindEmail();
     const [ data, setData ] = useState({ email: ''});

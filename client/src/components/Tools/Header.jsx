@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import useLogout from '../../hooks/AuthHooks/useLogout.jsx';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
-import { useContext } from "react";
 import { UserContext } from "../../../context/userContext.jsx";
 import { TbSettings } from "react-icons/tb";
 import { LuLogOut } from "react-icons/lu";
-import { RiUserSettingsLine } from "react-icons/ri";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { RiArrowDropUpLine } from "react-icons/ri";
+import { RiUserSettingsLine, RiArrowDropDownLine,  RiArrowDropUpLine } from "react-icons/ri";
 import logo from '../../assets/images/NU_shield.webp';
 import maleProfile from '../../assets/images/male.webp';
 import femaleProfile from '../../assets/images/female.webp';
+import useLogout from '../../hooks/AuthHooks/useLogout.jsx';
 
 const header = ({location}) => {
   const {user} = useContext(UserContext);
