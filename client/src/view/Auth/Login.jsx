@@ -9,7 +9,7 @@ const Login = () => {
             <BackgroundHead/>
                 <div className="form">
                     <div className="formContainer">
-                        <h1 className="font-Poppins text-center text-5xl mb-8 font-semibold max-[396px]:text-[2.5rem] max-[396px]:font-semibold">Login</h1>
+                        <h1 className="font-Poppins text-center text-[3.3rem] mb-6 font-semibold max-[396px]:text-[2.5rem] max-[396px]:font-semibold">Login</h1>
                         <div>
                             <LoginForm/>
                         </div>
