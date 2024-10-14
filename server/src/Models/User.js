@@ -7,6 +7,7 @@ const UserSchema = new Schema({
         type: String,
         unique: true
     },
+    
     approver: {
         type: String,
         default: null,
@@ -23,7 +24,6 @@ const UserSchema = new Schema({
         type: String,
         default: null
     }
-   
 })
 
 const UserModel = mongoose.model('users', UserSchema);
