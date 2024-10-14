@@ -24,7 +24,7 @@ app.use(
         credentials: true
 }));
 
-app.use(helmet());
+/* app.use(helmet());
 app.use(helmet.hsts({
     maxAge: 31536000,
     includeSubDomains: true, //apply HSTS to subdomain
@@ -34,10 +34,10 @@ app.use(helmet.hsts({
 app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self"],
-        scriptSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com"],
+        scriptSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com", "http://localhost:5173]',
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'"],
-        connectSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com"],
+        connectSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com", 'http://localhost:5173'],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"], //prevent this page from being loaded in a 
         upgradeInsecureRequests: [], //automaticall upgrade HTTP to HTTPS
@@ -51,7 +51,7 @@ app.use(helmet.frameguard({
 
 app.use(helmet.noSniff());
 
-app.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
+app.use(helmet.referrerPolicy({ policy: 'no-referrer' })); */
 
 // middleware 
 app.use(compression());
