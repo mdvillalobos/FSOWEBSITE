@@ -21,10 +21,10 @@ const UserSchema = new Schema({
     },
     approver: {
         type: String,
-        default: null
+        default: null,
     }
 })
 
-const UserModel = mongoose.model('users', UserSchema);
+const UserModel = mongoose.model('userdata', UserSchema);
 
 export default UserModel;
