@@ -151,30 +151,6 @@ export const submitReport = async (req, res) => {
     }
 }
 
-export const updateProfile = async (req, res) => {
-    const { loginToken } = req.cookies;
-    const { firstName, lastName, middleName, department } = req.body;
-
-    if(!loginToken) {
-        return res.json({ error: 'Access denied!'});
-    }
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET); 
-        const updateUserCredentials = await User.updateOne({ email: decode.email }, { $set: { lastName: lastName, firstName: firstName, middleName: middleName, department: department }});
-
-        if(!updateUserCredentials) {
-            return res.json({ error: 'User data not found!' });
-        }
-
-        return res.json(updateUserCredentials);
-        
-    } catch (error) {
-        console.error(`Update User Details Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
 export const changePassword = async (req, res) => {
     const { loginToken } = req.cookies;
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
@@ -216,6 +192,31 @@ export const changePassword = async (req, res) => {
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
+
+export const updateName = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { firstName, lastName, middleName } = req.body;
+
+    if(!loginToken) {
+        return res.json({ error: 'Access denied!'});
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET); 
+        const updateUserCredentials = await User.updateOne({ email: decode.email }, { $set: { lastName: lastName, firstName: firstName, middleName: middleName }});
+
+        if(!updateUserCredentials) {
+            return res.json({ error: 'User data not found!' });
+        }
+
+        return res.json(updateUserCredentials);
+        
+    } catch (error) {
+        console.error(`Update User Details Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
 
 export const updateProfilePicture = async (req, res) => {
     const { loginToken } = req.cookies;

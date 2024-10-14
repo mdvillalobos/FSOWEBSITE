@@ -32,15 +32,15 @@ router.post('/api/forgot', forgotPassword);
 router.post('/api/resetpassword', resetPassword);
 
 //edit profile
-router.post('/api/updateprofile', updateProfile);
+router.post('/api/updatename', updateName);
+router.post('/api/updateProfilePicture', upload.single('profilePicture'), updateProfilePicture);
 router.post('/api/changepassword', changePassword);
 
 //user
-router.post('/api/updateProfilePicture', upload.single('profilePicture'), updateProfilePicture);
 router.get('/api/getUserRepository', authorizationMiddleware('user'), getUserRepository);
 router.post('/api/updateRepository', authorizationMiddleware('user'), uploadFiles, updateRepository);
 router.post('/api/submitreport', authorizationMiddleware('user'), submitReport);
-router.get('/api/getreport', uploadFiles, getUserReports);
+router.get('/api/getreport', authorizationMiddleware('user'), getUserReports);
 router.get('/api/getProfile', getUserData);
 router.get('/api/getRole', getRole);
 router.get('/api/getAllRank', getRanks);

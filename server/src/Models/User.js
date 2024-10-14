@@ -7,10 +7,6 @@ const UserSchema = new Schema({
         type: String,
         unique: true
     },
-    approver: {
-        type: String,
-        default: null,
-    },
     firstName: String,
     lastName: String,
     middleName: String,
@@ -20,6 +16,10 @@ const UserSchema = new Schema({
     department: String,
     position: String,
     profilePicture: {
+        type: String,
+        default: null
+    },
+    approver: {
         type: String,
         default: null
     }

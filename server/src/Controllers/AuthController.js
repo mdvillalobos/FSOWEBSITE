@@ -125,8 +125,7 @@ export const verifyEmail = async (req,res) => {
 export const registerProfile = async (req, res) => {
     const { verificationToken } = req.cookies;
     const {  firstName, lastName, middleName, sex, track, rank, department, position } = req.body;
-
-    const start = Date.now();
+    
     if(!firstName || !lastName || !sex || !track || !rank || !department || !position) {
         return res.json({ error: 'Required all fields!' });
     }
@@ -161,7 +160,6 @@ export const registerProfile = async (req, res) => {
         if(userData) {
             res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
             const loginToken = jwt.sign({ email: decode.email, role: decode.role }, process.env.JWT_SECRET);
-            console.log(`${Date.now() - start}`)
             return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully' });
         }
 
