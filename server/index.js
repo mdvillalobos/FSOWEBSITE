@@ -63,26 +63,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-/* 
-app.use(helmet.contentSecurityPolicy({
-    directives: {
-        defaultSrc: ["'self"],
-        scriptSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com", "http://localhost:5173]',
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'"],
-        connectSrc: ["'self'", "https://nu-fso-54ab116ceb1f.herokuapp.com", 'http://localhost:5173'],
-        objectSrc: ["'none'"],
-        frameAncestors: ["'none'"], //prevent this page from being loaded in a 
-        upgradeInsecureRequests: [], //automaticall upgrade HTTP to HTTPS
-
-    }
-}));
-
-app.use(helmet.noSniff());
-
-app.use(helmet.referrerPolicy({ policy: 'no-referrer' })); */
-
 // middleware 
 app.use(compression());
 app.use(express.json({ limit : "50mb" }));
@@ -95,7 +75,7 @@ app.use('/', apiRoutes);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '../client/dist', 'my-app.js'));
 });
 
 
