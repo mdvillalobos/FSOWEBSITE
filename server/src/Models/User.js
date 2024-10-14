@@ -7,7 +7,6 @@ const UserSchema = new Schema({
         type: String,
         unique: true
     },
-    
     approver: {
         type: String,
         default: null,

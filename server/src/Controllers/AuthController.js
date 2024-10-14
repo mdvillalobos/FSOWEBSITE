@@ -137,8 +137,6 @@ export const registerProfile = async (req, res) => {
 
     try {
         const decode = jwt.verify(verificationToken, process.env.JWT_SECRET);
-        console.log(decode.role)
-
         const profilePicture = req.file ? req.file.path  : null;
         var cloudinaryResponse = '';
 
