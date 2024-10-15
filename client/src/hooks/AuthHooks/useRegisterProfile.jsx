@@ -24,7 +24,6 @@ const useRegisterProfile = () => {
             title: 'Registering your data. Please wait!'
         })
         try {
-
             const formData = new FormData();
             formData.append('profilePicture', profilePicture);
             formData.append('lastName', lastName);
@@ -36,7 +35,6 @@ const useRegisterProfile = () => {
             formData.append('department', department);
             formData.append('college', college)
             formData.append('position', position);
-
 
             const { data } = await axios.post('/api/registeProfile', formData);
         
