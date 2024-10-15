@@ -52,15 +52,15 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                 requirement_9,
                 requirement_10,
             ]
-            console.log( selectedRank.requirements.length)
           
             for (let i = 0; i < selectedRank.requirements.length; i++) {
-              if (selectedRank.requirements[i] !== null && !requirementState[i]) {
-                return Toast.fire({
-                  icon: 'error',
-                  title: 'Required all fields!'
-                });
-              }
+                console.log(requirementState[i])
+                if (selectedRank.requirements[i] !== null && !requirementState[i]) {
+                    return Toast.fire({
+                        icon: 'error',
+                        title: 'Required all fields!'
+                    });
+                }
             }
         }
 
