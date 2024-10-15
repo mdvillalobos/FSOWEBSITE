@@ -33,7 +33,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"], // Allow resources from the same origin
-            scriptSrc: ["'self'","'sha256-abc123...'", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
+            scriptSrc: ["'self'", "'sha256-abc123...'", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"], // Allow styles from the same origin and inline styles
             imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "data:"], // Allow images from the same origin, data URIs, and a trusted source
             connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
@@ -42,9 +42,18 @@ app.use(helmet({
     },
     frameguard: {
         action: 'Deny'
+    },
+
+    xssFilter: {
+        setOnOldIE: true,
+        mode: 'block'
     }
 
 }))
+app.use((req, res, next) => {
+    res.set('X-XSS-Protection', '1; mode=block');
+    next();
+});
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -60,6 +69,7 @@ app.use((req, res, next) => {
     res.setHeader('Permissions-Policy', 'geolocation=(self), camera=(), microphone=()'); // Adjust as needed
     next();
 });
+
 
 // middleware 
 app.use(compression());
