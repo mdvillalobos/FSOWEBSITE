@@ -71,21 +71,28 @@ const UpdateNameModal = (props) => {
     lastName: '',
     firstName: '',
     middleName: '', 
-  })
+  });
+
+  useEffect(() => {
+    axios.get('/api/getProfile')
+    .then(res => setData(res.data))
+    .catch(error => console.log(error))
+  }, []);
 
   const updateProfile = async (e) => {
     e.preventDefault();
-    await EditName(data.lastName, data.firstName, data.middleName);
+    await EditName(data.lastName, data.firstName, data.middleName, props);
   }
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[64%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
         <div className="break-words text-sm">
           <form onSubmit={updateProfile} className='font-Poppins'>
             <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
               <IoChevronBackOutline size={'1.3rem'} />
             </button> 
+
             <h1 className='my-4 text-xl font-medium'>Name</h1>
 
             <div className="space-y-4">
@@ -118,10 +125,80 @@ const UpdateNameModal = (props) => {
                 <span className='setting-input-label'>Last Name</span>
               </div>
             </div>
-            <p className='text-[0.8rem] ml-0.5 mt-1'>Don't add any unusual capitalization, punctuation, characters or random words.</p>
+            <p className='text-[0.8rem] ml-0.5 mt-2'>Don't add any unusual capitalization, punctuation, characters or random words.</p>
             <input type="submit" value='Update' className='w-full text-white font-semibold bg-NuBlue py-3 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
           </form> 
         </div>
+      </div>
+    </div>
+  )
+}
+
+const UpdateOtherInfoModal = (props) => {
+  const { updateOtherInformation } = useUpdateOtherInformation();
+  const [ data, setData ] = useState({
+    sex: '',
+    department: '',
+    position: '',
+  });
+
+  useEffect(() => {
+    axios.get('/api/getProfile')
+    .then(res => setData(res.data))
+    .catch(error => console.log(error))
+  }, []);
+
+  const updateProfilePicture = async (e) => {
+    e.preventDefault();
+    await updateOtherInformation(data.sex, data.department, data.position, props);
+  }
+
+  return (
+    <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
+      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+        <form onSubmit={updateProfilePicture} className='font-Poppins'>
+          <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
+            <IoChevronBackOutline size={'1.3rem'} />
+          </button> 
+          
+          <h1 className='my-4 text-xl font-medium'>Other Information</h1>
+
+          <div className="space-y-4">
+            <div className="setting-input-container">
+              <select value={data.sex} onChange={(e) => setData({...data, sex: e.target.value})} className='border-2 rounded-lg px-2 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <span className='setting-input-label'>Sex</span>
+            </div>
+
+            <div className="setting-input-container">
+              <select value={data.department} onChange={(e) => setData({...data, department: e.target.value})} className='border-2 rounded-lg px-2 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'>
+                <option value="College of Allied Health">College of Allied Health</option>
+                <option value="College of Architecture">College of Architecture</option>
+                <option value="College of Business and Accountancy">College of Business and Accountancy</option>
+                <option value="College of Computing and Information Technologies">College of Computing and Information Technologies</option>
+                <option value="College of Education, Arts and Science">College of Education, Arts and Science</option>
+                <option value="College of Engineering">College of Engineering</option>
+                <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
+              </select>
+              <span className='setting-input-label'>Department</span>
+            </div>
+
+            <div className="setting-input-container">
+              <input type="text"
+                required
+                value={data.position} 
+                onChange={(e) => setData({...data, lastpositionName: e.target.value})}
+                className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2] select-none cursor-not-allowed'
+              />
+              <span className='setting-input-label'>Position</span>
+            </div>
+
+          </div>
+          <p className='text-[0.8rem] ml-0.5 mt-2'>Don't add any unusual capitalization, punctuation, characters or random words.</p>
+          <input type="submit" value='Update' className='w-full text-white font-semibold bg-NuBlue py-3 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
+        </form> 
       </div>
     </div>
   )
@@ -169,76 +246,13 @@ const UpdateProfileModal = (props) => {
             <p className='text-sm'>Upload a new photo</p>
           </label>
 
-          <input type="submit" value='Save' className='w-full text-white font-semibold bg-NuBlue py-4 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
-        </form> 
-      </div>
-    </div>
-  )
-}
-
-const UpdateOtherInfoModal = (props) => {
-  const { updateOtherInformation } = useUpdateOtherInformation();
-  const [ data, setData ] = useState({
-    sex: '',
-    department: '',
-    position: '',
-  });
-
-  useEffect(() => {
-    axios.get('/api/getProfile')
-    .then(res => setData(res.data))
-    .catch(error => console.log(error))
-  }, []);
-
-  const updateProfilePicture = async (e) => {
-    e.preventDefault();
-    await updateOtherInformation(profile, props);
-  }
-
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
-        <form onSubmit={updateProfile} className='font-Poppins'>
-          <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
-            <IoChevronBackOutline size={'1.3rem'} />
-          </button> 
-          
-          <h1 className='my-4 text-xl font-medium'>Name</h1>
-
-          <div className="space-y-4">
-            <div className="setting-input-container">
-              <input type="text"
-                required
-                value={data.sex} 
-                onChange={(e) => setData({...data, sex: e.target.value})}
-                className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
-              />
-              <span className='setting-input-label'>First Name</span>
-            </div>
-
-            <div className="setting-input-container">
-              <input type="text"
-                value={data.department} 
-                onChange={(e) => setData({...data, department: e.target.value})}
-                className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
-              />
-              <span className='setting-input-label'>Middle Name</span>
-            </div>
-
-            <div className="setting-input-container">
-              <input type="text"
-                required
-                value={data.position} 
-                onChange={(e) => setData({...data, lastpositionName: e.target.value})}
-                className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
-              />
-              <span className='setting-input-label'>Last Name</span>
-            </div>
-
-          </div>
-          <p className='text-[0.8rem] ml-0.5 mt-1'>Don't add any unusual capitalization, punctuation, characters or random words.</p>
-          <input type="submit" value='Update' className='w-full text-white font-semibold bg-NuBlue py-3 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
-        </form> 
+          {profile === null ? (
+            <input type="submit" value='Save' className='w-full text-white font-semibold bg-NuBlue py-4 px-14 mt-4 text-sm rounded-lg duration-300 hover:bg-NuButtonHover cursor-not-allowed' disabled />
+         
+          ) : (
+            <input type="submit" value='Save' className='w-full text-white font-semibold bg-NuBlue py-4 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
+          )}
+          </form>
       </div>
     </div>
   )

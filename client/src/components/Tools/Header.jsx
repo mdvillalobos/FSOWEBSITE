@@ -21,13 +21,13 @@ const header = ({location}) => {
   return (
     <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8'>
       <div className='flex space-x-6'>
-          <div className="flex my-auto mx-0 after:border-r-2 after:ml-5">
+          <Link to='/' className="flex my-auto mx-0 after:border-r-2 after:ml-5">
             <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>
             <div className="text-[#41518d] font-semibold font-Poppins max-[396px]:hidden">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
             </div>
-          </div>
+          </Link>
           <div className="my-auto text-xl font-Poppins font-medium text-gray-500">{location}</div>
       </div>
 
@@ -66,11 +66,6 @@ const header = ({location}) => {
               <Link to='/settings/personaldetails' className='dropDownItem'>
                 <RiUserSettingsLine size={'1.1rem'} className='mr-2'/>
                 Account Settings
-              </Link>
-
-              <Link to='/settings/personaldetails' className='dropDownItem'>
-                <TbSettings size={'1.1rem'} className='mr-2 translate-y-[1px]'/>
-                Settings
               </Link>
 
               <div className="w-full h-[1.5px] my-1 bg-[#e5e7eb]"></div>

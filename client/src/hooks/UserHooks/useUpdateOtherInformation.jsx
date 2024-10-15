@@ -1,22 +1,30 @@
-import useToast from "../Helpers/useToast"
+import useToast from "../Helpers/useToast";
+import axios from 'axios'
 
 const useUpdateOtherInformation = () => {
   const { Toast, LoadingToast } = useToast();
 
   const updateOtherInformation = async (sex, department, position, props) => {
+    LoadingToast.fire({
+      title: 'Updating...'
+    });
+
     try {
       const { data } = await axios.post('/api/updateotherinfo', { 
         sex, department, position
       });
   
       if(data.error) {
-        Toast.fire({
+        return Toast.fire({
           icon: 'error',
           title: data.error
         });
       }
+
       else {
+        LoadingToast.close();
         props.toggle();
+        location.reload();
       }
   
     } catch (error) {

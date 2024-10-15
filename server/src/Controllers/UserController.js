@@ -225,7 +225,7 @@ export const updateOtherInfo = async(req, res) => {
         return res.json({ error: 'Access Denied!'});
     }
 
-    if(!sex || !department || !position) {
+    if(!sex || !department || !position ) {
         return res.json({ error: 'Required all fields'});
     }
 

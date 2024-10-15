@@ -4,7 +4,9 @@ import { UserContext } from '../../../context/userContext';
 import { BiEditAlt } from "react-icons/bi";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { TiWarningOutline } from "react-icons/ti";
-
+import { FaEyeSlash } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
+import IconButton from '@mui/material/IconButton';
 
 const Security = () => {
   const { user, role } = useContext(UserContext);
@@ -118,6 +120,10 @@ const ChangeEmailForm = (props) => {
 
 const ChangePasswordForm = (props) => {
   const { ChangePassword } = useChangePassword();
+  const [ showOldPass, setShowOldPass ] = useState(false);
+  const [ showNewPass, setShowNewPass ] = useState(false);
+  const [ showConfirmPass, setShowConfirmPass ] = useState(false);
+
   const [ data, setData ] = useState({
     oldPassword: '',
     newPassword: '',
@@ -131,43 +137,54 @@ const ChangePasswordForm = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
         <div className="break-words text-sm">
           <form onSubmit={handleChangePassword} className='space-y-4'>
             <button type='button' className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
               <IoChevronBackOutline size={'1.3rem'} />
             </button> 
 
+            <h1 className='my-4 text-xl font-medium'>Change Password</h1>
             <div className="setting-input-container">
-              <input type="text"
+              <input type={showOldPass ? 'text' : 'password'}
                 required
                 value={data.oldPassword} 
                 onChange={(e) => setData({...data, oldPassword: e.target.value})}
                 className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
               />
               <span className='setting-input-label'>Old Password</span>
+              <button type='button'  onClick={() => setShowOldPass((prev) => !prev)} className='absolute right-2 top-[0.8rem] text-gray-500 hover:bg-gray-300 rounded-full py-1.5 px-1.5 duration-200'>
+                {showOldPass ? <FaEyeSlash size="20px" opacity="80%"/> : <IoEyeSharp size="20px" opacity="80%"/>}
+              </button>
             </div>
 
             <div className="setting-input-container">
-              <input type="text"
+              <input type={showNewPass ? 'text' : 'password'}
                 required
                 value={data.newPassword} 
                 onChange={(e) => setData({...data, newPassword: e.target.value})}
                 className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
               />
               <span className='setting-input-label'>New Password</span>
+              <button type='button'  onClick={() => setShowNewPass((prev) => !prev)} className='absolute right-2 top-[0.8rem] text-gray-500 hover:bg-gray-300 rounded-full py-1.5 px-1.5 duration-200'>
+                {showNewPass ? <FaEyeSlash size="20px" opacity="80%"/> : <IoEyeSharp size="20px" opacity="80%"/>}
+              </button>
             </div>
 
             <div className="setting-input-container">
-              <input type="text"
+              <input type={showConfirmPass ? 'text' : 'password'}
                 required
                 value={data.confirmNewPassword} 
                 onChange={(e) => setData({...data, confirmNewPassword: e.target.value})}
                 className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
               />
               <span className='setting-input-label'>Confirm New Password</span>
+              <button type='button'  onClick={() => setShowConfirmPass((prev) => !prev)} className='absolute right-2 top-[0.8rem] text-gray-500 hover:bg-gray-300 rounded-full py-1.5 px-1.5 duration-200'>
+                {showConfirmPass ? <FaEyeSlash size="20px" opacity="80%"/> : <IoEyeSharp size="20px" opacity="80%"/>}
+              </button>
             </div>
 
+            <p className='text-[0.8rem] ml-0.5 mt-2'>Your password must contain at least one uppecase letter, one lowercase letter, one number and one special character(_-@#$&).</p>
             <input type="submit" value='Change Password' className='text-white bg-NuButton font-semibold py-3 w-full text-sm cursor-pointer hover:bg-NuButtonHover duration-200 rounded-md' />
           </form>
         </div>

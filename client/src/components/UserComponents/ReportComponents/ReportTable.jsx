@@ -42,7 +42,7 @@ const ReportTable = () => {
           </tr>
         </thead>
         <tbody className='divide-y-8 divide-white'>
-          {data.map(i =>(
+          {data?.map(i =>(
             <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
               <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</td>
               <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.message} </td>

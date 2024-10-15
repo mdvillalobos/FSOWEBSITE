@@ -25,6 +25,7 @@ const useUpdateProfilePicture = () => {
             else {
                 LoadingToast.close();
                 props.toggle();
+                location.reload();
             }
         }
         catch (error) {

@@ -10,10 +10,11 @@ const Config = () => {
     const [ isChecked, setIsChecked ] = useState(false)
 
     useEffect(() => {
-        axios.get('/api/getAllApprovers')
+        axios.get('/api/getapprovers')
         .then(res => setData(res.data))
         .catch(error => console.error(`Error Fetching Approvers In Front End: ${ error.message }`))
     }, [])
+    console.log(data)
 
     return (
         <div className='flex flex-col justify-between h-full'>
@@ -43,7 +44,7 @@ const Config = () => {
                             </div>
                         })     
                         : (
-                            <p>No Data</p>
+                            <p>No Approver Yet</p>
                         )
                     }
                 </div>

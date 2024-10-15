@@ -48,7 +48,7 @@ router.get('/api/getAllRank', getRanks);
 
 //admin 
 router.get('/api/getAllReports', authorizationMiddleware('admin'), getAllReports);
-router.get('/api/getAllApprovers', authorizationMiddleware('admin'), getAllApprovers);
+router.get('/api/getapprovers', authorizationMiddleware('admin'), getAllApprovers);
 router.get('/api/getApplications', authorizationMiddleware('admin'), getApplicationsForReRanking);
 router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/checkApplication', authorizationMiddleware('admin'), checkApplication);

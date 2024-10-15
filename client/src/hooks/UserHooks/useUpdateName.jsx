@@ -6,13 +6,14 @@ const useUpdateName = () => {
 
   const EditName = async (lastName, firstName, middleName, props) => {
     LoadingToast.fire({
-     title: 'Editing your name...'
+     title: 'Updating...'
     });
 
     try {
-      const { data } = await axios.post('/api/updateprofile' , {
+      const { data } = await axios.post('/api/updatename' , {
         lastName, firstName, middleName,
       });
+      console.log('processing')
     
       if(data.error) {
         Toast.fire({
@@ -22,6 +23,7 @@ const useUpdateName = () => {
       }
 
       else {
+        LoadingToast.close();
         props.toggle();
         location.reload();
       }

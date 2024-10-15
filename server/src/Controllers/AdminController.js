@@ -21,8 +21,11 @@ export const getAllReports = async (req, res) => {
 
 export const getAllApprovers = async (req, res) => {
     try {
-        const approvers = await User.find({ approver: { $ne: null }}, { email: 1, _id: 1, approver: 1, lastName: 1, firstName: 1, profilePicture: 1, sex: 1 }).sort({ approver: 1})
-        return res.json(approvers)
+        const approvers = await User.find({ approver: { $ne: null }}, { email: 1, _id: 1, approver: 1, lastName: 1, firstName: 1, profilePicture: 1, sex: 1 }).sort({ approver: 1 })
+        if(approvers) {
+            return res.json(approvers)
+        }
+return res.json(null)
     }
     catch (error) {
         console.error(`Fetching Reports Error: ${ error.message }`);
