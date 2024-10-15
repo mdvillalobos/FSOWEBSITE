@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     track: String,
     rank: String,
     department: String,
+    college: String,
     position: String,
     profilePicture: {
         type: String,

@@ -15,10 +15,10 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     
     const [ data, setData ] = useState({
         name: user?.firstName + ' ' + user?.lastName,
-        college: "",
+        college: user?.college,
         department: user?.department,
         currentRank: user?.rank,
-        academicYear: "",
+        academicYear: "2024-2025",
     });
     
     const [ requirement_1, setRequirement_1 ] = useState(null);
@@ -33,29 +33,37 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const [ requirement_10, setRequirement_10 ] = useState(null);
 
     const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === ApplyingFor);
-
-    console.log(selectedRank.requirements[0])
-
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
 
         const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
 
+        console.log(action)
         if (action === 'submit') {
-            const requirements = selectedRank?.requirements || [];
-            const requirementsCount = requirements.length;
-        
-            for (let i = 0; i < requirementsCount; i++) {
-                if (requirements[i] !== null && eval(`requirement_${i + 1}`) === null) {
-                    return Toast.fire({
-                        icon: 'error',
-                        title: 'Required all fields!'
-                    });
-                }
+            const requirementState = [
+                requirement_1,
+                requirement_2,
+                requirement_3,
+                requirement_4,
+                requirement_5,
+                requirement_6,
+                requirement_7,
+                requirement_8,
+                requirement_9,
+                requirement_10,
+            ]
+            console.log( selectedRank.requirements.length)
+          
+            for (let i = 0; i < selectedRank.requirements.length; i++) {
+              if (selectedRank.requirements[i] !== null && !requirementState[i]) {
+                return Toast.fire({
+                  icon: 'error',
+                  title: 'Required all fields!'
+                });
+              }
             }
         }
 
-        console.log(data.name, data.college, data.department, data.currentRank, data.academicYear)
         await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
             requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
             requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
