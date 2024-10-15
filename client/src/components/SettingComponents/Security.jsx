@@ -27,7 +27,7 @@ const Security = () => {
             {!!user && (<p>{user.email}</p>)}
             <p className='pt-1.5 text-sm text-green-400'>Verified</p>
           </span>
-          <button className='flex my-auto border-2 rounded-md py-1.5 px-4 text-sm hover:bg-[#e1e1e1] duration-200' onClick={() => setSeenEditEmail(!seenEditEmail)}>
+          <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 transform hover:scale-105' onClick={() => setSeenEditEmail(!seenEditEmail)}>
             Edit
             <BiEditAlt className='ml-1.5 mt-0.5'/>
           </button>
@@ -41,7 +41,7 @@ const Security = () => {
           <p>Password</p>
           <p className='text-sm text-gray-400'>Set a unique password to protect your account.</p>
         </span>
-        <button className='flex my-auto border-2 rounded-md py-1.5 px-4 text-sm hover:bg-[#e1e1e1] duration-200' onClick={() => setSeenPasswordModal(!seenPasswordModal)}>
+        <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 transform hover:scale-105' onClick={() => setSeenPasswordModal(!seenPasswordModal)}>
           Change Password
           <BiEditAlt className='ml-1.5 mt-0.5'/>
         </button>
@@ -59,7 +59,7 @@ const WarningMessage = (props) => {
 
   return(
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[50%] w-[30%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[50%] w-[30%] bg-white shadow-lg rounded-2xl px-6 py-6 space-y-5 overflow-hidden fade-in">
         <div className="h-full flex flex-col justify-between">
           <div className="break-words flex text-justify flex-col">
             <TiWarningOutline size={'9rem'} className='mx-auto mb-4 text-red-500'/>
@@ -92,7 +92,7 @@ const ChangeEmailForm = (props) => {
 
   return(
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6 space-y-5 overflow-hidden fade-in">
         <div className="break-words text-sm">
 
           <form onSubmit={handleChangePassword} className='space-y-4'>
@@ -137,7 +137,7 @@ const ChangePasswordForm = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6 space-y-5 overflow-hidden fade-in">
         <div className="break-words text-sm">
           <form onSubmit={handleChangePassword} className='space-y-4'>
             <button type='button' className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>

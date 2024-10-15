@@ -113,7 +113,7 @@ const ProfileRegistrationForm = () => {
               </div>
 
               <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">Last Name</label>
+                <label htmlFor="firstName">Employee Position</label>
                 <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({...data, position: e.target.value})}>
                   <option value="Faculty">Faculty</option>
                   <option value="Director">Director</option>

@@ -6,7 +6,7 @@ import About from '../../components/UserComponents/ProfileComponents/About.jsx';
 
 const Profile = () => {
     return (
-        <div className="background-gradient h-screen">
+        <div className="bg-[#f4f7fa] h-screen">
             <Header location={'Profile'}/>
             <div className="px-16 py-2">
                 <BackBtn/>

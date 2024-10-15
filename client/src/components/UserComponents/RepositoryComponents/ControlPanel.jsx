@@ -23,7 +23,7 @@ export default ControlPanel
 const CreateApplication = (props) => {
     return (
       <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-        <div className="relative h-[90vh] w-[80vw] bg-white shadow-lg rounded-xl px-7 py-7  space-y-5 overflow-hidden font-Poppins">
+        <div className="h-[90vh] w-[80vw] bg-white shadow-lg rounded-xl px-7 py-7 space-y-5 overflow-hidden fade-in">
             <button className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-md duration-200" onClick={props.toggle}>
                 <IoChevronBackOutline size={'1.3rem'} />
             </button>

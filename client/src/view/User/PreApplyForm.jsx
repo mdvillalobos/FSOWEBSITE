@@ -8,7 +8,7 @@ const PreApplyForm = () => {
     const location = useLocation();
     const { files } = location.state || {};
     return (
-        <div className='background-gradient h-full'>
+        <div className='bg-[#f4f7fa] h-full'>
             <Header location={ files?.applyingFor }/>
             <div className="px-16 py-2">
               <BackBtn/>

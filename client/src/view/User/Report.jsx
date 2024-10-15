@@ -6,7 +6,7 @@ import Header from "../../components/Tools/Header.jsx";
 
 const Report = () => {
     return (
-        <div className='bg-[#f4f7fa] h-[100dvh]'>
+        <div className='background-gradient h-[100dvh]'>
             <Header location={'Weekly Report'}/>
             <div className="px-16 py-2">
                 <BackBtn/>

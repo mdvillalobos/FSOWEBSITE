@@ -25,16 +25,27 @@ const ReportModal = () => {
 
 export default ReportModal
 
-function CreateReport(props) {
-  const dateNow = new Date();
+function CreateReport(props) {;
   const { createReport } = useCreateReport();
+
+  const dateNow = new Date()
+  const tobeSubmitted = dateNow.toLocaleDateString('en-PH', {
+    year: 'numeric',
+    month: '2-digit', // This will give abbreviated month names
+    day: '2-digit', // Ensures the day is two digits
+  });
+
+  const formattedDate = dateNow.toLocaleDateString('en-PH', {
+    year: 'numeric',
+    month: 'long', // This will give abbreviated month names
+    day: '2-digit', // Ensures the day is two digits
+  });
+
   const [ data, setData ] = useState({
     subject: '',
     message: '', 
-    date: dateNow.toLocaleDateString()
+    date: tobeSubmitted
   });
-
-  console.log(data.date)
 
   const handleSubmitReport = async (e) =>{
     e.preventDefault();
@@ -43,22 +54,21 @@ function CreateReport(props) {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden font-Poppins">
+      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in ">
         <div className="break-words text-sm">
           <form onSubmit={handleSubmitReport} className='flex flex-col'>
-            <div className="flex justify-between">
-              <button className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
-                <IoChevronBackOutline size={'1.3rem'} />
-              </button>
-              <p className='border-2 px-10 py-2 rounded-lg'>{dateNow.toDateString()}</p>
-            </div>
-
+            <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
+              <IoChevronBackOutline size={'1.3rem'} />
+            </button>
+          
+            <h1 className='text-2xl my-4 font-medium'>Report Form</h1>
+            <p className='border-2 px-4 py-2 rounded-lg my-auto mb-3'>{formattedDate}</p>
             <input 
                 type="text" 
                 placeholder='Subject'
                 value={data.subject} 
                 onChange={(e) => setData({...data, subject: e.target.value})} 
-                className='rounded-lg px-2 mb-3 py-2 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
+                className='rounded-lg mb-3 py-2 px-4 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
             />
 
             <textarea 
@@ -70,7 +80,7 @@ function CreateReport(props) {
             />
 
             <div className="flex mt-4">
-              <input type="submit" value="Submit" className=' py-3 px-10 text-sm bg-[#4b538f] text-white hover:bg-[#5d69c6] duration-300 rounded-lg cursor-pointer shadow-lg hover:shadow-lg w-full'/>
+              <input type="submit" value="Submit" className=' py-3 px-10 text-sm bg-NuBlue text-white hover:bg-NuButtonHover duration-300 rounded-lg cursor-pointer shadow-md w-full'/>
             </div>
           </form>
         </div>

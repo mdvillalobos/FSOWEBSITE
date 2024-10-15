@@ -9,7 +9,7 @@ const ViewApplication = () => {
     const { data } = location.state || {};
 
     return (
-        <div className='background-gradient h-full'>
+        <div className='bg-[#f4f7fa] h-full'>
             <Header/>
             <div className="px-14 pt-2 pb-4">
                 <BackBtn/>

@@ -6,7 +6,7 @@ import ControlPanel from '../../components/UserComponents/RepositoryComponents/C
 
 const Repository = () => {
     return (
-        <div className="background-gradient h-screen w-screen">
+        <div className="bg-[#f4f7fa] h-screen w-screen">
             <Header location={ 'Repository' }/>
             <div className="px-16 py-2">
                 <BackBtn/>

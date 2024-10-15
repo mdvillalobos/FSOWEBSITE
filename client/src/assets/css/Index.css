@@ -232,3 +232,18 @@ td:last-child{
 .background-gradient {
     background: linear-gradient(to bottom, #fbfbfd, #f8f8fd);
 }
+
+.fade-in {
+    animation: fadeIn 0.2s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
