@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ApplicationMasterPage = ({ name, college, department, currentRank, academicYear, data, setData }) => {
+const ApplicationMasterPage = ({ name, college, department, currentRank, academicYear }) => {
   
   return (
     <div className="">
@@ -14,7 +14,7 @@ const ApplicationMasterPage = ({ name, college, department, currentRank, academi
             </div>
             <div className="inputContainer">
               <label htmlFor="college" className='text-sm font-normal'>College:</label>
-              <input type="text" id="college" className='inputFields ' value={ college } onChange={(e) => setData({...data, college: e.target.value }) }/>
+              <input type="text" id="college" className='inputFields ' defaultValue={ college } disabled/>
             </div>
             <div className="inputContainer">
               <label htmlFor="department" className='text-sm font-normal'>Department:</label>
@@ -28,11 +28,11 @@ const ApplicationMasterPage = ({ name, college, department, currentRank, academi
             </div>
             <div className="inputContainer">
               <label htmlFor="status" className='text-sm font-normal'>Status:</label>
-              <input type="text" id="status" className='inputFields pointer-events-none' defaultValue='For Approval' disabled/>
+              <input type="text" id="status" className='inputFields pointer-events-none' defaultValue='' disabled/>
             </div>
             <div className="inputContainer">
               <label htmlFor="term" className='text-sm font-normal'>AY/Term:</label>
-              <input type="text" id="term" className='inputFields' value={ academicYear } onChange={(e) => setData({...data, academicYear: e.target.value })}/>
+              <input type="text" id="term" className='inputFields' defaultValue={ academicYear } disabled/>
             </div>
           </div>
         </div>
