@@ -13,6 +13,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { getApplicationData } = useGetApplicationData();
     const { Toast } = useToast();
     
+    console.log(user)
     const [ data, setData ] = useState({
         name: user?.firstName + ' ' + user?.lastName,
         college: user?.college,
@@ -53,7 +54,8 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                 requirement_10,
             ]
           
-            for (let i = 0; i < selectedRank.requirements.length - 1;  i++) {
+            for (let i = 0; i < selectedRank.requirements.length;  i++) {
+                console.log(i)
                 console.log(requirementState[i])
                 if (selectedRank.requirements[i] !== null && !requirementState[i]) {
                     return Toast.fire({
