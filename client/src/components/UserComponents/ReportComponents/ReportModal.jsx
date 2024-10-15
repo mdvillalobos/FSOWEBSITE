@@ -11,14 +11,12 @@ const ReportModal = () => {
   }
 
   return (
-    <div>
-      <div className="flex font-Poppins">
-        <button className='flex items-center px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg py-2 shadow-md duration-300 transform hover:scale-105' onClick={togglePop}>
-          <LuPencil size={'0.9rem'} className='mr-2 relative top-[-0.5px]'/>
-          Create Report
-        </button>
-      </div>
-        {seen ? <CreateReport toggle={togglePop}/> : null}
+    <div className="flex font-Poppins">
+      <button className='flex items-center px-4 text-sm bg-NuButton text-white rounded-lg py-2 shadow-md duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
+        <LuPencil size={'0.9rem'} className='mr-2 top-[-0.5px]'/>
+        Create Report
+      </button>
+      {seen ? <CreateReport toggle={togglePop}/> : null}
     </div>
   )
 }

@@ -1,8 +1,30 @@
 import { React, useState } from 'react';
 import useCreateRank from '../../../hooks/AdminHooks/useCreateRank.jsx';
+import { LuPencil } from "react-icons/lu";
 
-const RankModal = (props) => {
-  const [data, setData] = useState({
+const RankModal = () => {
+  const [ seen, setSeen ] = useState(false)
+
+  const togglePop = () => {
+    setSeen(!seen)
+  }
+
+  return (
+    <div>
+      <button className='flex items-center px-7 py-[7px] w-36 text-xs bg-NuButton text-white rounded-md shadow-md duration-300 hover:bg-NuButtonHover hover:scale-105' onClick={togglePop}>
+        <LuPencil size={'0.9rem'} className='mr-2'/> 
+        Add Rank
+      </button>
+      {seen ? <CreateRankModal toggle={togglePop}/> : null}
+    </div>
+  )
+}
+
+export default RankModal
+
+const CreateRankModal = (props) => {
+  const { createRank } = useCreateRank();
+  const [ data, setData ] = useState({
     rankName: '',
     track: '',
     requirement_1: '',
@@ -16,8 +38,6 @@ const RankModal = (props) => {
     requirement_9: '',
     requirement_10: '',
   })
-  
-  const { createRank } = useCreateRank();
 
   const handleCreateRank = async (e) => {
     e.preventDefault();
@@ -126,6 +146,4 @@ const RankModal = (props) => {
     </div>
   )
 }
-
-export default RankModal
 

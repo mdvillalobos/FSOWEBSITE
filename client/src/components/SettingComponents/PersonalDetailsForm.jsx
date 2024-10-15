@@ -24,7 +24,7 @@ const PersonalDetailsForm = () => {
           <p className='text-sm text-gray-400'>The email address associated with your account.</p>
         </span>
         <div className="flex space-x-8 text-right text-sm">
-          <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 transform hover:scale-105' onClick={() => setIsNameOpen(!isNameOpen)}>
+          <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsNameOpen(!isNameOpen)}>
             Edit
             <BiEditAlt className='ml-1.5 mt-0.5'/>
           </button>
@@ -38,7 +38,7 @@ const PersonalDetailsForm = () => {
           <p>Others</p>
           <p className='text-sm text-gray-400'>Other informations about your account.</p>
         </span>
-        <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 transform hover:scale-105' onClick={() => setIsOtherOpen(!isOtherOpen)}>
+        <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsOtherOpen(!isOtherOpen)}>
           Edit
           <BiEditAlt className='ml-1.5 mt-0.5'/>
         </button>
@@ -51,7 +51,7 @@ const PersonalDetailsForm = () => {
           <p>Profile Picture</p>
           <p className='text-sm text-gray-400'>Set a unique password to protect your account.</p>
         </span>
-        <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 transform hover:scale-105' onClick={() => setIsProfileOpen(!isProfileOpen)}>
+        <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsProfileOpen(!isProfileOpen)}>
           Change Profile
           <BiEditAlt className='ml-1.5 mt-0.5'/>
         </button>

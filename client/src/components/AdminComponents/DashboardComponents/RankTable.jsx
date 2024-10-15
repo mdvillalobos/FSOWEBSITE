@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { RankContext } from '../../../../context/rankContext.jsx';
-import ModalBtn from './ModalBtn.jsx';
+import RankModal from './RankModal.jsx';
 
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
@@ -43,7 +43,7 @@ const RankTable = () => {
                 <p className='text-2xl font-medium'>Ranks</p>
                 <div className="flex text-sm space-x-2">
                     <div className="relative">
-                        <button  className="items-center py-[7.4px] px-4 w-36 text-xs rounded-md font-medium text-ellipsis overflow-hidden whitespace-nowrap bg-gray-200 " onClick={() => setIsOpen(!isOpen)}>
+                        <button  className="items-center py-[7.4px] px-4 w-36 text-xs rounded-md font-medium text-ellipsis overflow-hidden whitespace-nowrap bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
                             {!selectedTrack ? 'All' : selectedTrack}
                             {!isOpen ? (
                               <TiArrowSortedDown size={'1rem'} className='absolute right-1 top-[8px]'/>
@@ -52,7 +52,7 @@ const RankTable = () => {
                             )}
                         </button>
                         {isOpen && (
-                            <div className="absolute w-48 text-xs z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+                            <div className="absolute w-48 text-xs z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg ">
                                  <div
                                     onClick={() => {setSelectedTrack(), setIsOpen(!isOpen)}}
                                     className="cursor-pointer py-2 px-4 hover:bg-[#41518d] hover:text-white duration-200"
@@ -71,7 +71,7 @@ const RankTable = () => {
                             </div>
                         )}
                     </div>
-                    <ModalBtn/>
+                    <RankModal/>
                 </div>
             </div>
             <div className="h-[25vh]">

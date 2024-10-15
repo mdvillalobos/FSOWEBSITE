@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Choice = () => {
+const Instruction = () => {
   return (
-    <div className="">
+    <div>
       <p>Faculty Ranking System tracks:</p>
       <p>A. <span>Academic Track</span> - A faculty is assignmed to this track under the following conditions:</p>
       <ul className='ml-8'>
@@ -15,4 +15,4 @@ const Choice = () => {
   )
 }
 
-export default Choice
+export default Instruction

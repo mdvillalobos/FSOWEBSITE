@@ -6,12 +6,15 @@ import ReactMarkdown from 'react-markdown';
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();
-  const [ selected, setSelected ] = useState('Instructor 1');
   const { ranks } = useContext(RankContext);
   const { user } = useContext(UserContext);
-
+  
   const availableRank = ranks?.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
+
+  const [ selected, setSelected ] = useState(availableRank[0]?.rankName);
+
   const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === selected);
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,10 +28,14 @@ const Requirements = ({ from }) => {
   }
   return (
     <div>
+      <button type='button'>
+
+
+      </button>
       <form onSubmit={onSubmit}>
         <select value= {selected} onChange={(e) => setSelected(e.target.value)} className=' bg-[#f0f0f0] text-black p-1.5 mt-4 text-sm font-normal text-center w-52 rounded-sm ' >
           {availableRank ? (
-            availableRank.map(i => (
+            availableRank?.map(i => (
               <option key ={i._id} value={i.rankName}>{i.rankName}</option>
             ))
           ) : (
@@ -39,8 +46,8 @@ const Requirements = ({ from }) => {
       </form>
 
       <div className="bg-white text-black p-4">
-        {selectedRank? (
-          selectedRank.requirements.map((requirement, i) => (
+        {selectedRank ? (
+          selectedRank?.requirements.map((requirement, i) => (
             <ReactMarkdown key={requirement._id} className='font-Poppins mb-2'>{`&#8211; ${String(requirement.requirement)}`}</ReactMarkdown>
           ))
         ): (

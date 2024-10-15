@@ -116,6 +116,7 @@ export const getUserReports = async (req, res) => {
     const { loginToken } = req.cookies;
 
     try {
+        console.log(process.env.JWT_SECRET)
         const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
         const userReportsData = await Reports.find({ email: decode.email });
         return res.json(userReportsData);

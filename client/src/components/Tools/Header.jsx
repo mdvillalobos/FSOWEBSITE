@@ -10,30 +10,31 @@ import femaleProfile from '../../assets/images/female.webp';
 import useLogout from '../../hooks/AuthHooks/useLogout.jsx';
 
 const header = ({location}) => {
-  const {user} = useContext(UserContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const { user, role } = useContext(UserContext);
+  const [ isOpen, setIsOpen ] = useState(false);
 
+  const home = (role === 'user') ? '/home' : (role === 'admin') && '/admin/home'
   const { Logout } = useLogout();
   const handleLogout = () => {
     Logout();
   }
 
   return (
-    <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8'>
+    <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8 font-Poppins'>
       <div className='flex space-x-6'>
-          <Link to='/' className="flex my-auto mx-0 after:border-r-2 after:ml-5">
+          <Link to={home} className="flex my-auto mx-0 after:border-r-2 after:ml-5">
             <img src={logo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>
-            <div className="text-[#41518d] font-semibold font-Poppins max-[396px]:hidden">
+            <div className="text-[#41518d] font-semibold max-[396px]:hidden">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
             </div>
           </Link>
-          <div className="my-auto text-xl font-Poppins font-medium text-gray-500">{location}</div>
+          <div className="my-auto text-xl font-medium text-gray-500">{location}</div>
       </div>
 
 
       <div className="flex border-l-2 before:mr-5">
-        <div className="relative duration-300 translate-y-1">
+        <div className="duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center'>
             {!!user && user.profilePicture ? (
               <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
@@ -52,7 +53,7 @@ const header = ({location}) => {
                 <img src={maleProfile} alt="Default Profile Picture" className='w-full h-auto object-cover'/>
               </div>
             )}
-            {!!user && (<p className='text-[0.8rem] ml-3 text-black font-medium font-Poppins max-sm:hidden'>{user.firstName} {user.lastName}</p>)}
+            {!!user && (<p className='text-[0.8rem] ml-3 text-black font-medium max-sm:hidden'>{user.firstName} {user.lastName}</p>)}
             
             {!isOpen ? (
               <RiArrowDropDownLine size={'1.5rem'}/>

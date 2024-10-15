@@ -15,8 +15,8 @@ const ProfileCard = () => {
                   <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
                 </div>
               ) : (
-                user.gender === 'Male' ? (
-                  <div className="w-52 h-52overflow-hidden rounded-full flex items-center justify-center">
+                user.sex === 'Male' ? (
+                  <div className="w-52 h-52 overflow-hidden rounded-full flex items-center justify-center">
                     <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
                   </div>
                 ) : (
