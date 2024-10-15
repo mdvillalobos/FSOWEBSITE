@@ -53,7 +53,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                 requirement_10,
             ]
           
-            for (let i = 0; i < selectedRank.requirements.length; i++) {
+            for (let i = 0; i < selectedRank.requirements.length - 1;  i++) {
                 console.log(requirementState[i])
                 if (selectedRank.requirements[i] !== null && !requirementState[i]) {
                     return Toast.fire({
