@@ -43,7 +43,7 @@ const ReRankingFields = ({ requirement, data, setData }) => {
             } else {
                 Toast.fire({
                     icon: 'error',
-                    title: 'Invalid File Type'
+                    title: 'Invalid File'
                 })
             }
         };
@@ -86,7 +86,7 @@ const ReRankingFields = ({ requirement, data, setData }) => {
                         </span>
                     ) : (
                         <label className='flex justify-center items-center border px-1.5 text-sm rounded-md h-12 w-52 bg-gray-200 cursor-pointer'>
-                            <input type='file' className='hidden'  onChange={(e) => setData(e.target.files[0])}/>
+                            <input type='file' className='hidden' accept=".png, .jpg, .jpeg, .pdf" onChange={(e) => setData(e.target.files[0])}/>
                             <GoPaperclip size={'1rem'} className='mr-2 translate-y-[1px] text-[#41518d]' />
                             <p className='text-sm'>Browse Files</p>
                         </label>
