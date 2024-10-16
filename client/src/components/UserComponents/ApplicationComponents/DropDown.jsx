@@ -29,22 +29,22 @@ const Requirements = ({ from }) => {
   }
   return (
     <div>
-      <button type='button' onClick={() => setIsOpen(!isOpen)} className='items-center py-[7.4px] px-4 w-36 text-xs rounded-sm font-medium text-ellipsis overflow-hidden whitespace-nowrap bg-gray-200'>
+      <button type='button' onClick={() => setIsOpen(!s)}>
         {selected}
       </button>
 
-      {isOpen && 
-        <div className="absolute w-48 text-xs z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg flex flex-col">
-          {availableRank?.map(i => (
-            <button 
-              key={i._id}
-              type='button' 
-              className='text-left' 
-              onClick={() => setSelected(i.rankName)}>{i.rankName}
-            </button>
-          ))}
-        </div>
-      }
+      <form onSubmit={onSubmit}>
+        <select value= {selected} onChange={(e) => setSelected(e.target.value)} className=' bg-[#f0f0f0] text-black p-1.5 mt-4 text-sm font-normal text-center w-52 rounded-sm ' >
+          {availableRank ? (
+            availableRank?.map(i => (
+              <option key ={i._id} value={i.rankName}>{i.rankName}</option>
+            ))
+          ) : (
+            <option>No Available Rank</option>
+          )}
+        </select>
+        <input type="submit" value='submit' className='py-2 px-6 my-4 text-sm bg-[#41518d] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer'/>
+      </form>
 
       <div className="bg-white text-black p-4">
         {selectedRank ? (

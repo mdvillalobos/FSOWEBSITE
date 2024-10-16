@@ -26,7 +26,6 @@ const ReRankingFields = ({ requirement, data, setData }) => {
 
         reader.onload = (event) => {
             const fileType = imageToShow.type || imageToShow.name.split('.').pop().toLowerCase();
-            console.log(fileType)
             
             if (fileType.startsWith('image/')) {
                 setShowImage({

@@ -38,7 +38,7 @@ app.use(helmet({
             imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "blob:", "data:"], // Allow images from the same origin, data URIs, and a trusted source
             connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
             scriptSrcAttr: ["'self'", "'unsafe-inline'"],
-            frameSrc: ["'self'", "blob:"]
+            frameSrc: ["'self'",]
         }
     },
     frameguard: {
