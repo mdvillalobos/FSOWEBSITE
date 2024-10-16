@@ -21,6 +21,7 @@ const ReRankingFields = ({ requirement, data, setData }) => {
 
     const handleViewImage = (imagePath) => {
         const imageToShow = data.filePath ? data.filePath : URL.createObjectURL(imagePath);
+        console.log(imageToShow)
 
         setShowImage({
             show: true,

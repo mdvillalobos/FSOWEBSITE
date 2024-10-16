@@ -161,7 +161,7 @@ export const registerProfile = async (req, res) => {
         if(userData) {
             res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
             const loginToken = jwt.sign({ email: decode.email, role: decode.role }, process.env.JWT_SECRET);
-            return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully' });
+            return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
         }
 
         return res.json({ error: 'There is a problem at the moment please try again later' });

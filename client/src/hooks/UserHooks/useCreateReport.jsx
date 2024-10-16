@@ -23,7 +23,7 @@ const useCreateReport = () => {
                 });
             }
             else {
-                /* location.reload(); */
+                location.reload();
                 props.toggle();
             }
         } catch (error) {
