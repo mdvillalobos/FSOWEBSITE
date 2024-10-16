@@ -20,17 +20,8 @@ const ReRankingFields = ({ requirement, data, setData }) => {
     }
 
     const handleViewImage = (imagePath) => {
-        let imageToShow;
-
-        if (data.filePath) {
-            imageToShow = data.filePath;
-        } else if (imagePath instanceof Blob || imagePath instanceof File) {
-            imageToShow = URL.createObjectURL(imagePath);
-            console.log(imageToShow)
-
-        }
-        /* const imageToShow = data.filePath ? data.filePath : URL.createObjectURL(imagePath);
-        console.log(imageToShow) */
+        const imageToShow = data.filePath ? data.filePath : URL.createObjectURL(imagePath);
+        console.log(imageToShow)
 
         setShowImage({
             show: true,
