@@ -6,14 +6,11 @@ import Header from "../../components/Tools/Header.jsx";
 
 const Report = () => {
     return (
-        <div className='background-gradient h-[100dvh]'>
+        <div className='bg-[#f4f7fa] h-[100dvh]'>
             <Header location={'Weekly Report'}/>
             <div className="px-16 py-2">
                 <BackBtn/>
-                <div className='bg-white py-5 px-8 shadow-md rounded-xl overflow-hidden'>
-                    <div className="flex justify-end mb-2">
-                        <ReportModal/>
-                    </div>
+                <div className='bg-white py-6 rounded-xl shadow-md overflow-hidden h-[80vh]'>
                     <Table/>
                 </div>
             </div>  

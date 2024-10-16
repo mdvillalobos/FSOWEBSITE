@@ -63,7 +63,7 @@
         
     }
     .navigation {
-        @apply flex flex-col bg-[#41518d] text-white text-center font-Poppins shadow-md w-72 h-[19rem] mt-16 py-10 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
+        @apply flex flex-col bg-NuButton text-white text-center font-Poppins shadow-md w-72 h-[19rem] mt-16 py-10 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
         max-[396px]:w-80 max-[396px]:pl-6
         /* min-width 640px*/
         max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0  

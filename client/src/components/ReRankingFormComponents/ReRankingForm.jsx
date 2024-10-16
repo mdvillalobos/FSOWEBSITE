@@ -63,7 +63,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
             }
         }
 
-        await getApplicationData(data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
+        await getApplicationData(from, data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
             requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
             requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
         );

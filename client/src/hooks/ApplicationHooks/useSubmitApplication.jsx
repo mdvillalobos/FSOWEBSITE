@@ -6,7 +6,7 @@ const useSubmitApplication = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
 
-    const submitForm = async(formData) => {
+    const submitForm = async(formData, from) => {
         LoadingToast.fire({ 
             title: 'Submitting your application.'
         })
@@ -25,20 +25,18 @@ const useSubmitApplication = () => {
                     icon: 'success',
                     title: 'Thank you'
                 });
-                navigate('/application');
+
+            
+                if(from === 'Repository') {
+                    navigate('/repository')
+                }
+                else {
+                    navigate('/application');
+                }
             }
         }
         catch(error) {
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                console.error('Error response:', error.response.data);
-              } else if (error.request) {
-                // The request was made but no response was received
-                console.error('Error request:', error.request);
-              } else {
-                // Something happened in setting up the request
-                console.error('Error message:', error.message);
-              }
+            console.error(`Error response: ${error.message}`);
             LoadingToast.close();
         }
     } 

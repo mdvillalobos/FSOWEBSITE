@@ -4,7 +4,7 @@ import useSubmitApplication from "./useSubmitApplication";
 const useGetApplicationData = () => {
     const { Toast } = useToast();
     const { submitForm } = useSubmitApplication();
-    const getApplicationData = async (name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
+    const getApplicationData = async (from, name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
         
         console.log(name, college, department, currentRank)
         if(!name || !college || !department || !currentRank) {
@@ -55,7 +55,7 @@ const useGetApplicationData = () => {
                    
                 }
             })
-            await submitForm(formData);
+            await submitForm(formData, from);
 
         } catch (error) {
             console.error(`Getting User Application Data Error: ${ error.message }`);

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { LuPencil } from "react-icons/lu";
 import { IoChevronBackOutline } from "react-icons/io5";
 import useCreateReport from '../../../hooks/UserHooks/useCreateReport';
 
@@ -12,8 +11,7 @@ const ReportModal = () => {
 
   return (
     <div className="flex font-Poppins">
-      <button className='flex items-center px-4 text-sm bg-NuButton text-white rounded-lg py-2 shadow-md duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
-        <LuPencil size={'0.9rem'} className='mr-2 top-[-0.5px]'/>
+      <button className='px-8 text-sm bg-NuButton text-white rounded-md py-1.5 duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
         Create Report
       </button>
       {seen ? <CreateReport toggle={togglePop}/> : null}
@@ -29,14 +27,14 @@ function CreateReport(props) {;
   const dateNow = new Date()
   const tobeSubmitted = dateNow.toLocaleDateString('en-PH', {
     year: 'numeric',
-    month: '2-digit', // This will give abbreviated month names
-    day: '2-digit', // Ensures the day is two digits
+    month: '2-digit', 
+    day: '2-digit', 
   });
 
   const formattedDate = dateNow.toLocaleDateString('en-PH', {
     year: 'numeric',
-    month: 'long', // This will give abbreviated month names
-    day: '2-digit', // Ensures the day is two digits
+    month: 'long', 
+    day: '2-digit',
   });
 
   const [ data, setData ] = useState({

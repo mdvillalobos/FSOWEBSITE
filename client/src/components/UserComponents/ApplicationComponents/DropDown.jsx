@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RankContext } from '../../../../context/rankContext';
 import { UserContext } from '../../../../context/userContext';
 import ReactMarkdown from 'react-markdown';
+import { RiArrowDropDownLine,  RiArrowDropUpLine } from "react-icons/ri";
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();
@@ -29,24 +30,34 @@ const Requirements = ({ from }) => {
   }
   return (
     <div>
-      <button type='button' onClick={() => setIsOpen(!s)}>
-        {selected}
-      </button>
+      <div className="w-full relative">
+        <div className="flex justify-between rounded-lg text-ellipsis overflow-hidden whitespace-nowrap border-2 border-[#93adc2] py-1 px-2 mt-3">
+          <button type='button' onClick={() => setIsOpen(!isOpen)} className='flex justify-between my-auto w-full py-2 px-4'>
+            {selected}
+            {!isOpen ? (
+              <RiArrowDropDownLine size={'1.5rem'} className=''/>
+            ) : (
+              <RiArrowDropUpLine size={'1.5rem'} className=''/>
+            )}
+          </button>
+          <button className='text-white text-sm py-2.5 px-10 bg-NuButton rounded-md shadow-md duration-300 hover:bg-NuButtonHover hover:scale-105' onClick={onSubmit}>Submit</button>
+        </div>
+          
+        {isOpen && 
+          <div className="absolute flex flex-col mt-1 bg-white border rounded-md shadow-lg fade-in w-full border-[#93adc2] ">
+            {availableRank?.map(i => (
+              <button 
+                key={i._id}
+                type='button' 
+                className='text-left hover:bg-NuButtonHover hover:text-white duration-200 py-1.5 px-4' 
+                onClick={() => {setSelected(i.rankName), setIsOpen(!isOpen)}}>{i.rankName}
+              </button>
+            ))}
+          </div>
+        }
+      </div>
 
-      <form onSubmit={onSubmit}>
-        <select value= {selected} onChange={(e) => setSelected(e.target.value)} className=' bg-[#f0f0f0] text-black p-1.5 mt-4 text-sm font-normal text-center w-52 rounded-sm ' >
-          {availableRank ? (
-            availableRank?.map(i => (
-              <option key ={i._id} value={i.rankName}>{i.rankName}</option>
-            ))
-          ) : (
-            <option>No Available Rank</option>
-          )}
-        </select>
-        <input type="submit" value='submit' className='py-2 px-6 my-4 text-sm bg-[#41518d] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer'/>
-      </form>
-
-      <div className="bg-white text-black p-4">
+      <div className=" p-4 mt-4 rounded-md border-2 border-[#93adc2]">
         {selectedRank ? (
           selectedRank?.requirements.map((requirement, i) => (
             <ReactMarkdown key={requirement._id} className='font-Poppins mb-2'>{`&#8211; ${String(requirement.requirement)}`}</ReactMarkdown>
