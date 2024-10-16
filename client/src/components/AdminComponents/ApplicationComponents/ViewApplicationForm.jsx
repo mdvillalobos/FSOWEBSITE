@@ -11,7 +11,8 @@ const ViewApplicationForm = ({ rest }) => {
     const { submitReview } = useSubmitReview();
     const [ showImage, setShowImage ] = useState({
         show: false,
-        image: null
+        image: null,
+        isPdf: null,
     });
 
     const [ checkedReq1, setCheckedReq1 ] = useState(null);
@@ -25,12 +26,27 @@ const ViewApplicationForm = ({ rest }) => {
     const [ checkedReq9, setCheckedReq9 ] = useState(null);
     const [ checkedReq10, setCheckedReq10 ] = useState(null);
 
-    const handleExit = () => {
-        setShowImage({ show: false });
-    }
-
     const handleViewImage = (imagePath) => {
-        setShowImage({ show: true, image: imagePath });
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            const fileType = imagePath.type || imageToShow.name.split('.').pop().toLowerCase();
+            
+            if (fileType.startsWith('image/')) {
+                setShowImage({
+                    show: true,
+                    image: event.target.result,
+                    isPdf: false
+                });
+            } else if (fileType === 'application/pdf' || fileType === 'pdf') {
+                setShowImage({
+                    show: true,
+                    image: event.target.result,
+                    isPdf: true
+                });
+            }
+        };
+        reader.readAsDataURL(imagePath);
     }
 
     const handleSubmitReview = async (decision) => {
@@ -38,16 +54,24 @@ const ViewApplicationForm = ({ rest }) => {
     }
 
     const selectedRank = ranks.find(requirement => requirement.rankName === rest.applyingFor);
-
     return (
         <div>
             {showImage.show && (
-                <FocusOn>
-                    <ViewImage 
-                        handleExit ={handleExit}
-                        image={showImage.image}
-                    />
-                </FocusOn>
+                showImage.isPdf ? (
+                    <FocusOn>
+                        <ViewPdf 
+                            handleExit ={() => setShowImage({ show: false })}
+                            file={showImage.image}
+                        />
+                    </FocusOn>
+                ) : (
+                    <FocusOn>
+                        <ViewImage 
+                            handleExit ={() => setShowImage({ show: false })}
+                            image={showImage.image}
+                        />
+                    </FocusOn>
+                )
             )}
             <div className='font-Poppins z-0'>
                 <div className="flex justify-between">

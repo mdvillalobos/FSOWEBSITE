@@ -43,12 +43,6 @@ app.use(helmet({
     frameguard: {
         action: 'Deny'
     },
-
-    xssFilter: {
-        setOnOldIE: true,
-        mode: 'block'
-    }
-
 }))
 app.use((req, res, next) => {
     res.set('X-XSS-Protection', '1; mode=block');

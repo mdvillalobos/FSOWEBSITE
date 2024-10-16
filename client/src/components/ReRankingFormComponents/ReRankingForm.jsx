@@ -12,11 +12,10 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const { user } = useContext(UserContext);
     const { getApplicationData } = useGetApplicationData();
     const { Toast } = useToast();
-    
-    console.log(user)
+
     const [ data, setData ] = useState({
         name: user?.firstName + ' ' + user?.lastName,
-        college: user?.college,
+        college: 'ad',
         department: user?.department,
         currentRank: user?.rank,
         academicYear: "2024-2025",
@@ -55,8 +54,6 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
             ]
           
             for (let i = 0; i < selectedRank.requirements.length;  i++) {
-                console.log(i)
-                console.log(requirementState[i])
                 if (selectedRank.requirements[i] !== null && !requirementState[i]) {
                     return Toast.fire({
                         icon: 'error',

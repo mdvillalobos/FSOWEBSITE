@@ -14,7 +14,10 @@ const useGetApplicationData = () => {
             })
         }
 
+
         try {
+            const maxSizeInBytes = 5 * 1024 * 1024;
+            const validTypes = ['image/png', 'image/jpeg', 'application/pdf'];
             const userSubmittedFields = [
                 requirement_1, 
                 requirement_2, 
@@ -40,14 +43,18 @@ const useGetApplicationData = () => {
             
             userSubmittedFields.forEach((field, i) => {
                 if(field !== null) {
-                    formData.append(`requirement_${i+1}`, field)
+                    if(validTypes.includes(field.type) && field.size <= maxSizeInBytes) {
+                        formData.append(`requirement_${i+1}`, field)
+                    }
+                    else {
+                        return Toast.fire({
+                            icon: 'error',
+                            title: `Invalid file type or size: ${field.name}`
+                        })
+                    }
+                   
                 }
             })
-
-          /*   for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
-            }
- */
             await submitForm(formData);
 
         } catch (error) {
