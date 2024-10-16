@@ -1,19 +1,14 @@
-import React, { useState, useContext } from 'react'
-import { RankContext } from '../../../../context/rankContext.jsx'
-import { FocusOn } from 'react-focus-on'
-import ApplicationMaster from './ViewFormComponents/UserDetails.jsx'
-import ViewImage from './ViewFormComponents/ViewImage.jsx';
+import React, { useState, useContext } from 'react';
+import { RankContext } from '../../../../context/rankContext.jsx';
+import ApplicationMaster from './ViewFormComponents/UserDetails.jsx';
 import ApplicationInput from './ViewFormComponents/ApplicationInputs.jsx';
 import useSubmitReview from '../../../hooks/AdminHooks/useSubmitReview.jsx';
+import useToast from '../../../hooks/Helpers/useToast.jsx';
 
 const ViewApplicationForm = ({ rest }) => {
     const { ranks } = useContext(RankContext);
+    const { Toast } = useToast();
     const { submitReview } = useSubmitReview();
-    const [ showImage, setShowImage ] = useState({
-        show: false,
-        image: null,
-        isPdf: null,
-    });
 
     const [ checkedReq1, setCheckedReq1 ] = useState(null);
     const [ checkedReq2, setCheckedReq2 ] = useState(null);
@@ -26,53 +21,35 @@ const ViewApplicationForm = ({ rest }) => {
     const [ checkedReq9, setCheckedReq9 ] = useState(null);
     const [ checkedReq10, setCheckedReq10 ] = useState(null);
 
-    const handleViewImage = (imagePath) => {
-        const reader = new FileReader();
 
-        reader.onload = (event) => {
-            const fileType = imagePath.type || imageToShow.name.split('.').pop().toLowerCase();
-            
-            if (fileType.startsWith('image/')) {
-                setShowImage({
-                    show: true,
-                    image: event.target.result,
-                    isPdf: false
-                });
-            } else if (fileType === 'application/pdf' || fileType === 'pdf') {
-                setShowImage({
-                    show: true,
-                    image: event.target.result,
-                    isPdf: true
+    const selectedRank = ranks?.find(requirement => requirement.rankName === rest.applyingFor);
+    const handleSubmitReview = async (decision) => {
+        const requirementState = [
+            checkedReq1,
+            checkedReq2,
+            checkedReq3,
+            checkedReq4,
+            checkedReq5,
+            checkedReq6,
+            checkedReq7,
+            checkedReq8,
+            checkedReq9,
+            checkedReq10,
+        ]
+      
+        for (let i = 0; i < selectedRank.requirements.length;  i++) {
+            if (selectedRank.requirements[i] !== null && !requirementState[i]) {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'Review all fields!'
                 });
             }
-        };
-        reader.readAsDataURL(imagePath);
-    }
-
-    const handleSubmitReview = async (decision) => {
+        }
         await submitReview(rest._id, decision, checkedReq1, checkedReq2, checkedReq3, checkedReq4, checkedReq5, checkedReq6, checkedReq7, checkedReq8, checkedReq9, checkedReq10);
     }
 
-    const selectedRank = ranks.find(requirement => requirement.rankName === rest.applyingFor);
     return (
         <div>
-            {showImage.show && (
-                showImage.isPdf ? (
-                    <FocusOn>
-                        <ViewPdf 
-                            handleExit ={() => setShowImage({ show: false })}
-                            file={showImage.image}
-                        />
-                    </FocusOn>
-                ) : (
-                    <FocusOn>
-                        <ViewImage 
-                            handleExit ={() => setShowImage({ show: false })}
-                            image={showImage.image}
-                        />
-                    </FocusOn>
-                )
-            )}
             <div className='font-Poppins z-0'>
                 <div className="flex justify-between">
                     <h1 className='formTitle'>Faculty Ranking Form</h1>
@@ -89,7 +66,7 @@ const ViewApplicationForm = ({ rest }) => {
                 <div className='py-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-4'>Qualification</h1>
                     <div>
-                        {rest.requirements.map((data, i) => {
+                        {rest?.requirements?.map((data, i) => {
                             const requirement = selectedRank.requirements[i];
                             const stateValues = {
                                 checkedReq1: checkedReq1,
@@ -122,10 +99,9 @@ const ViewApplicationForm = ({ rest }) => {
                             return <div key={data._id}>
                                 <ApplicationInput
                                     requirement={requirement.requirement}
-                                    imagePath={data.filePath}
+                                    filePath={data.filePath}
                                     checkedValue={checkedValue}
                                     setCheckedValue={setCheckedValue}
-                                    handleViewImage={handleViewImage}
                                 />
                             </div>
                         })}

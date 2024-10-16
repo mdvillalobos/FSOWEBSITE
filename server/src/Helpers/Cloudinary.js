@@ -18,12 +18,12 @@ cloudinary.config({
 const uploadQueue = new PQueue({ concurrency: 5 }); 
 const cache = createCache({ store: 'memory' });
 
-export const uploadImageToCloudinary = async (filePath, folderName) => {
+export const uploadImageToCloudinary = async (filePath, folderName, resourceType) => {
     const cacheKey = `${filePath}:${folderName}`;
     const cachedResponse = await cache.get(cacheKey);
     if (cachedResponse) return cachedResponse;
 
-    const upload = await cloudinaryInstance.uploader.upload(filePath, { folder: folderName });
+    const upload = await cloudinaryInstance.uploader.upload(filePath, { folder: folderName, resource_type: resourceType });
 
     const secureUrl = upload.secure_url;
     await cache.set(cacheKey, secureUrl);
@@ -40,15 +40,29 @@ export const filterAndUploadedRequirements = async (files, folderName) => {
 
     const userSubmittedRequirements = Object.values(files).map(fileArray => {
         const file = fileArray[0];
+        const fileType = file.originalname.split('.').pop();
         return {
             requirementNumber: parseInt(file.fieldname.split('_')[1], 10),
             path: file.path,
-            filename: file.originalname 
+            filename: file.originalname,
+            fileType: fileType
         };
     });
 
     const uploadPromises = userSubmittedRequirements.map(fileArray => {
-        return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, { concurrent: true }))
+        const imageFileType = ['png', 'jpg', 'jpeg'];
+        const fileFileType = ['pdf'];
+
+        console.log(fileArray.fileType)
+        if(imageFileType.includes(fileArray.fileType)) {
+            return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'image',{ concurrent: true }))
+        }
+        else if(fileFileType.includes(fileArray.fileType)) {
+            console.log('tasdsad')
+            return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'raw', { concurrent: true }))
+        }
+        
+       
     })
     
     const uploadResponses = await Promise.all(uploadPromises);
