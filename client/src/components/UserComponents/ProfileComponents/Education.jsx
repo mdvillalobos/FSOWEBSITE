@@ -25,7 +25,7 @@ const Education = () => {
             ) : (
                 <div className='flex flex-col justify-center items-center h-full mt-4 select-none pointer-events-none space-y-2'>
                     <img src={NoData} alt="No Data Found" className='h-64' />
-                    <h1 className='flex justify-center font-medium text-2xl text-[#aeb3b6]'>No Data Available</h1>
+                    <h1 className='flex justify-center font-medium text-2xl text-gray-500'>No Data Available</h1>
                 </div>
             )}
         </div>

@@ -60,7 +60,7 @@ const ReportTable = () => {
           ) : (
             <div className='flex flex-col justify-center items-center mt-10 space-y-2 select-none pointer-events-none'>
               <img src={NotFound} alt="No Data Found" className='h-80 opacity-90'/>
-              <h1 className='flex justify-center font-medium text-2xl text-[#aeb3b6]'>No Available Data</h1>
+              <h1 className='flex justify-center font-medium text-2xl text-gray-500'>No Available Data</h1>
             </div>
           )}
       </table>
