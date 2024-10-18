@@ -1,18 +1,22 @@
 import React, { useContext, useState } from 'react'
 import useRegisterProfile from '../../hooks/AuthHooks/useRegisterProfile';
-import Box from '@mui/material/Box';
 import { RankContext } from '../../../context/rankContext';
 import { HiMiniPencil } from "react-icons/hi2";
+import { MdError } from "react-icons/md";
+import useToast from '../../hooks/Helpers/useToast';
 
 const ProfileRegistrationForm = () => {
-  const { ranks } = useContext(RankContext)
+  const { Toast } = useToast();
+  const { ranks } = useContext(RankContext);
   const { registerProfile } = useRegisterProfile();
+  const [ isSubmitted, setIsSubmitted ] = useState(false);
 
   const [ data, setData ] = useState({
     profilePicture: null,
     lastName: '', 
     firstName: '',
     middleName: '',
+    contact: '',
     sex: '',
     track: '', 
     rank: '',
@@ -28,117 +32,204 @@ const ProfileRegistrationForm = () => {
 
   const RegisterUserInfo = async (e) => {
     e.preventDefault();
-    console.log(data.profilePicture)
+
+    const fieldsToCheck = [
+      data.lastName,
+      data.firstName,
+      data.middleName,
+      data.contact,
+      data.sex,
+      data.track,
+      data.rank,
+      data.department,
+      data.college,
+      data.position,
+    ];
+    setIsSubmitted(true);
+
+    if (fieldsToCheck.some(field => field.trim() === '')) {
+      return Toast.fire({
+        icon: 'error',
+        title: 'Require All fields'
+      })
+    }
     await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.sex, data.track, data.rank, data.department, data.college, data.position);
   }
 
   return (
-    <div className='bg-white shadow-md flex justify-center rounded-lg text-sm'>
-      <Box component="form" autoComplete='off' noValidate onSubmit={RegisterUserInfo}> 
-        <div className='space-y-4 py-8 px-10 w-full'>
-          <div className="flex justify-center mx-auto mb-5">
-            <label className='flex justify-center items-center overflow-hidden rounded-full h-36 w-36 bg-gray-200 cursor-pointer relative'>
-              <input type='file' className='hidden' onChange={(e) => setData({ ...data, profilePicture: e.target.files[0]})}/>
-              {data.profilePicture ? (
-                <img src={URL.createObjectURL(data.profilePicture)} alt="" className='w-full h-full object-fill' />
-              ) : (
-                <p className='absolute bottom-0'><HiMiniPencil size={'1.5rem'} /></p>              
-              )}
-            </label>
-          </div>
-
-          <h1 className='text-[#35408E] font-Poppins font-semibold text-2xl'>Personal Information</h1>
-
-          <div className="profile-registration-container">
-            <div className="flex gap-16">
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">First Name</label>
-                <input type="text" id='firstName' name='firstName' className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, firstName: e.target.value})}/>
-              </div>
-
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text" id='lastName' name='lastName' className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, lastName: e.target.value})}/>
-              </div>
-            </div>
-
-            <div className="flex gap-16">
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="middleInitial">Middle Name</label>
-                <input type="text" id='middleInitial' name='middleInitial' className='border-2 px-3 py-3 rounded-md w-[35vw]  text-sm' onChange={(e) => setData({ ...data, middleName: e.target.value})}/>
-              </div>
-
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="sex">Sex</label>
-                <select name="sex" id="sex" className='border-2 px-3 py-3 rounded-md w-[35vw]  text-sm' onChange={(e) => setData({ ...data, sex: e.target.value})}>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex gap-16">
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">Track</label>
-                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, track: e.target.value})}>
-                  <option value="">Select a track</option>
-                  {trackOptions.map(track => (
-                    <option key={track} value={track}>{track}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">Current Rank</label>
-                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({ ...data, rank: e.target.value})}>
-                  <option value='None'>None</option>
-                  {filteredRank?.map(rank => (
-                    <option key={rank._id} value={rank.rankName}>{rank.rankName}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="flex gap-16">
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">Department</label>
-                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({...data, department: e.target.value})}>
-                  <option value="College of Allied Health">College of Allied Health</option>
-                  <option value="College of Architecture">College of Architecture</option>
-                  <option value="College of Business and Accountancy">College of Business and Accountancy</option>
-                  <option value="College of Computing and Information Technologies">College of Computing and Information Technologies</option>
-                  <option value="College of Education, Arts and Science">College of Education, Arts and Science</option>
-                  <option value="College of Engineering">College of Engineering</option>
-                  <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">College</label>
-                <input type='text' className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' value={data.college} onChange={(e) => setData({...data, college: e.target.value})}/>
-              </div>
-              
-            </div>
-
-            <div className="flex gap-16">
-              <div className="flex flex-col space-y-0.5">
-                <label htmlFor="firstName">Employee Position</label>
-                <select className='border-2 px-3 py-3 rounded-md w-[35vw] text-sm' onChange={(e) => setData({...data, position: e.target.value})}>
-                  <option value="Faculty">Faculty</option>
-                  <option value="Director">Director</option>
-                  <option value="FSO">Faculty Service Office</option>
-                </select>
-              </div>
-
-            </div>
-          </div>
-          
-          <div className="flex justify-end max-sm:justify-normal">
-            <input type="submit" value="Submit" className='font-medium cursor-pointer mt-4 text-white bg-[#41518d] py-2.5 px-16 duration-300 hover:bg-NuButtonHover rounded-md'/>
-          </div>
-
+    <div className='bg-white shadow-md flex justify-center rounded-lg'>
+      <form onSubmit={RegisterUserInfo} autoComplete='off' className="space-y-4 py-8 w-full px-24">
+        <div className="flex justify-center mb-5">
+          <label className='flex justify-center items-center overflow-hidden rounded-full h-36 w-36 bg-gray-200 cursor-pointer relative'>
+            <input type='file' className='hidden' onChange={(e) => setData({ ...data, profilePicture: e.target.files[0]})}/>
+            {data.profilePicture ? (
+              <img src={URL.createObjectURL(data.profilePicture)} alt="" className='w-full h-full object-fill' />
+            ) : (
+              <p className='absolute bottom-0'><HiMiniPencil size={'1.5rem'} /></p>              
+            )}
+          </label>
         </div>
-      </Box>
+
+        <h1 className='text-[#35408E] font-Poppins font-semibold text-2xl'>Personal Information</h1>
+
+        <div>
+          <div className="flex space-x-14 w-full max-lg:flex-col max-lg:space-x-0">
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="firstName">First Name</label>
+              <input type="text" id='firstName' name='firstName' 
+                className={ `border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.firstName.trim() ? 'border-red-400' : ''}` }
+                onChange={ (e) => setData({ ...data, firstName: e.target.value}) }
+              />
+              {isSubmitted && !data.firstName.trim() && (
+                <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="lastName">Last Name</label>
+              <input type="text" id='lastName' name='lastName' 
+                className={`border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.lastName.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({ ...data, lastName: e.target.value})}
+              />
+              {isSubmitted && !data.lastName.trim() && (
+                <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="middleInitial">Middle Name</label>
+              <input type="text" id='middleInitial' name='middleInitial' 
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.middleName.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({ ...data, middleName: e.target.value})}
+              />
+              {isSubmitted && !data.middleName.trim() && (
+                <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="contact">Contact No.</label>
+              <select id='contact' name='contact'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : ''}`} 
+                onChange={(e) => setData({ ...data, contact: e.target.value})}
+              >
+                <option value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              {isSubmitted && !data.contact.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="sex">Sex</label>
+              <select id='sex' name='sex'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.sex.trim() ? 'border-red-400' : ''}`} 
+                onChange={(e) => setData({ ...data, sex: e.target.value})}
+              >
+                <option value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              {isSubmitted && !data.sex.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="position">Employee Position</label>
+              <select id='position' name='position'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.position.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, position: e.target.value})}
+              >
+                <option value=""></option>
+                <option value="Faculty">Faculty</option>
+                <option value="Director">Director</option>
+                <option value="FSO">Faculty Service Office</option>
+              </select>
+              {isSubmitted && !data.position.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="track">Track</label>
+              <select id='track' name='track'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.track.trim() ? 'border-red-400' : ''}`} 
+                onChange={(e) => setData({ ...data, track: e.target.value})}
+              >
+                <option value="">Select a track</option>
+                {trackOptions?.map(track => (
+                  <option key={track} value={track}>{track}</option>
+                ))}
+              </select>
+              {isSubmitted && !data.track.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="firstName">Current Rank</label>
+              <select 
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.rank.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({ ...data, rank: e.target.value})}
+              >
+                <option value='None'>None</option>
+                {filteredRank?.map(rank => (
+                  <option key={rank._id} value={rank.rankName}>{rank.rankName}</option>
+                ))}
+              </select>
+              {isSubmitted && !data.rank.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="department">Department</label>
+              <select id='department' name='department'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, department: e.target.value})}
+              >
+                <option value=''></option>
+                <option value="College of Allied Health">College of Allied Health</option>
+                <option value="College of Architecture">College of Architecture</option>
+                <option value="College of Business and Accountancy">College of Business and Accountancy</option>
+                <option value="College of Computing and Information Technologies">College of Computing and Information Technologies</option>
+                <option value="College of Education, Arts and Science">College of Education, Arts and Science</option>
+                <option value="College of Engineering">College of Engineering</option>
+                <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
+              </select>
+              {isSubmitted && !data.department.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+
+            <div className="relative flex flex-col flex-1 space-y-0.5">
+              <label htmlFor="college">College</label>
+              <input type='text' id='college' name='college'
+               className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, college: e.target.value})}
+              />
+              {isSubmitted && !data.college.trim() && (
+                  <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-end max-sm:justify-normal">
+          <input type="submit" value="Submit" className='font-medium cursor-pointer text-white bg-[#41518d] py-2.5 px-16 duration-300 hover:bg-NuButtonHover rounded-md max-lg:w-full'/>
+        </div>
+      </form>
     </div>
   )
 }

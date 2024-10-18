@@ -29,23 +29,22 @@ const SavedData = () => {
 
   return (
     <div className='flex flex-col'>
-      <p>My Applications Forms</p>
       <div className="flex space-x-6">
         {data?.map(files => (
           <div 
             key={files._id} // Ensure each button has a unique key
             className="w-48 py-3 px-5 border-2 rounded-lg space-y-0.5 transition duration-300 cursor-pointer space-x-2"
-            /* onClick={() => EditApplication(files)} */
+            onClick={() => EditApplication(files)}
           >
             <div className="flex justify-end relative space-y-6">
-              <button type='button' className="hover:text-blue-600" onClick={() => toggleMenu(files._id)}>
+              <button type='button' className="hover:text-blue-600" onClick={(e) => {e.stopPropagation(), toggleMenu(files._id)}}>
                 <BsThreeDots size={'1.2rem'} className='text-gray-500'/>
               </button>
 
               {isOpen === files._id && (
                 <div className="absolute flex flex-col bg-white text-sm shadow-lg rounded-md overflow-hidden w-full right-[-9rem] fade-in">
-                  <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200'><GrView className='my-auto mr-2'/>Open</button>
-                  <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200'><FiEdit3 className='my-auto mr-2'/>Edit</button>
+                  <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200' onClick={(e) => {e.stopPropagation(), EditApplication(files)}}><GrView className='my-auto mr-2'/>Open</button>
+                  <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200' onClick={(e) => {e.stopPropagation(), EditApplication(files)}}><FiEdit3 className='my-auto mr-2'/>Edit</button>
                   <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200'><IoTrashOutline className='my-auto mr-2'/>Delete</button>
                 </div>
               )}
