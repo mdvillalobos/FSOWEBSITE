@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../../../context/userContext';
-import { Helmet } from 'react-helmet';
+import { UserContext } from '../../../../context/userContext'
 import NoData from '../../../assets/images/NoData.webp';
 
 const Seminar = () => {
@@ -8,9 +7,6 @@ const Seminar = () => {
     
     return (
         <div className='flex flex-col px-4'> 
-            <Helmet>
-                <link rel="preload" href={NoData} as="image" />
-            </Helmet>
             {credentials?.seminars.length > 0 ? (
                 <ul>
                     {credentials?.seminars.map(i => (

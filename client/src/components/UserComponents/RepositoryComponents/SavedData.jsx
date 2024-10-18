@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { FaFile } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
@@ -30,9 +29,6 @@ const SavedData = () => {
 
   return (
     <div className='flex flex-col'>
-      <Helmet>
-        <link rel="preload" href={NotFound} as="image" />
-      </Helmet>
       <div className="flex space-x-6">
         {data?.length > 1 ? 
           data?.map(files => (

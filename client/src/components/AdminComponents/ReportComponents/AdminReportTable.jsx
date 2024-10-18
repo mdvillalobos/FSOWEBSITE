@@ -36,9 +36,6 @@ const ReportTable = () => {
           rest={viewData}
         />
       )}
-      <Helmet>
-        <link rel="preload" href={NotFound} as="image" />
-      </Helmet>
       <table className='table-auto w-full rounded-md font-Poppins divide-y-4 divide-white'>
         <thead>
           <tr>

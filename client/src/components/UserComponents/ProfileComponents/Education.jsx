@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../../../context/userContext'
-import { Helmet } from 'react-helmet';
 import NoData from '../../../assets/images/NoData.webp';
 
 const Education = () => {
@@ -8,9 +7,6 @@ const Education = () => {
 
     return (
         <div className='flex flex-col space-y-4'> 
-            <Helmet>
-                <link rel="preload" href={NoData} as="image" />
-            </Helmet>
             {credentials?.educations.length > 0 ? (
                 credentials?.educations.map(i => (
                     <div className="flex w-full" key={i._id}>

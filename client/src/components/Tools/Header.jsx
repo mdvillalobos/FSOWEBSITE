@@ -2,12 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { UserContext } from "../../../context/userContext.jsx";
 import { LuLogOut } from "react-icons/lu";
-import { Helmet } from 'react-helmet';
 import { RiUserSettingsLine, RiArrowDropDownLine,  RiArrowDropUpLine } from "react-icons/ri";
-import useLogout from '../../hooks/AuthHooks/useLogout.jsx';
 import NuLogo from '../../assets/images/NU_shield.webp';
 import maleProfile from '../../assets/images/male.webp';
 import femaleProfile from '../../assets/images/female.webp';
+import useLogout from '../../hooks/AuthHooks/useLogout.jsx';
 
 const header = ({location}) => {
   const { user, role } = useContext(UserContext);
@@ -21,11 +20,7 @@ const header = ({location}) => {
 
   return (
     <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8 font-Poppins'>
-      <Helmet>
-        <link rel="preload" href={NuLogo} as="image" />
-        <link rel="preload" href={maleProfile} as="image" />
-        <link rel="preload" href={femaleProfile} as="image" />
-      </Helmet>
+      
       <div className='flex space-x-6'>
           <Link to={home} className="flex my-auto mx-0 after:border-r-2 after:ml-5">
             <img src={NuLogo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>

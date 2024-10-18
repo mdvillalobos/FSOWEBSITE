@@ -34,61 +34,77 @@ import ErrorPage from './view/Error/ErrorPage.jsx';
 import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
-/* axios.defaults.baseURL = 'http://localhost:3001'; */
-axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
+//images 
+import { Helmet } from 'react-helmet';
+import NotFound from './assets/images/NotFound.webp';
+import NoData from './assets/images/NoData.webp';
+import NuLogo from './assets/images/NU_shield.webp';
+import maleProfile from './assets/images/male.webp';
+import femaleProfile from './assets/images/female.webp';
+
+axios.defaults.baseURL = 'http://localhost:3001';
+/* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */ 
 axios.defaults.withCredentials = true;
 
 function App() {
   const { PageRouteProtection, AuthPageProtection} = useProtectRoutes();
 
   return (
-    <Routes>
-
-      {/* authentication */}
-      <Route element={<AuthPageProtection/>}>
-        <Route exact path="/" element={ <Login/> }/>
-        <Route exact path="/login" element={ <Login/> }/>
-        <Route exact path="/register" element={ <Registration/> }/>
-        <Route exact path="/registration" element={ <Registration/> }/>
-        <Route exact path='/emailverification' element={ <EmailVerification/> }/>
-        <Route exact path='/profileregistration' element={ <ProfileRegistration/> }/>
-
-        {/* forgot password */}
-        <Route exact path='/forgotpassword' element={ <ForgotPassword/> }/>
-        <Route exact path='/verifyotp' element={ <VerifyOTP/> }/>
-        <Route exact path='/resetpassword' element={ <ResetPassword/> }/>
-      </Route>
-
-      {/* User */}
-      <Route element={<PageRouteProtection providedRole={'user'}/>}>
-        <Route exact path="/home" element={ <Home/> }/>
-        <Route exact path="/profile" element={ <Profile/> }/>
-        <Route exact path="/report" element={ <Report/> }/>
-        <Route exact path="/repository" element={ <Repository /> }/>
-        <Route exact path="/application" element={ <ApplicationForReRanking /> }/>
-        <Route exact path="/settings/personaldetails" element={ <PersonalDetails/> }/>
-        <Route exact path="/settings/password&security" element={ <PassAndSecurity/> }/>
-
-        {/* Application forms */}
-        <Route exact path='/preapply/form' element={ <PreApplyForm/> }/>
-        <Route exact path='/application/form' element={ <ApplicationForm/> }/>
-      </Route>
-      
-      {/* admin */}
-      <Route element={<PageRouteProtection providedRole={'admin'}/>}>
-      <Route exact path="/admin/" element={ <AdminHome/> }/>
-        <Route exact path="/admin/home" element={ <AdminHome/> }/>
-        <Route exact path="/admin/profile" element={ <AdminProfile/> }/>
-        <Route exact path="/admin/dashboard" element={ <Dashboard/> }/>
-        <Route exact path="/admin/report" element={ <AdminSurvey/> }/>
-        <Route exact path="/admin/application" element={ <AdminApplication/> }/>
-        <Route exact path='/admin/viewapplication' element={ <ViewApplication/> }/>
-      </Route>
-
-      {/* Error Page */}
-      <Route path='*' element={<ErrorPage/>}/>
-      <Route path='/restriction'element ={<Restriction/>}/>
-    </Routes>
+    <>
+      <Helmet>
+          <link rel="preload" href={NotFound} as="image" />
+          <link rel="preload" href={NoData} as="image" />
+          <link rel="preload" href={NuLogo} as="image" />
+          <link rel="preload" href={maleProfile} as="image" />
+          <link rel="preload" href={femaleProfile} as="image" />
+        </Helmet>
+      <Routes>
+        {/* authentication */}
+        <Route element={<AuthPageProtection/>}>
+          <Route exact path="/" element={ <Login/> }/>
+          <Route exact path="/login" element={ <Login/> }/>
+          <Route exact path="/register" element={ <Registration/> }/>
+          <Route exact path="/registration" element={ <Registration/> }/>
+          <Route exact path='/emailverification' element={ <EmailVerification/> }/>
+          <Route exact path='/profileregistration' element={ <ProfileRegistration/> }/>
+    
+          {/* forgot password */}
+          <Route exact path='/forgotpassword' element={ <ForgotPassword/> }/>
+          <Route exact path='/verifyotp' element={ <VerifyOTP/> }/>
+          <Route exact path='/resetpassword' element={ <ResetPassword/> }/>
+        </Route>
+    
+        {/* User */}
+        <Route element={<PageRouteProtection providedRole={'user'}/>}>
+          <Route exact path="/home" element={ <Home/> }/>
+          <Route exact path="/profile" element={ <Profile/> }/>
+          <Route exact path="/report" element={ <Report/> }/>
+          <Route exact path="/repository" element={ <Repository /> }/>
+          <Route exact path="/application" element={ <ApplicationForReRanking /> }/>
+          <Route exact path="/settings/personaldetails" element={ <PersonalDetails/> }/>
+          <Route exact path="/settings/password&security" element={ <PassAndSecurity/> }/>
+    
+          {/* Application forms */}
+          <Route exact path='/preapply/form' element={ <PreApplyForm/> }/>
+          <Route exact path='/application/form' element={ <ApplicationForm/> }/>
+        </Route>
+        
+        {/* admin */}
+        <Route element={<PageRouteProtection providedRole={'admin'}/>}>
+        <Route exact path="/admin/" element={ <AdminHome/> }/>
+          <Route exact path="/admin/home" element={ <AdminHome/> }/>
+          <Route exact path="/admin/profile" element={ <AdminProfile/> }/>
+          <Route exact path="/admin/dashboard" element={ <Dashboard/> }/>
+          <Route exact path="/admin/report" element={ <AdminSurvey/> }/>
+          <Route exact path="/admin/application" element={ <AdminApplication/> }/>
+          <Route exact path='/admin/viewapplication' element={ <ViewApplication/> }/>
+        </Route>
+    
+        {/* Error Page */}
+        <Route path='*' element={<ErrorPage/>}/>
+        <Route path='/restriction'element ={<Restriction/>}/>
+      </Routes>
+    </>
   )
 }
 
