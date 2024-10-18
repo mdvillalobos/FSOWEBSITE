@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import sslRedirect from 'heroku-ssl-redirect';
 import { mongoose } from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -24,6 +25,7 @@ app.use(
         credentials: true
 }));
 
+app.use(sslRedirect());
 app.use(helmet({
     hsts: {
         maxAge: 31536000, // 1 year in seconds
@@ -45,6 +47,7 @@ app.use(helmet({
         action: 'Deny'
     },
 }))
+
 app.use((req, res, next) => {
     res.set('X-XSS-Protection', '1; mode=block');
     next();
