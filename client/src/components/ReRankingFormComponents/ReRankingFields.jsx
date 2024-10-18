@@ -9,7 +9,6 @@ import useToast from '../../hooks/Helpers/useToast';
 
 const ReRankingFields = ({ requirement, data, setData }) => {
     const { Toast } = useToast();
-    console.log(data)
     const removeFile = () => {
         setData(null)
     }

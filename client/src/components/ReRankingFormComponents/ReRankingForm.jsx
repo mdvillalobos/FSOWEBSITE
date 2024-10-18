@@ -37,8 +37,6 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
         e.preventDefault();
 
         const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
-
-        console.log(action)
         if (action === 'submit') {
             const requirementState = [
                 requirement_1,

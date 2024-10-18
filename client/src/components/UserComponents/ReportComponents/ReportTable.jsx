@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight  } from "react-icons/md";
+import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import ViewForm from './ReportView.jsx';
 import ReportModal from './ReportModal.jsx';
 
@@ -52,17 +52,19 @@ const ReportTable = () => {
           rest={viewData}
         />
       )}
-      <div className="flex justify-between px-8">
+      <div className="flex justify-between px-8 font-Poppins">
         <p className='font-medium text-3xl text-NuButton'>My Reports</p>
         <div className="flex space-x-3">
           <ReportModal/>
-          <div className='flex space-x-1 text-sm'>
-            <button onClick={handlePrevPage} disabled={currentPage === 1} className='border-2 py-1.5 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
-                <MdKeyboardArrowLeft className='my-auto' size={'1.3rem'}/>
+          <div className='flex space-x-2 text-sm'>
+            <button onClick={handlePrevPage} disabled={currentPage === 1} className='flex border-2 py-1.5 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
+                <RiArrowLeftDoubleFill className='my-auto ml-2' size={'1.3rem'}/>
+                <span className='mr-2'>Prev</span>
             </button>
             <span className='border-2 py-1.5 px-4 rounded-md'>{currentPage} of {totalPages}</span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages} className='border-2 py-1.5 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
-                <MdKeyboardArrowRight  className='my-auto' size={'1.3rem'}/>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages} className='flex border-2 py-1.5 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
+              <span className='ml-2'>Next</span>
+              <RiArrowRightDoubleFill  className='my-auto mr-2' size={'1.3rem'}/>
             </button>
           </div>
         </div>

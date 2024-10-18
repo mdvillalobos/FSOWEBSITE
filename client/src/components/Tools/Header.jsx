@@ -38,7 +38,7 @@ const header = ({location}) => {
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center'>
             {!!user && user.profilePicture ? (
               <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
-                <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-fill'/>
+                <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-cover'/>
               </div>
             ) : user?.sex === 'Male' ? (
               <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">

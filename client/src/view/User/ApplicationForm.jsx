@@ -15,7 +15,7 @@ const ApplicationForm = () => {
         <div className='bg-[#f4f7fa] h-full'>
             <Header location={ selectedForm }/>
             <div className="px-16 py-2">
-              <BackBtn/>
+              <BackBtn from={ from }/>
                 <div className='bg-white py-8 px-10 mx-36 shadow-md rounded-xl overflow-hidden'>
                     <ReRankingForm 
                         ApplyingFor={ selectedForm }

@@ -4,23 +4,26 @@ import axios from "axios";
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState();
-    const [role, setRole] = useState();
+    const [ user, setUser ] = useState();
+    const [ role, setRole ] = useState();
+    const [ credentials, setCredentials ] = useState();
     
     const checkAuth = async () => {
         try {
-            const [ getProfile, getRole ] = await Promise.all([
+            const [ getProfile, getRole, getCredentials ] = await Promise.all([
                 axios.get('/api/getProfile'),
                 axios.get('/api/getRole'),
+                axios.get('/api/getUserCredentials')
             ]);
             setUser(getProfile.data);
-            setRole(getRole.data)
-
+            setRole(getRole.data);
+            setCredentials(getCredentials.data)
 
         } catch (error) {
             console.error(`Fetching User Information Error: ${ error.message }`);
             setUser(null);
             setRole(null);
+            setCredentials(null);
         }
     };
 
@@ -34,7 +37,7 @@ export const UserContextProvider = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ user, setUser, role, setRole, getProfileOnLogin }}>
+        <UserContext.Provider value={{ user, setUser, role, setRole, credentials, setCredentials, getProfileOnLogin }}>
             {children}
         </UserContext.Provider>
     )

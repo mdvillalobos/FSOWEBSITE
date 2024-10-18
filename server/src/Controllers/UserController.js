@@ -1,13 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
-import validator from 'validator';
 import Account from '../Models/Account.js';
 import User from '../Models/User.js';
 import Reports from '../Models/Reports.js';
 import Repository from '../Models/Repository.js';
-import { uploadImageToCloudinary, filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
-import { hashPassword, compareHashed } from '../Helpers/Auth.js';
+import Credentials from '../Models/Credentials.js';
+import { filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 
 export const getUserData = async (req, res) => {
     const { loginToken } = req.cookies;
@@ -53,6 +52,144 @@ export const getRole = async (req, res) => {
 
     } catch (error) {
         console.error(`Fetching User Role Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const addEducation = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { level, schoolName, address, year } = req.body;
+
+    if(!level || !schoolName || !address || !year) {
+        return res.json({ error: 'Required all fields!'})
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+
+        const educationData = {
+            level: level,
+            schoolName: schoolName,
+            address: address,
+            yearGraduated: year,
+        }
+
+        const userData = await Credentials.findOne({ email: decode.email });
+
+        if(userData) {
+            userData.educations.push(educationData);
+            await userData.save();
+            return res.json({ message: 'Education successfully created!'})
+        }
+
+        else {
+            await Credentials.create({
+                email: decode.email,
+                educations: educationData
+            });
+            return res.json({ message: 'Education successfully created!'})
+        }
+    }
+
+    catch (error) {
+        console.error(`Creating Education Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const addSeminar = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { seminarName, date } = req.body;
+
+    if(!seminarName || !date ) {
+        return res.json({ error: 'Required all fields!'})
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+
+        const seminarData = {
+            seminarName: seminarName,
+            date: date,
+        }
+
+        const userData = await Credentials.findOne({ email: decode.email });
+
+        if(userData) {
+            userData.seminars.push(seminarData);
+            await userData.save();
+            return res.json({ message: 'Seminar successfully created!'})
+        }
+
+        else {
+            await Credentials.create({
+                email: decode.email,
+                seminars: seminarData
+            });
+            return res.json({ message: 'Seminar successfully created!'})
+        }
+    }
+
+    catch (error) {
+        console.error(`Creating Seminar Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const addAchievement = async (req, res) => {
+    const { loginToken } = req.cookies;
+    const { achievementName, date } = req.body;
+
+    if(!achievementName || !date ) {
+        return res.json({ error: 'Required all fields!'})
+    }
+
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+
+        const achievementData = {
+            achievementName: achievementName,
+            date: date,
+        }
+
+        const userData = await Credentials.findOne({ email: decode.email });
+
+        if(userData) {
+            userData.achievements.push(achievementData);
+            await userData.save();
+            return res.json({ message: 'Achievement successfully created!'})
+        }
+
+        else {
+            await Credentials.create({
+                email: decode.email,
+                achievements: achievementData
+            });
+            return res.json({ message: 'Achievement successfully created!'})
+        }
+    }
+
+    catch (error) {
+        console.error(`Creating Seminar Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const getUserCredentials = async (req, res) => {
+    const { loginToken } = req.cookies;
+    
+    if(!loginToken) { 
+        return res.json({ error: 'Access Denied!'});
+    }
+    
+    try {
+        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userCredentials = await Credentials.findOne({ email: decode.email });
+        return res.json(userCredentials);
+    }
+
+    catch (error) {
+        console.error(`Fetching User Credentials Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
@@ -116,7 +253,6 @@ export const getUserReports = async (req, res) => {
     const { loginToken } = req.cookies;
 
     try {
-        console.log(process.env.JWT_SECRET)
         const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
         const userReportsData = await Reports.find({ email: decode.email });
         return res.json(userReportsData);
@@ -152,124 +288,3 @@ export const submitReport = async (req, res) => {
     }
 }
 
-export const changePassword = async (req, res) => {
-    const { loginToken } = req.cookies;
-    const { oldPassword, newPassword, confirmNewPassword } = req.body;
-
-    if(!oldPassword || !newPassword || !confirmNewPassword) {
-        return res.json({ error: 'Required all fields!'});
-    }
-
-    if(!loginToken) {
-        return res.json({ error: 'Access denied!'});
-    }
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const userData = await Account.findOne({ email: decode.email });
-        if(!userData) {
-            return res.json({ error: 'User data not found '});
-        }
-
-        const isOldPasswordCorrect = await compareHashed(oldPassword, userData.password);
-        if(!isOldPasswordCorrect) {
-            return res.json({ error: 'Incorrect Old Password' });
-        }
-
-        if(!validator.isStrongPassword(newPassword)) {
-            return res.json({ error: 'Password must contain one uppercase, one lowecase, one number and one special character.'});
-        }
-
-        if(newPassword != confirmNewPassword) {
-            return res.json({ error: 'New password do not match!' });
-        }
-
-        const hashedPassword = await hashPassword(newPassword);
-        await Account.updateOne({email: userData.email}, {$set: { password: hashedPassword }});
-        return res.json({ message: 'Password updated successfully.' });
-   
-    } catch (error) {
-        console.error(`Change Password Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-export const updateName = async (req, res) => {
-    const { loginToken } = req.cookies;
-    const { firstName, lastName, middleName } = req.body;
-
-    if(!loginToken) {
-        return res.json({ error: 'Access denied!'});
-    }
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET); 
-        const updateUserCredentials = await User.updateOne({ email: decode.email }, { $set: { lastName: lastName, firstName: firstName, middleName: middleName }});
-
-        if(!updateUserCredentials) {
-            return res.json({ error: 'User data not found!' });
-        }
-
-        return res.json({ message: 'Successfully updated user name.' });
-        
-    } catch (error) {
-        console.error(`Update User Details Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-export const updateOtherInfo = async(req, res) => {
-    const { loginToken } = req.cookies;
-    const { sex, department, position } = req.body;
-
-    if(!loginToken )  {
-        return res.json({ error: 'Access Denied!'});
-    }
-
-    if(!sex || !department || !position ) {
-        return res.json({ error: 'Required all fields'});
-    }
-
-    try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
-
-        const updateOtherInfo = await User.updateOne({ email: decode.email }, { $set: { sex: sex, department: department, position: position}});
-
-        if(!updateOtherInfo) {
-            return res.json({ error: 'User data not found!' });
-        }
-
-        return res.json({ message:  'Successfully updated user other information.' });
-    }
-    catch (error) {
-        console.error(`Update Other Information Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-
-export const updateProfilePicture = async (req, res) => {
-    const { loginToken } = req.cookies;
-
-    if(!loginToken) {
-        return res.json({ error: 'Access denied!'});
-    }
-
-    try {
-        const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
-        const uploadedPicture = req.file ? req.file.path : null;
-
-        const userData = await User.findOne({ email: userEmail.email });
-
-        userData.profilePicture ? await DestroyImageInCloudinary(userData.profilePicture) : null;
-        userData.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'profilepictures') : uploadedPicture;
-        await userData.save();
-        return res.json({ message: 'Profile Picture Successfully Changed' });
-    
-    }
-
-    catch(error) {
-        console.error(`Update Profile Picture Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}

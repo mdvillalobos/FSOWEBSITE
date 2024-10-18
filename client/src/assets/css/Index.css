@@ -27,7 +27,7 @@
     }
 
     .formBtn {
-        @apply bg-[#41518d] text-white py-3 rounded-md cursor-pointer font-Poppins font-medium text-sm
+        @apply bg-NuButton duration-200 hover:bg-NuButtonHover text-white py-3 rounded-md cursor-pointer font-Poppins font-medium text-sm
         max-[396px]:py-2.5 
     }
 
@@ -114,11 +114,18 @@
 
     /* PROFILE */
     .profileFields {
-        @apply flex mb-4
+        @apply flex flex-col w-72
     }
     
     .label {
-        @apply text-base font-medium w-32 
+        @apply text-sm text-[#939292]
+    }
+
+    .profileNav {
+        @apply py-2 px-4  hover:text-white hover:bg-NuButtonHover font-medium duration-300 rounded-md 
+    }
+    .profileActive { 
+        @apply bg-NuButton text-white 
     }
 
     /*APPLICATION FORMS*/
@@ -234,16 +241,31 @@ td:last-child{
 }
 
 .fade-in {
-    animation: fadeIn 0.2s ease-in-out forwards;
-  }
-  
-  @keyframes fadeIn {
+    animation: fadeIn 0.2s easet forwards;
+}
+
+.fade-left {
+    animation: fadeLeft 0.2s ease forwards;
+}
+
+@keyframes fadeLeft {
     from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+}
+  
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
