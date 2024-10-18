@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import path from 'path';
 
+console.log(sslRedirect); 
 dotenv.config();
 const app = express();
 
@@ -25,7 +26,9 @@ app.use(
         credentials: true
 }));
 
-app.use(sslRedirect());
+app.use(sslRedirect.default());
+
+/* app.use(sslRedirect()); */
 app.use(helmet({
     hsts: {
         maxAge: 31536000, // 1 year in seconds
