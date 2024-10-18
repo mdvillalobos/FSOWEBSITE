@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsThreeDots } from "react-icons/bs";
 import { FiEdit3 } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
+import { GrView } from "react-icons/gr";
+
 
 const SavedData = () => {
   const navigate = useNavigate()
@@ -42,8 +44,8 @@ const SavedData = () => {
 
               {isOpen === files._id && (
                 <div className="absolute flex flex-col bg-white text-sm shadow-md w-full right-[-9rem] fade-in">
-                  <button className='flex text-left py-2 px-4 hover:'>Open</button>
-                  <button className='flex text-left py-2 px-4 hover:'>Edit</button>
+                  <button className='flex text-left py-2 px-4 hover:'><GrView/>Open</button>
+                  <button className='flex text-left py-2 px-4 hover:'><FiEdit3/>Edit</button>
                   <button className='flex text-left py-2 px-4 hover:'><IoTrashOutline/>Delete</button>
                 </div>
               )}
