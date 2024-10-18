@@ -6,7 +6,7 @@ import { GoPerson } from "react-icons/go";
 const SettingNav = () => {
   return (
     <div className='flex flex-col border-r-2 w-80 px-6 font-medium'>
-      <p className='font-semibold text-lg text-gray-400 ml-2 mb-2'>My Profile</p>
+      <p className='font-semibold text-lg text-gray-500 ml-2 mb-2'>My Profile</p>
       <ul className='space-y-1.5'>
         <ActiveLink to="/settings/personaldetails" className='flex hover:bg-NuButtonHover hover:text-white py-2.5 px-1.5 rounded-md duration-200'>
           <GoPerson className="text-2xl mr-2 font-bold"/>

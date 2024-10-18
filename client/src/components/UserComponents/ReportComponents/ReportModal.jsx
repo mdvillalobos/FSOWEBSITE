@@ -11,7 +11,7 @@ const ReportModal = () => {
 
   return (
     <div className="flex font-Poppins">
-      <button className='px-8 text-sm bg-NuButton text-white rounded-md py-1.5 duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
+      <button className='px-8 text-sm bg-NuButton text-white rounded-md py-1 duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
         Create Report
       </button>
       {seen ? <CreateReport toggle={togglePop}/> : null}

@@ -20,7 +20,7 @@ const Security = () => {
       <div className='flex justify-between w-full py-4 border-b '>
         <span className="text-left space-y-1.5">
           <p>Email Address</p>
-          <p className='text-sm text-gray-400'>The email address associated with your account.</p>
+          <p className='text-sm text-gray-500'>The email address associated with your account.</p>
         </span>
         <div className="flex space-x-10 text-right">
           <span >
@@ -39,7 +39,7 @@ const Security = () => {
       <div className='flex justify-between w-full py-4 border-b'>
         <span className="text-left space-y-1.5">
           <p>Password</p>
-          <p className='text-sm text-gray-400'>Set a unique password to protect your account.</p>
+          <p className='text-sm text-gray-500'>Set a unique password to protect your account.</p>
         </span>
         <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setSeenPasswordModal(!seenPasswordModal)}>
           Change Password
