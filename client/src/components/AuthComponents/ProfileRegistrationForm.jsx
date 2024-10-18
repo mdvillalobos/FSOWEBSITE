@@ -53,7 +53,7 @@ const ProfileRegistrationForm = () => {
         title: 'Require All fields'
       })
     }
-    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.sex, data.track, data.rank, data.department, data.college, data.position);
+    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.contact, data.sex, data.track, data.rank, data.department, data.college, data.position);
   }
 
   return (
@@ -72,9 +72,9 @@ const ProfileRegistrationForm = () => {
 
         <h1 className='text-[#35408E] font-Poppins font-semibold text-2xl'>Personal Information</h1>
 
-        <div>
+        <div className='space-y-2'>
           <div className="flex space-x-14 w-full max-lg:flex-col max-lg:space-x-0">
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="firstName">First Name</label>
               <input type="text" id='firstName' name='firstName' 
                 className={ `border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.firstName.trim() ? 'border-red-400' : ''}` }
@@ -85,7 +85,7 @@ const ProfileRegistrationForm = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="lastName">Last Name</label>
               <input type="text" id='lastName' name='lastName' 
                 className={`border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.lastName.trim() ? 'border-red-400' : ''}`}
@@ -98,7 +98,7 @@ const ProfileRegistrationForm = () => {
           </div>
 
           <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="middleInitial">Middle Name</label>
               <input type="text" id='middleInitial' name='middleInitial' 
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.middleName.trim() ? 'border-red-400' : ''}`}
@@ -109,16 +109,12 @@ const ProfileRegistrationForm = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="contact">Contact No.</label>
-              <select id='contact' name='contact'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : ''}`} 
+              <input type="text" id='contact' name='contact' 
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : ''}`}
                 onChange={(e) => setData({ ...data, contact: e.target.value})}
-              >
-                <option value=""></option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+              />
               {isSubmitted && !data.contact.trim() && (
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
@@ -126,7 +122,7 @@ const ProfileRegistrationForm = () => {
           </div>
 
           <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="sex">Sex</label>
               <select id='sex' name='sex'
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.sex.trim() ? 'border-red-400' : ''}`} 
@@ -141,7 +137,7 @@ const ProfileRegistrationForm = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="position">Employee Position</label>
               <select id='position' name='position'
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.position.trim() ? 'border-red-400' : ''}`}
@@ -159,7 +155,7 @@ const ProfileRegistrationForm = () => {
           </div>
 
           <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="track">Track</label>
               <select id='track' name='track'
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.track.trim() ? 'border-red-400' : ''}`} 
@@ -175,7 +171,7 @@ const ProfileRegistrationForm = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="firstName">Current Rank</label>
               <select 
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.rank.trim() ? 'border-red-400' : ''}`}
@@ -193,7 +189,7 @@ const ProfileRegistrationForm = () => {
           </div>
 
           <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="department">Department</label>
               <select id='department' name='department'
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : ''}`}
@@ -213,7 +209,7 @@ const ProfileRegistrationForm = () => {
               )}
             </div>
 
-            <div className="relative flex flex-col flex-1 space-y-0.5">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="college">College</label>
               <input type='text' id='college' name='college'
                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : ''}`}

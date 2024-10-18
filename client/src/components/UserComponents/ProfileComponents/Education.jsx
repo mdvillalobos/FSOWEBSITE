@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../../../context/userContext'
+import NoData from '../../../assets/images/NoData.png';
 
 const Education = () => {
     const { credentials } = useContext(UserContext);
@@ -22,7 +23,10 @@ const Education = () => {
                     </div>
                 ))
             ) : (
-                <h1 className='flex justify-center font-medium text-2xl'>No Current Data</h1>
+                <div className='flex flex-col justify-center items-center h-full mt-4 select-none pointer-events-none space-y-2'>
+                    <img src={NoData} alt="No Data Found" className='h-64' />
+                    <h1 className='flex justify-center font-medium text-2xl text-[#aeb3b6]'>No Data Available</h1>
+                </div>
             )}
         </div>
     )

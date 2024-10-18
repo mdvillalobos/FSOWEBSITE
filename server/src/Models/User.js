@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     middleName: String,
+    contact: String,
     sex: String,
     track: String,
     rank: String,

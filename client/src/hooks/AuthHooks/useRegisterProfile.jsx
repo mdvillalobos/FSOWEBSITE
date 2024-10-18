@@ -12,7 +12,8 @@ const useRegisterProfile = () => {
     const { getProfileOnLogin } = useContext(UserContext);
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const registerProfile = async (profilePicture, lastName, firstName, middleName, sex, track, rank, department, college, position) => {
+
+    const registerProfile = async (profilePicture, lastName, firstName, middleName, contact, sex, track, rank, department, college, position) => {
         if(!lastName || !firstName || !sex || !track || !rank || !department || !college, !position) {
             return Toast.fire({
                 icon: "error",
@@ -29,6 +30,7 @@ const useRegisterProfile = () => {
             formData.append('lastName', lastName);
             formData.append('firstName', firstName);
             formData.append('middleName', middleName);
+            formData.append('contact', contact);
             formData.append('sex', sex);
             formData.append('track', track);
             formData.append('rank', rank);

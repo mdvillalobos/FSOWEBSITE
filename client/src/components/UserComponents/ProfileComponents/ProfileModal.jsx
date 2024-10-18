@@ -16,7 +16,7 @@ const ProfileModal = () => {
         <div className='flex justify-between w-full shadow-md bg-white rounded-xl py-4 px-5'>
             <p className='text-2xl font-semibold my-auto'>Personal Information</p>
             <div className="space-x-2">
-                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white hover:shadow-lg hover:scale-105'>Generate CV</button>
+                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white hover:shadow-lg hover:scale-105 '>Generate CV</button>
                 <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white hover:shadow-lg hover:scale-105'>Add Info</button>
             </div>
             {isOpen ? <AddInfo toggle={togglePop}/> : null} 
@@ -33,7 +33,7 @@ const AddInfo = (props) => {
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-            <div className="h-[45%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden fade-in">
+            <div className="h-[46%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden fade-in">
                 <div className="break-words text-sm">
                     <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
                         <IoChevronBackOutline size={'1.3rem'} />
@@ -41,17 +41,17 @@ const AddInfo = (props) => {
 
                     <h1 className='text-2xl my-4 font-medium'>Add Information</h1>
 
-                    <div className="flex flex-col w-full mt-4 rounded-lg">
-                        <button type='button' onClick={() => setIsEducOpen(!isEducOpen)} className='flex justify-between text-left border-y-2 py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
-                            Add an education
+                    <div className="flex flex-col w-full mt-4 rounded-lg overflow-hidden">
+                        <button type='button' onClick={() => setIsEducOpen(!isEducOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                            <span className='my-auto'>Add an education</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
-                        <button type='button' onClick={() => setIsSeminarOpen(!isSeminarOpen)} className='flex justify-between text-left border-y-2 py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
-                            Add a seminar
+                        <button type='button' onClick={() => setIsSeminarOpen(!isSeminarOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                            <span className='my-auto'>Add a seminar</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
-                        <button type='button' onClick={() => setIsAchieveOpen(!isAchieveOpen)} className='flex justify-between text-left border-y-2 py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
-                            Add an achievement
+                        <button type='button' onClick={() => setIsAchieveOpen(!isAchieveOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                            <span className='my-auto'>Add an achievement</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
                     </div>

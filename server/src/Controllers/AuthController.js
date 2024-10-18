@@ -124,9 +124,9 @@ export const verifyEmail = async (req,res) => {
 
 export const registerProfile = async (req, res) => {
     const { verificationToken } = req.cookies;
-    const {  firstName, lastName, middleName, sex, track, rank, department, college, position } = req.body;
+    const {  firstName, lastName, middleName, contact, sex, track, rank, department, college, position } = req.body;
 
-    if(!firstName || !lastName || !sex || !track || !rank || !department || !college || !position) {
+    if(!firstName || !lastName || !contact || !sex || !track || !rank || !department || !college || !position) {
         return res.json({ error: 'Required all fields!' });
     }
 
@@ -149,6 +149,7 @@ export const registerProfile = async (req, res) => {
             firstName: firstName,
             lastName: lastName,
             middleName: middleName,
+            contact: contact,
             sex: sex,
             track: track,
             rank: rank,

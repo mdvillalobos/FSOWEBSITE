@@ -3,6 +3,7 @@ import axios from 'axios';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import ViewForm from './ReportView.jsx';
 import ReportModal from './ReportModal.jsx';
+import NotFound from '../../../assets/images/NotFound.png';
 
 const ReportTable = () => {
   const [ data, setData ] = useState([]);
@@ -87,7 +88,10 @@ const ReportTable = () => {
               </div>
             ))
           ) : (
-            <>p</>
+            <div className='flex flex-col justify-center items-center mt-10 space-y-2 select-none pointer-events-none'>
+              <img src={NotFound} alt="No Data Found" className='h-80 opacity-90'/>
+              <h1 className='flex justify-center font-medium text-2xl text-[#aeb3b6]'>No Available Data</h1>
+            </div>
           )}
         </div>
       </div>
