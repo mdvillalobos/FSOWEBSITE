@@ -10,7 +10,6 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import path from 'path';
 
-console.log(sslRedirect); 
 dotenv.config();
 const app = express();
 
