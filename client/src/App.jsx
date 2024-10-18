@@ -34,6 +34,14 @@ import ErrorPage from './view/Error/ErrorPage.jsx';
 import Restriction from './view/Error/Restriction.jsx';
 import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 
+//images 
+import { Helmet } from 'react-helmet';
+import NotFound from './assets/images/NotFound.webp';
+import NoData from './assets/images/NoData.webp';
+import NuLogo from './assets/images/NU_shield.webp';
+import maleProfile from './assets/images/male.webp';
+import femaleProfile from './assets/images/female.webp';
+
 axios.defaults.baseURL = 'http://localhost:3001';
 /* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */ 
 axios.defaults.withCredentials = true;
@@ -43,8 +51,8 @@ function App() {
 
   return (
     <Routes>
-       {/* authentication */}
-       <Route element={<AuthPageProtection/>}>
+      {/* authentication */}
+      <Route element={<AuthPageProtection/>}>
         <Route exact path="/" element={ <Login/> }/>
         <Route exact path="/login" element={ <Login/> }/>
         <Route exact path="/register" element={ <Registration/> }/>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { FaFile } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +7,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FiEdit3 } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
 import { GrView } from "react-icons/gr";
-import NotFound from '../../../assets/images/NotFound.png';
+import NotFound from '../../../assets/images/NotFound.webp';
 
 const SavedData = () => {
   const navigate = useNavigate()
@@ -29,6 +30,9 @@ const SavedData = () => {
 
   return (
     <div className='flex flex-col'>
+      <Helmet>
+        <link rel="preload" href={NotFound} as="image" />
+      </Helmet>
       <div className="flex space-x-6">
         {data?.length > 1 ? 
           data?.map(files => (

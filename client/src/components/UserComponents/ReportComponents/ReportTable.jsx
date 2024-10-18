@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import ViewForm from './ReportView.jsx';
 import ReportModal from './ReportModal.jsx';
-import NotFound from '../../../assets/images/NotFound.png';
+import NotFound from '../../../assets/images/NotFound.webp';
 
 const ReportTable = () => {
   const [ data, setData ] = useState([]);
@@ -53,6 +54,9 @@ const ReportTable = () => {
           rest={viewData}
         />
       )}
+      <Helmet>
+        <link rel="preload" href={NotFound} as="image" />
+      </Helmet>
       <div className="flex justify-between px-8 font-Poppins">
         <p className='font-medium text-2xl my-auto text-NuButton'>My Reports</p>
         <div className="flex space-x-3">

@@ -8,15 +8,13 @@ import App from './App.jsx';
 import './assets/css/index.css';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode StrictMode>
-    <UserContextProvider>
-      <RankContextProvider>
-        <AnalyticsContextProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </AnalyticsContextProvider>
-      </RankContextProvider>
-    </UserContextProvider>
-  </StrictMode>,
+  <UserContextProvider>
+    <RankContextProvider>
+      <AnalyticsContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AnalyticsContextProvider>
+    </RankContextProvider>
+  </UserContextProvider>
 )

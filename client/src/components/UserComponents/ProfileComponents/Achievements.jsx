@@ -1,12 +1,16 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../../../context/userContext'
-import NoData from '../../../assets/images/NoData.png';
+import { UserContext } from '../../../../context/userContext';
+import { Helmet } from 'react-helmet';
+import NoData from '../../../assets/images/NoData.webp';
 
 const Achievements = () => {
     const { credentials } = useContext(UserContext);
 
     return (
         <div className='flex flex-col px-4'> 
+            <Helmet>
+                <link rel="preload" href={NoData} as="image" />
+            </Helmet>
             {credentials?.achievements?.length > 0 ? (
                 <ul>
                     {credentials?.achievements?.map(i => (

@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../../context/userContext';
+import { Helmet } from 'react-helmet';
 import maleProfile from '../../../assets/images/male.webp';
 import femaleProfile from '../../../assets/images/female.webp';
-import { RankContext } from '../../../../context/rankContext';
 
 const ProfileCard = () => {
   const { user } = useContext(UserContext);
   
   return (
     <div className=" h-full"> 
+      <Helmet>
+        <link rel="preload" href={maleProfile} as="image" />
+        <link rel="preload" href={femaleProfile} as="image" />
+      </Helmet>
       <div className="flex justify-center select-none">
         {!!user && user.profilePicture ? (
           <div className="flex items-center justify-center w-52 h-52 overflow-hidden p-1 border-2 border-[#93adc2] rounded-full">

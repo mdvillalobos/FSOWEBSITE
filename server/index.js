@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import sslRedirect from 'heroku-ssl-redirect';
+/* import sslRedirect from 'heroku-ssl-redirect'; */
 import { mongoose } from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -25,7 +25,7 @@ app.use(
         credentials: true
 }));
 
-app.use(sslRedirect.default());
+/* app.use(sslRedirect.default()); */
 
 /* app.use(sslRedirect()); */
 app.use(helmet({

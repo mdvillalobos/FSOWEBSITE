@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react';
 import ReportView from './AdminViewForm';
 import axios from 'axios';
+import NotFound from '../../../assets/images/NotFound.webp';
 
 const ReportTable = () => {
   const [data, setData] = useState([]);
@@ -35,6 +36,9 @@ const ReportTable = () => {
           rest={viewData}
         />
       )}
+      <Helmet>
+        <link rel="preload" href={NotFound} as="image" />
+      </Helmet>
       <table className='table-auto w-full rounded-md font-Poppins divide-y-4 divide-white'>
         <thead>
           <tr>
@@ -45,16 +49,23 @@ const ReportTable = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody className='divide-y-8 divide-white'>
-          {data.map(i =>(
-            <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
-              <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.email}</td>      
-              <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</td>       
-              <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.message} </td>
-              <td className='px-10 py-4'>{i.date}</td>
-            </tr>
-          ))}
-        </tbody>
+        {data?.length > 1 ? (
+          <tbody className='divide-y-8 divide-white'>
+            {data.map(i =>(
+              <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
+                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.email}</td>      
+                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</td>       
+                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.message} </td>
+                <td className='px-10 py-4'>{i.date}</td>
+              </tr>
+            ))}
+          </tbody>
+          ) : (
+            <div className='flex flex-col justify-center items-center mt-10 space-y-2 select-none pointer-events-none'>
+              <img src={NotFound} alt="No Data Found" className='h-80 opacity-90'/>
+              <h1 className='flex justify-center font-medium text-2xl text-[#aeb3b6]'>No Available Data</h1>
+            </div>
+          )}
       </table>
     </div>
   )
