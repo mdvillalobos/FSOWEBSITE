@@ -32,10 +32,9 @@ const useFindEmail = () => {
                 email,
             })
             const serviceTime = Date.now() - start; // Time until after the axios call
-        console.log(`Service time: ${serviceTime}ms`);
+            console.log(`Service time: ${serviceTime}ms`);
     
             if(data.error) {
-                
                  Toast.fire({
                     icon: "error",
                     title: data.error
