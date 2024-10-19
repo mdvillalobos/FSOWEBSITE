@@ -180,7 +180,6 @@ export const forgotPassword = async (req, res) => {
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!email || !emailRegex.test(email)) {
-        console.log(Date.now() - start);
         return res.json({ error: 'Please enter a valid email' });
     }
 
@@ -188,13 +187,11 @@ export const forgotPassword = async (req, res) => {
         const user = await Account.findOne({ email })
         
         if(!user) {
-            console.log(Date.now() - start);
             return res.json({ error: "Email doesn't exist!" });
         }
         
         sendEmailVerification(email);
         const verificationToken = jwt.sign({ email: email }, process.env.JWT_SECRET);
-        console.log(Date.now() - start)
         return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Email is valid' });
         
     } catch (error) {

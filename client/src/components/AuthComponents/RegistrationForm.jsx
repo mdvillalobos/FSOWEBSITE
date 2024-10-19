@@ -37,7 +37,7 @@ const registrationForm = () => {
         e.preventDefault();
         await Register(data.employeeID, data.email, data.password);
     }
-    console.log(isHovered)
+
     return (
         <div className='font-Poppins'>
             <form onSubmit={handleRegistration} className='auth-container'>
