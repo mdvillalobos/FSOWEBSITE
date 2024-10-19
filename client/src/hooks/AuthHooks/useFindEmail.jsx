@@ -12,7 +12,7 @@ const useFindEmail = () => {
         if(!regex.test(email)) {
             return Toast.fire({
                 icon: "error",
-                title: 'Invalid Email'
+                title: 'Please enter a valid email.'
             });
         }
         
@@ -31,14 +31,17 @@ const useFindEmail = () => {
             const { data } = await axios.post('/api/forgot', {
                 email,
             })
-            console.log(Date.now() - start)
+            const serviceTime = Date.now() - start; // Time until after the axios call
+        console.log(`Service time: ${serviceTime}ms`);
     
             if(data.error) {
-                console.log(Date.now() - start)
-                return Toast.fire({
+                
+                 Toast.fire({
                     icon: "error",
                     title: data.error
                 });
+                console.log(Date.now() - start)
+                return;
             }
             else {
                 LoadingToast.close();
