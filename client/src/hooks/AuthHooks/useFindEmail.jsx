@@ -7,6 +7,15 @@ const useFindEmail = () => {
     const { Toast, LoadingToast } = useToast();
     
     const findEmail = async (email) => {
+        const start = Date.now()
+        const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if(!regex.test(email)) {
+            return Toast.fire({
+                icon: "error",
+                title: 'Invalid Email'
+            });
+        }
+        
         if(!email) {
             return Toast.fire({
                 icon: "error",
@@ -22,16 +31,19 @@ const useFindEmail = () => {
             const { data } = await axios.post('/api/forgot', {
                 email,
             })
+            console.log(Date.now() - start)
     
             if(data.error) {
-                Toast.fire({
+                console.log(Date.now() - start)
+                return Toast.fire({
                     icon: "error",
                     title: data.error
                 });
             }
             else {
+                LoadingToast.close();
                 navigate('/verifyotp');
-                Toast.fire({
+                return Toast.fire({
                     icon: "success",
                     title: 'Check your email.'
                 });

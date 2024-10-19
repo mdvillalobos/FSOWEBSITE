@@ -176,10 +176,13 @@ export const registerProfile = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
+    const start = Date.now();
 
     if(!email) {
+        console.log(Date.now() - start)
         return res.json({ error: 'Please enter your email' });
     }
+
 
     try {
         const user = await Account.findOne({ email: email })
@@ -190,8 +193,9 @@ export const forgotPassword = async (req, res) => {
         
         sendEmailVerification(email);
         const verificationToken = jwt.sign({ email: email }, process.env.JWT_SECRET);
+        console.log(Date.now() - start)
         return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Email is valid' });
-    
+        
     } catch (error) {
         console.error(`Forgot Password Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });

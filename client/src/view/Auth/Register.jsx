@@ -9,10 +9,8 @@ const Register = () => {
             <BackgroundHead/>
             <div className="form">
                 <div className="formContainer">
-                <h1 className="font-Poppins text-center text-5xl mb-8 font-semibold max-[396px]:text-[2.5rem] max-[396px]:font-semibold">Register</h1>
-                    <div>
-                        <RegistrationForm/>
-                    </div>
+                <h1 className="font-Poppins text-center text-5xl mb-9 mt-2 font-semibold max-[396px]:text-[2.5rem] max-[396px]:font-semibold">Register</h1>
+                    <RegistrationForm/>
                 </div>
             </div>
             <BackgroundFoot/>

@@ -15,7 +15,7 @@
     }
 
     .formContainer {
-        @apply bg-white px-8 py-8 shadow-lg rounded-xl
+        @apply bg-white px-8 py-9 shadow-lg rounded-xl
         max-[396px]:p-5 
         max-sm:p-6
     }
@@ -39,11 +39,11 @@
     }
 
     .auth-input-container {
-        @apply flex border-2 rounded-lg px-3 focus-within:border-[#c1c6f2] duration-200 bg-[#f5f6fa] mb-4 
+        @apply flex border-2 border-[#dde0e5] rounded-lg px-3 focus-within:border-[#93adc2] duration-200 /* bg-[#f5f6fa] */ mb-4 
     }
 
     .auth-input-field {
-        @apply outline-none text-[0.8rem] ml-2 py-4 bg-transparent w-full h-full font-medium font-Poppins
+        @apply outline-none text-[0.8rem] ml-2 py-4  bg-transparent w-full h-full font-medium font-Poppins
         max-[396px]:py-3.5 max-[396px]:text-[0.7rem]
     }
 
@@ -269,3 +269,15 @@ td:last-child{
     transform: translateY(0);
   }
 }
+
+.arrow {
+    position: absolute;
+    top: 100%; /* Position above the popover */
+    left: 50%; /* Center the arrow horizontally */
+    transform: translateX(-50%); /* Adjust centering */
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent; /* Adjust for the arrow size */
+    border-right: 8px solid transparent; /* Adjust for the arrow size */
+    border-bottom: 15px solid #f87171; /* Color matches popover */
+  }

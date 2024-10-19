@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { HiOutlineMail } from "react-icons/hi";
 import useFindEmail from '../../hooks/AuthHooks/useFindEmail';
 
 const ForgotPasswordForm = () => {
@@ -17,7 +18,7 @@ const ForgotPasswordForm = () => {
         <div>
             <form onSubmit={ handleFindEmail } className='auth-container'>
                 <div className='auth-input-container'>
-                    <MdEmail className='my-auto mx-1' size='1.2rem' color='#707074'/>
+                    <HiOutlineMail  className='my-auto translate-y-[-0.5px] ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
                         placeholder='Work Email' 

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp, IoLockOpen } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
+import { HiOutlineMail } from "react-icons/hi";
+import { TbLock } from "react-icons/tb";
 import IconButton from '@mui/material/IconButton';
 import useLogin from '../../hooks/AuthHooks/useLogin';
 
@@ -20,7 +22,7 @@ const loginForm = () => {
         <div>
             <form onSubmit={handleLogin} className='auth-container' >
                 <div className='auth-input-container'>
-                    <MdEmail className='my-auto mx-1' size='1.2rem' color='#707074'/>
+                    <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
                         placeholder='Work Email' 
@@ -31,7 +33,7 @@ const loginForm = () => {
                 </div>
         
                 <div className="auth-input-container">
-                    <IoLockOpen className='my-auto mx-1' size='1.2rem' color='#707074'/>
+                    <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 
                         type={showPassword ? 'text' : 'password'}
                         placeholder='Password'
