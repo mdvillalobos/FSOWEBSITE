@@ -42,12 +42,12 @@ import NuLogo from './assets/images/NU_shield.webp';
 import maleProfile from './assets/images/male.webp';
 import femaleProfile from './assets/images/female.webp';
 
-axios.defaults.baseURL = 'http://localhost:3001';
-/* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */
+/* axios.defaults.baseURL = 'http://localhost:3001'; */
+axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 function App() {
-  const { PageRouteProtection, AuthPageProtection} = useProtectRoutes();
+  const { AuthRegistration, PageRouteProtection, AuthPageProtection} = useProtectRoutes();
 
   return (
     <>
@@ -60,13 +60,18 @@ function App() {
         </Helmet>
       <Routes>
         {/* authentication */}
+      
+        {/* <Route element={<AuthRegistration />}>
+          
+        </Route> */}
+
         <Route element={<AuthPageProtection/>}>
           <Route exact path="/" element={ <Login/> }/>
           <Route exact path="/login" element={ <Login/> }/>
           <Route exact path="/register" element={ <Registration/> }/>
           <Route exact path="/registration" element={ <Registration/> }/>
           <Route exact path='/emailverification' element={ <EmailVerification/> }/>
-          <Route exact path='/profileregistration' element={ <ProfileRegistration/> }/>
+          <Route exact path='/profileregistration' element={<ProfileRegistration />} />
     
           {/* forgot password */}
           <Route exact path='/forgotpassword' element={ <ForgotPassword/> }/>

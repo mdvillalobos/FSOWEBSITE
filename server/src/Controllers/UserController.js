@@ -24,7 +24,7 @@ export const getUserData = async (req, res) => {
             return res.json(userData);
         }
 
-        return res.json('No data found'); 
+        return res.json('No data'); 
 
     } catch (error) {
         console.error(`Fetching User Data Error: ${ error.message }`);

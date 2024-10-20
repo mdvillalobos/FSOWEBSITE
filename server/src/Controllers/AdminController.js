@@ -37,7 +37,7 @@ export const getRanks = async (req, res) => {
     const { loginToken, verificationToken } = req.cookies;
 
     if(!loginToken && !verificationToken) {
-        return res.json({ error: 'Access denied!' });
+        return res.json(null);
     }
 
     try {

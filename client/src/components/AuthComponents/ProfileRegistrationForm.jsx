@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import useRegisterProfile from '../../hooks/AuthHooks/useRegisterProfile';
 import { RankContext } from '../../../context/rankContext';
-import { HiMiniPencil } from "react-icons/hi2";
-import { MdError } from "react-icons/md";
 import useToast from '../../hooks/Helpers/useToast';
+import Default from '../../assets/images/Default.webp';
+import { MdError } from "react-icons/md";
+import { IoIosAddCircle } from "react-icons/io";
 
 const ProfileRegistrationForm = () => {
   const { Toast } = useToast();
@@ -25,18 +26,19 @@ const ProfileRegistrationForm = () => {
     position: '', 
   });
 
-  const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
-  const filteredRank = ranks?.filter(rank =>
-    data.track ? rank.track === data.track : false
-  );
+  console.log(ranks)
 
+  const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
+  const filteredRank = ranks?.filter(rank => data.track ? rank.track === data.track : false);
+
+  console.log(ranks)
+  
   const RegisterUserInfo = async (e) => {
     e.preventDefault();
 
     const fieldsToCheck = [
       data.lastName,
-      data.firstName,
-      data.middleName,
+      data.firstName, 
       data.contact,
       data.sex,
       data.track,
@@ -57,16 +59,18 @@ const ProfileRegistrationForm = () => {
   }
 
   return (
-    <div className='bg-white shadow-md flex justify-center rounded-lg'>
+    <div className='flex justify-center' >
       <form onSubmit={RegisterUserInfo} autoComplete='off' className="space-y-4 py-8 w-full px-24">
-        <div className="flex justify-center mb-5">
-          <label className='flex justify-center items-center overflow-hidden rounded-full h-36 w-36 bg-gray-200 cursor-pointer relative'>
-            <input type='file' className='hidden' onChange={(e) => setData({ ...data, profilePicture: e.target.files[0]})}/>
+        <div className="flex flex-col items-center mb-5 relative">
+          <p className='font-medium mb-2 text-xl'>Profile Picture</p>
+          <label className='flex justify-center items-center rounded-full h-36 w-36 bg-gray-200 cursor-pointer overflow-hidden border-2'>
+            <input type='file' className='hidden' accept="image/*" onChange={(e) => setData({ ...data, profilePicture: e.target.files[0]})}/>
             {data.profilePicture ? (
-              <img src={URL.createObjectURL(data.profilePicture)} alt="" className='w-full h-full object-fill' />
+              <img src={URL.createObjectURL(data.profilePicture)} alt='Profile Picture' className='w-full h-full object-cover' />
             ) : (
-              <p className='absolute bottom-0'><HiMiniPencil size={'1.5rem'} /></p>              
+              <img src={Default} alt='Profile Picture' className='w-full h-full object-cover'/>             
             )}
+            <IoIosAddCircle size={'3.5rem'} className='absolute p-0.5 rounded-full bg-white top-32 right-[31rem] text-gray-500 hover:text-NuButtonHover'/>
           </label>
         </div>
 
@@ -101,12 +105,10 @@ const ProfileRegistrationForm = () => {
             <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="middleInitial">Middle Name</label>
               <input type="text" id='middleInitial' name='middleInitial' 
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.middleName.trim() ? 'border-red-400' : ''}`}
+                placeholder='Optional'
+                className='border-2 px-3 py-3 rounded-md w-full text-sm'
                 onChange={(e) => setData({ ...data, middleName: e.target.value})}
               />
-              {isSubmitted && !data.middleName.trim() && (
-                <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
-              )}
             </div>
 
             <div className="relative flex flex-col flex-1 space-y-1">

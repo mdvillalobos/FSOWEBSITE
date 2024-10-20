@@ -15,6 +15,7 @@ export const UserContextProvider = ({ children }) => {
                 axios.get('/api/getRole'),
                 axios.get('/api/getUserCredentials')
             ]);
+            
             setUser(getProfile.data);
             setRole(getRole.data);
             setCredentials(getCredentials.data)
@@ -34,6 +35,8 @@ export const UserContextProvider = ({ children }) => {
     const getProfileOnLogin = () => {
         checkAuth();
     }
+
+    console.log(user)
 
     return (
         <UserContext.Provider value={{ user, setUser, role, setRole, credentials, setCredentials, getProfileOnLogin }}>

@@ -59,7 +59,7 @@ const DashboardGraph = () => {
             )}
           </button>
           {isOpen && (
-            <div className="absolute w-48 text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+            <div className="absolute w-[13vw] text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 h-80 overflow-y-auto">
               {ranks.map((rank) => (
                 <div
                   key={rank._id}
