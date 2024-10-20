@@ -15,7 +15,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
 
     const [ data, setData ] = useState({
         name: user?.firstName + ' ' + user?.lastName,
-        college: 'ad',
+        college: user?.college,
         department: user?.department,
         currentRank: user?.rank,
         academicYear: "2024-2025",
