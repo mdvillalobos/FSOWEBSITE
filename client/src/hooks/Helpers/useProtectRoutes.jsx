@@ -45,7 +45,7 @@ console.log(user)
     } */
 
 
-    return { AuthRegistration, PageRouteProtection, AuthPageProtection }
+    return {  PageRouteProtection, AuthPageProtection }
 }
 
 
