@@ -249,6 +249,6 @@ export const resendOTP = (req, res) => {
 }
 
 export const logout = (req, res) => {
-    res.clearCookie('loginToken', { path: '/', sameSite: 'none', secure: true });
+    res.clearCookie('token', { path: '/', sameSite: 'none', secure: true });
     return res.json({ message: 'Logged out successfully' })
 }

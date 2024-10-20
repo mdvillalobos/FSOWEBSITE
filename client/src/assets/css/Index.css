@@ -66,7 +66,7 @@
         @apply flex flex-col bg-NuButton text-white text-center font-Poppins shadow-md w-72 h-[19rem] mt-16 py-10 px-4 rounded-2xl duration-300 hover:bg-NuBlue hover:duration-300 hover:shadow-lg
         max-[396px]:w-80 max-[396px]:pl-6
         /* min-width 640px*/
-        max-sm:w-96 max-sm:h-24 max-sm:flex-row max-sm:pl-10 max-sm:text-base max-sm:my-2 max-sm:py-0  
+        max-sm:w-[70vw] max-sm:h-24 max-sm:flex-row max-sm:pl-8 max-sm:text-base max-sm:my-2 max-sm:py-0  
         max-md:h-44
         /*min-width 1024px*/
         max-lg:h-48 max-lg:min-w-80 max-lg:flex-row max-lg:m-0 max-lg:mx-auto
@@ -107,7 +107,8 @@
     .homeHeader {
         @apply text-8xl font-black mt-16 mb-10 font-Poppins 
         after:content-[''] after:flex after:mx-auto after:bg-NuBlue after:w-48 after:h-1 after:mt-5
-        max-[396px]:text-5xl max-[396px]:mb-10 max-[396px]:mt-10
+        max-[396px]:text-5xl
+        max-sm:mt-8 max-sm:text-6xl max-sm:mb-8
         max-md:text-7xl max-md:mb-16 
         max-lg:text-7xl
     }
@@ -122,7 +123,8 @@
     }
 
     .profileNav {
-        @apply py-2 px-4  hover:text-white hover:bg-NuButtonHover font-medium duration-300 rounded-md 
+        @apply py-2 px-4 hover:text-white hover:bg-NuButtonHover font-medium duration-300 rounded-md 
+        max-sm:px-3 max-sm:text-sm 
     }
     .profileActive { 
         @apply bg-NuButton text-white 
@@ -137,20 +139,22 @@
     }
 
     .inputContainer {
-        @apply flex justify-between
+        @apply flex justify-between 
+        max-sm:justify-normal
     }
     .inputLabel {
-        @apply text-base font-normal
+        @apply text-base font-normal max-sm:w-36 max-sm:my-auto max-sm:text-sm
     }
 
     .inputFields {
-        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 text-sm relative top-[-9px] rounded-md
+        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 text-sm relative top-[-9px] rounded-md 
+        max-sm:top-0 max-sm:w-72
     }
 
-    .inputFileFields {
+    /* .inputFileFields {
         @apply relative top-[-9px] ml-3 w-[25vw] text-sm bg-white overflow-hidden rounded-md border-2 cursor-pointer
         file:py-2.5 file:px-3 file:border-0 file:mr-2 file:text-white file:bg-[#41518d] file:text-xs file:hover:bg-[#5d69c6] file:duration-200 file:cursor-pointer
-    }
+    } */
 
     /* SETTINGS */
     .settingNavActive {

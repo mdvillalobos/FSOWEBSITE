@@ -11,7 +11,7 @@ const ControlPanel = () => {
     }
     return (
       <div className="flex justify-between items-center mb-4">
-        <p className='font-medium text-2xl my-auto text-NuButton'>My Application Forms</p>
+        <p className='font-medium text-2xl my-auto text-NuButton max-sm:text-[1.4rem]'>My Application Forms</p>
         <button className="bg-[#41518d] text-white px-10 py-1.5 text-sm rounded-md hover:bg-[#5d69c6] duration-300 hover:scale-105" onClick={togglePop}>Create</button>
         {seen ? <CreateApplication toggle={togglePop} /> : null}
       </div>

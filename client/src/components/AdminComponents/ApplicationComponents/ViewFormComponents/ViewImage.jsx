@@ -7,7 +7,7 @@ const ViewImage = ({ handleExit, image  }) => {
       <button type="button" onClick={ handleExit } className='absolute text-3xl px-2 right-4 top-4 duration-300 text-white'>
         <RxCross2/>
       </button> 
-      <div className="relative h-[80vh] w-[70vw] bg-black shadow-lg rounded-md overflow-hidden">
+      <div className="relative h-[80vh] w-[70vw] bg-black shadow-lg rounded-md overflow-hidden max-sm:h-[72%] max-sm:w-[90%]">
         <img draggable='false' className='object-fill h-full w-full aspect-auto select-none' src={ image } alt='User Submitted Requirement'/>
       </div>
     </div>

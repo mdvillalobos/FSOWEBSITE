@@ -6,6 +6,7 @@ import User from '../Models/User.js';
 import Reports from '../Models/Reports.js';
 import Repository from '../Models/Repository.js';
 import Credentials from '../Models/Credentials.js';
+import ApplicationForms from '../Models/ApplicationForms.js';
 import { filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 
 export const getUserData = async (req, res) => {
@@ -284,6 +285,23 @@ export const submitReport = async (req, res) => {
         
     } catch (error) {
         console.error(`Report Submittion Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
+export const checkUserEntry = async (req, res) => {
+    const { token } = req.cookies;
+
+    try {
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const userEntry = await ApplicationForms.findOne({email: decode.email});
+        console.log(userEntry)
+        return res.json(userEntry)
+        
+        
+    }
+    catch (error) {
+        console.error(`Fetching User Entry Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

@@ -22,14 +22,14 @@ const header = ({location}) => {
     <div className='flex py-5 px-16 shadow bg-white justify-between max-sm:px-8 font-Poppins'>
       
       <div className='flex space-x-6'>
-          <Link to={home} className="flex my-auto mx-0 after:border-r-2 after:ml-5">
-            <img src={NuLogo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-[396px]:w-7'/>
-            <div className="text-[#41518d] font-semibold max-[396px]:hidden">
+          <Link to={home} className="flex my-auto mx-0 after:border-r-2 after:ml-5 max-sm:after:ml-3">
+            <img src={NuLogo} alt="Nu Logo" className='mr-1.5 translate-y-0.5 h-auto w-7 max-sm:w-7 max-sm:translate-y-0'/>
+            <div className="text-[#41518d] font-semibold max-sm:hidden">
                 <h1 className='text-[0.8rem] mt-[1.5px]'>NATIONAL UNIVERSITY</h1>
                 <p className='leading-3 text-[0.8rem]'>Faculty Service Office</p>
             </div>
           </Link>
-          <div className="my-auto text-xl font-medium text-gray-500">{location}</div>
+          <div className="my-auto text-xl font-medium text-gray-500 max-sm:text-lg">{location}</div>
       </div>
 
 
@@ -37,15 +37,15 @@ const header = ({location}) => {
         <div className="duration-300 translate-y-1">
           <button onClick={() => setIsOpen((prev) => !prev)} className='flex justify-center items-center'>
             {!!user && user.profilePicture ? (
-              <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full">
+              <div className="flex items-center justify-center w-[33px] h-[33px] overflow-hidden rounded-full max-sm:translate-y-0">
                 <img src={user.profilePicture} alt="Profile Picture" className='w-full h-full object-cover'/>
               </div>
             ) : user?.sex === 'Male' ? (
-              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center max-sm:translate-y-0">
                 <img src={maleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
               </div>
             ) : user?.sex === 'Female' ? (
-              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center">
+              <div className="w-[33px] h-[33px] overflow-hidden rounded-full flex items-center justify-center max-sm:translate-y-0">
                 <img src={femaleProfile} alt="Profile Picture" className='w-full h-auto object-cover'/>
               </div>
             ) : (

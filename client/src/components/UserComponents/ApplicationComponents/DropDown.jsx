@@ -37,10 +37,10 @@ const Requirements = ({ from }) => {
   }
   return (
     <div>
-      <div className="w-full relative">
-        <div className="flex justify-between rounded-lg text-ellipsis overflow-hidden whitespace-nowrap border-2 border-[#93adc2] py-1 px-2 mt-3">
-          <button type='button' onClick={() => setIsOpen(!isOpen)} className='flex justify-between my-auto w-full py-2 px-4'>
-            {selected}
+      <div className="w-full relative max-sm:text-sm">
+        <div className="flex justify-between rounded-lg text-ellipsis overflow-hidden whitespace-nowrap border-2 border-[#93adc2] py-1 px-2 mt-3 max-sm:py-0.5 max-sm:px-0.5">
+          <button type='button' onClick={() => setIsOpen(!isOpen)} className='flex justify-between w-full py-2 px-4'>
+            <span className='my-auto'>{selected}</span>
             {!isOpen ? (
               <RiArrowDropDownLine size={'1.5rem'} className=''/>
             ) : (
@@ -64,7 +64,7 @@ const Requirements = ({ from }) => {
         }
       </div>
 
-      <div className=" p-4 mt-4 rounded-md border-2 border-[#93adc2]">
+      <div className=" p-4 mt-4 rounded-md border-2 border-[#93adc2] max-sm:text-sm">
         {selectedRank ? (
           selectedRank?.requirements.map((requirement, i) => {
             const items = String(requirement.requirement) // Remove leading "o"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FocusOn } from 'react-focus-on';
 import { IoChevronBackOutline } from "react-icons/io5";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import useAddEducation from '../../../hooks/UserHooks/useAddEducation';
@@ -13,13 +14,13 @@ const ProfileModal = () => {
     }
 
     return (
-        <div className='flex justify-between w-full shadow-md bg-white rounded-xl py-4 px-5'>
+        <div className='flex justify-between w-full shadow-md bg-white rounded-xl py-4 px-5 max-sm:flex-col '>
             <p className='text-2xl font-semibold my-auto'>Personal Information</p>
-            <div className="space-x-2">
-                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white hover:shadow-lg hover:scale-105 '>Generate CV</button>
-                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white hover:shadow-lg hover:scale-105'>Add Info</button>
+            <div className="space-x-2 max-sm:flex">
+                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Generate CV</button>
+                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Add Info</button>
             </div>
-            {isOpen ? <AddInfo toggle={togglePop}/> : null} 
+            {isOpen ? (<FocusOn><AddInfo toggle={togglePop}/></FocusOn>) : null} 
         </div>
     )
 }
@@ -33,7 +34,7 @@ const AddInfo = (props) => {
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-            <div className="h-[46%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5 space-y-5 overflow-hidden fade-in">
+            <div className="h-[46%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5 space-y-5 overflow-hidden fade-in max-sm:h-[45%] max-sm:w-[85%]">
                 <div className="break-words text-sm">
                     <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
                         <IoChevronBackOutline size={'1.3rem'} />
@@ -42,15 +43,15 @@ const AddInfo = (props) => {
                     <h1 className='text-2xl my-4 font-medium'>Add Information</h1>
 
                     <div className="flex flex-col w-full mt-4 rounded-lg overflow-hidden">
-                        <button type='button' onClick={() => setIsEducOpen(!isEducOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                        <button type='button' onClick={() => setIsEducOpen(!isEducOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white max-sm:py-3 '>
                             <span className='my-auto'>Add an education</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
-                        <button type='button' onClick={() => setIsSeminarOpen(!isSeminarOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                        <button type='button' onClick={() => setIsSeminarOpen(!isSeminarOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white max-sm:py-3 '>
                             <span className='my-auto'>Add a seminar</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
-                        <button type='button' onClick={() => setIsAchieveOpen(!isAchieveOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white'>
+                        <button type='button' onClick={() => setIsAchieveOpen(!isAchieveOpen)} className='flex justify-between text-left py-4 px-3 text-base duration-300 hover:bg-NuButtonHover hover:text-white max-sm:py-3 '>
                             <span className='my-auto'>Add an achievement</span>
                             <MdKeyboardArrowRight size={'2rem'} className='my-auto'/>
                         </button>
@@ -84,7 +85,7 @@ const AddEducation = (props) => {
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex justify-center items-center font-Poppins ">
-            <div className="h-[60%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden">
+            <div className="h-[60%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5 space-y-5 overflow-hidden fade-in max-sm:h-[65%] max-sm:w-[85%]">
                 <div className="break-words text-sm">
                     <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
                         <IoChevronBackOutline size={'1.3rem'} />
@@ -97,11 +98,11 @@ const AddEducation = (props) => {
                             </button>
                             {isOpen && (
                                 <div className='absolute bg-white shadow-md w-full flex flex-col border-2 border-[#c1c6f2] rounded-xl'>
-                                    <button type='button' onClick={() => { setData({...data,  level: 'Primary Education'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white duration-200'>Primary Education</button>  
-                                    <button type='button' onClick={() => { setData({...data, level: 'Secondary Education'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white duration-200'>Secondary Education</button>
-                                    <button type='button' onClick={() => { setData({...data, level: 'Bachelors Degree'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white duration-200'>Bachelors Degree</button>
-                                    <button type='button' onClick={() => { setData({...data, level: 'Masters Degree'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white duration-200'>Masters Degree</button>            
-                                    <button type='button' onClick={() => { setData({...data, level: 'Doctorate Degree'}), setIsOpen(!isOpen)}} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white duration-200'>Doctorate Degree</button>                    
+                                    <button type='button' onClick={() => { setData({...data,  level: 'Primary Education'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white  duration-200'>Primary Education</button>  
+                                    <button type='button' onClick={() => { setData({...data, level: 'Secondary Education'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white  duration-200'>Secondary Education</button>
+                                    <button type='button' onClick={() => { setData({...data, level: 'Bachelors Degree'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white  duration-200'>Bachelors Degree</button>
+                                    <button type='button' onClick={() => { setData({...data, level: 'Masters Degree'}), setIsOpen(!isOpen) }} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white  duration-200'>Masters Degree</button>            
+                                    <button type='button' onClick={() => { setData({...data, level: 'Doctorate Degree'}), setIsOpen(!isOpen)}} className='py-2 text-left px-3 hover:bg-NuButtonHover hover:text-white  duration-200'>Doctorate Degree</button>                    
                                 </div>
                             )}
                         </div>
@@ -153,7 +154,7 @@ const AddSeminar = (props) => {
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex justify-center items-center font-Poppins">
-            <div className="h-[45%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden">
+            <div className="h-[45%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5 space-y-5 overflow-hidden fade-in max-sm:h-[45%] max-sm:w-[85%]">
                 <div className="break-words text-sm">
                     <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
                         <IoChevronBackOutline size={'1.3rem'} />
@@ -176,7 +177,7 @@ const AddSeminar = (props) => {
                             className='rounded-lg mb-3 py-3 px-4 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
                         />
 
-                      <div className="flex mt-4">
+                      <div className="flex mt-2">
                         <input type="submit" value="Submit" className=' py-3 px-10 text-sm bg-NuButton text-white hover:bg-NuButtonHover duration-300 rounded-lg cursor-pointer shadow-md w-full'/>
                       </div>
                     </form>
@@ -200,7 +201,7 @@ const AddAchievement = (props) => {
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex justify-center items-center font-Poppins">
-            <div className="h-[45%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden">
+            <div className="h-[45%] w-[35%] bg-white shadow-lg rounded-2xl px-5 py-5  space-y-5 overflow-hidden max-sm:h-[45%] max-sm:w-[85%]">
                 <div className="break-words text-sm">
                     <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
                         <IoChevronBackOutline size={'1.3rem'} />
@@ -226,7 +227,7 @@ const AddAchievement = (props) => {
 
                      
                       <div className="flex mt-2">
-                        <input type="submit" value="Submit" className=' py-3 px-10 text-sm bg-NuButton text-white hover:bg-NuButtonHover duration-300 rounded-lg cursor-pointer shadow-md w-full'/>
+                        <input type="submit" value="Submit" className='py-3 px-10 text-sm bg-NuButton text-white hover:bg-NuButtonHover duration-300 rounded-lg cursor-pointer shadow-md w-full'/>
                       </div>
                     </form>
                 

@@ -11,7 +11,7 @@ const ReportModal = () => {
 
   return (
     <div className="flex font-Poppins">
-      <button className='px-8 text-sm bg-NuButton text-white rounded-md py-1 duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105' onClick={togglePop}>
+      <button className='px-8 text-sm bg-NuButton text-white rounded-md py-1 duration-300 hover:bg-NuButtonHover hover:shadow-lg hover:scale-105 max-sm:py-2 max-sm:px-10' onClick={togglePop}>
         Create Report
       </button>
       {seen ? <CreateReport toggle={togglePop}/> : null}
@@ -50,7 +50,7 @@ function CreateReport(props) {;
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in ">
+      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6 space-y-5 overflow-hidden fade-in max-sm:h-[72%] max-sm:w-[85%]">
         <div className="break-words text-sm">
           <form onSubmit={handleSubmitReport} className='flex flex-col'>
             <button className="hover:bg-[#eae7e7] w-10 text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>

@@ -124,16 +124,16 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                         />
                     })}
 
-                    <div className='flex justify-end mt-4'>
+                    <div className='flex justify-end mt-4 space-x-3 text-sm font-medium max-sm:space-x-0 max-sm:justify-normal max-sm:flex-col-reverse'>
                         {from === 'Application For Re-Ranking' ? (
                             <>
-                                <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                                <input type='submit' value='Submit' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'/>
+                                <Link to="/application" className='py-2 px-12 duration-300 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb] text-center max-sm:py-3 max-sm:mt-2'>Cancel</Link>
+                                <input type='submit' value='Submit' className='py-2 px-12 bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer max-sm:py-3'/>
                             </>
                         ) : (
                             <>
-                                <Link to="/repository" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                                <input type='submit' value='Save' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'/>
+                                <Link to="/repository" className='py-2 px-12 duration-300 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb] max-sm:py-3 max-sm:mt-2'>Cancel</Link>
+                                <input type='submit' value='Save' className='py-2 px-12 bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer max-sm:py-3'/>
                             </>
                         )}
                     </div>

@@ -8,8 +8,8 @@ const PassAndSecurity = () => {
     return (
         <div>
             <div className='bg-[#f4f7fa] h-screen'>
-                <Header/>
-                <div className="px-16 py-2">
+                <Header location={'Account Settings'}/>
+                <div className="px-16 py-2 max-sm:px-8">
                     <BackBtn/>
                     <div className="flex bg-white font-Poppins py-6 shadow-md rounded-xl">
                         <SettingNav/>

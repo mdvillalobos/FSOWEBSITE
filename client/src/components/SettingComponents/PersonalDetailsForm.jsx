@@ -17,16 +17,15 @@ const PersonalDetailsForm = () => {
   return (
     <div className='px-6 w-full'>
       <h1 className='text-3xl font-medium mb-2 text-NuBlue'>Profiles</h1>
-
       <div className='flex justify-between w-full py-4 border-b'>
         <span className="text-left space-y-1.5">
           <p>Name</p>
-          <p className='text-sm text-gray-500'>The email address associated with your account.</p>
+          <p className='text-sm text-gray-500 max-sm:hidden'>The email address associated with your account.</p>
         </span>
         <div className="flex space-x-8 text-right text-sm">
           <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsNameOpen(!isNameOpen)}>
-            Edit
-            <BiEditAlt className='ml-1.5 mt-0.5'/>
+            <span className='max-sm:hidden'>Edit</span>
+            <BiEditAlt className='ml-1.5 mt-0.5 max-sm:ml-0 max-sm:mt-0'/>
           </button>
         </div>
       </div>
@@ -36,11 +35,11 @@ const PersonalDetailsForm = () => {
       <div className='flex justify-between w-full py-4 border-b'>
         <span className="text-left space-y-1.5">
           <p>Others</p>
-          <p className='text-sm text-gray-500'>Other informations about your account.</p>
+          <p className='text-sm text-gray-500 max-sm:hidden'>Other informations about your account.</p>
         </span>
         <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsOtherOpen(!isOtherOpen)}>
-          Edit
-          <BiEditAlt className='ml-1.5 mt-0.5'/>
+          <span className='max-sm:hidden'>Edit</span>
+          <BiEditAlt className='ml-1.5 mt-0.5 max-sm:ml-0 max-sm:mt-0'/>
         </button>
       </div>
 
@@ -49,11 +48,11 @@ const PersonalDetailsForm = () => {
       <div className='flex justify-between w-full py-4 border-b'>
         <span className="text-left space-y-1.5">
           <p>Profile Picture</p>
-          <p className='text-sm text-gray-500'>Set a unique password to protect your account.</p>
+          <p className='text-sm text-gray-500 max-sm:hidden'>Set a unique password to protect your account.</p>
         </span>
         <button className='flex my-auto py-2 px-4 text-sm bg-NuButton text-white hover:bg-NuButtonHover hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105' onClick={() => setIsProfileOpen(!isProfileOpen)}>
-          Change Profile
-          <BiEditAlt className='ml-1.5 mt-0.5'/>
+        <span className='max-sm:hidden'>Change Profile</span>
+          <BiEditAlt className='ml-1.5 mt-0.5 max-sm:ml-0 max-sm:mt-0'/>
         </button>
       </div>
 
@@ -67,17 +66,14 @@ export default PersonalDetailsForm
 
 const UpdateNameModal = (props) => {
   const { EditName } = useEditName();
+  const { user } = useContext(UserContext)
+
   const [ data, setData ] = useState({
-    lastName: '',
-    firstName: '',
-    middleName: '', 
+    lastName: user?.lastName,
+    firstName: user?.firstName,
+    middleName: user?.middleName, 
   });
 
-  useEffect(() => {
-    axios.get('/api/getProfile')
-    .then(res => setData(res.data))
-    .catch(error => console.log(error))
-  }, []);
 
   const updateProfile = async (e) => {
     e.preventDefault();
@@ -86,7 +82,7 @@ const UpdateNameModal = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[64%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in">
+      <div className="h-[64%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in max-sm:h-[67%] max-sm:w-[85%]">
         <div className="break-words text-sm">
           <form onSubmit={updateProfile} className='font-Poppins'>
             <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
@@ -136,17 +132,12 @@ const UpdateNameModal = (props) => {
 
 const UpdateOtherInfoModal = (props) => {
   const { updateOtherInformation } = useUpdateOtherInformation();
+  const { user } = useContext(UserContext)
   const [ data, setData ] = useState({
-    sex: '',
-    department: '',
-    position: '',
+    sex: user?.sex,
+    department: user?.department,
+    position: user?.position,
   });
-
-  useEffect(() => {
-    axios.get('/api/getProfile')
-    .then(res => setData(res.data))
-    .catch(error => console.log(error))
-  }, []);
 
   const updateProfilePicture = async (e) => {
     e.preventDefault();
@@ -155,7 +146,7 @@ const UpdateOtherInfoModal = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in">
+      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in max-sm:h-[68%] max-sm:w-[85%]">
         <form onSubmit={updateProfilePicture} className='font-Poppins'>
           <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
             <IoChevronBackOutline size={'1.3rem'} />
@@ -216,7 +207,7 @@ const UpdateProfileModal = (props) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in">
+      <div className="h-[69%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in max-sm:h-[72%] max-sm:w-[85%]">
         <form onSubmit={updateProfilePicture} className='font-Poppins'>
           <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
             <IoChevronBackOutline size={'1.3rem'} />
@@ -242,7 +233,7 @@ const UpdateProfileModal = (props) => {
           </div>
 
           <label className='flex justify-center items-center w-full font-semibold border-2 border-NuButton py-4 px-14 mt-4 text-sm rounded-lg duration-300 hover:bg-NuButtonHover hover:border-NuButtonHover hover:text-white cursor-pointer'>
-            <input type='file' className='hidden' onChange={(e) => setProfile(e.target.files[0])}/>
+            <input type='file' className='hidden' accept="image/*"  onChange={(e) => setProfile(e.target.files[0])}/>
             <p className='text-sm'>Upload a new photo</p>
           </label>
 
@@ -252,7 +243,7 @@ const UpdateProfileModal = (props) => {
           ) : (
             <input type="submit" value='Save' className='w-full text-white font-semibold bg-NuBlue py-4 px-14 mt-4 text-sm cursor-pointer rounded-lg duration-300 hover:bg-NuButtonHover' />
           )}
-          </form>
+        </form>
       </div>
     </div>
   )
