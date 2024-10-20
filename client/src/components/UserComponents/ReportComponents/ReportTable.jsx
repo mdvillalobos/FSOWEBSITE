@@ -72,10 +72,10 @@ const ReportTable = () => {
       </div>
       <div className="w-full font-Poppins my-6 h-full max-sm:text-sm">
         <div className=" flex font-medium px-6 bg-[#f4f7fa] max-sm:px-0">
-          <p className=' py-3 px-4 w-[20%] border-2 max-sm:w-[25%] '>Subject</p>
-          <p className=' py-3 px-4 w-[40%] border-2 max-sm:w-[25%]'>Report</p>
-          <p className=' py-3 px-4 w-[20%] border-2 max-sm:w-[25%]'>Date</p>
-          <p className=' py-3 px-4 w-[20%] border-2 max-sm:w-[25%]'>Action</p>
+          <p className=' py-3 px-4 w-[20%] max-sm:w-[25%] '>Subject</p>
+          <p className=' py-3 px-4 w-[40%] max-sm:w-[25%]'>Report</p>
+          <p className=' py-3 px-4 w-[20%] max-sm:w-[25%]'>Date</p>
+          <p className=' py-3 px-4 w-[20%] max-sm:w-[25%]'>Action</p>
         </div>
         <div className="w-full">
           {data.length > 0 ? (
