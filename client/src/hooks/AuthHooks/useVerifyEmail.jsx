@@ -10,7 +10,7 @@ const useVerifyEmail = () => {
     const { fetchRanksOnLogin } = useContext(RankContext);
 
     const verifyEmail = async (otp) => {
-        if(!otp) {
+        if(!otp || otp.length < 6) {
             return Toast.fire({
                 icon: "error",
                 title: 'Required all fields'

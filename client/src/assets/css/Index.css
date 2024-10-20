@@ -27,7 +27,7 @@
     }
 
     .formBtn {
-        @apply bg-NuButton duration-200 hover:bg-NuButtonHover text-white py-3 rounded-md cursor-pointer font-Poppins font-medium text-sm
+        @apply bg-NuButton duration-200 hover:bg-NuButtonHover text-white py-3 rounded-md cursor-pointer font-medium text-sm 
         max-[396px]:py-2.5 
     }
 
@@ -39,7 +39,7 @@
     }
 
     .auth-input-container {
-        @apply flex border-2 border-[#dde0e5] rounded-lg px-3 focus-within:border-[#93adc2] duration-200 /* bg-[#f5f6fa] */ mb-4 
+        @apply flex border-2 rounded-lg px-3 duration-200 mt-[1.2rem] bg-[#fbfcfe]
     }
 
     .auth-input-field {
@@ -240,14 +240,26 @@ td:last-child{
     background: linear-gradient(to bottom, #fbfbfd, #f8f8fd);
 }
 
-.fade-in {
-    animation: fadeIn 0.2s easet forwards;
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
-.fade-left {
-    animation: fadeLeft 0.2s ease forwards;
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
 }
 
+  
 @keyframes fadeLeft {
     from {
         opacity: 0;
@@ -259,15 +271,17 @@ td:last-child{
       }
 }
   
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.2s easet forwards;
+}
+
+.fade-left {
+    animation: fadeLeft 0.2s ease forwards;
 }
 
 .arrow {

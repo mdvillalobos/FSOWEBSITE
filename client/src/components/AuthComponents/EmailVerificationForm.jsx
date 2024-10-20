@@ -67,7 +67,7 @@ const EmailVerification = () => {
             />
           ))}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-6">
             <input type="submit" value="Verify" className='formBtn'/>
         </div>
       </form>

@@ -14,7 +14,7 @@ export const AnalyticsContextProvider = ({ children }) => {
             setStatusData(response.data.statusData);
         }
 
-        catch {
+        catch (error) {
             setIsApprovedData(null);
             setStatusData(null);
             console.error(`Fetching Ranks Error: ${ error.message }`);

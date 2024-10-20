@@ -68,7 +68,7 @@ const verifyOtpForm = () => {
           ))}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-6">
           <input type="submit" value="Submit" className='formBtn'/>
         </div>
       </form>

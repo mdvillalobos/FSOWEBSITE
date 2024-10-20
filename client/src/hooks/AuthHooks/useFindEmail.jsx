@@ -7,6 +7,7 @@ const useFindEmail = () => {
     const { Toast, LoadingToast } = useToast();
     
     const findEmail = async (email) => {
+        const Start = Date.now()
         const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
         if(!regex.test(email)) {
             return Toast.fire({
@@ -30,6 +31,7 @@ const useFindEmail = () => {
             const { data } = await axios.post('/api/forgot', {
                 email,
             })
+            console.log(Date.now() - Start)
 
             if(data.error) {
                 return Toast.fire({

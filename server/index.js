@@ -25,7 +25,7 @@ app.use(
         credentials: true
 }));
 
-app.use(sslRedirect.default());
+/* app.use(sslRedirect.default()); */
 
 /* app.use(sslRedirect()); */
 app.use(helmet({

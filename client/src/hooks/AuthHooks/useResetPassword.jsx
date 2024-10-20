@@ -7,13 +7,6 @@ const useResetPassword = () => {
     const navigate = useNavigate();
 
     const ResetPassword = async (password, confirmPassword) => {
-        if(!password || !confirmPassword) {
-            return Toast.fire({
-                icon: "error",
-                title: 'Required all fields'
-            });
-        }
-
         if(password != confirmPassword) {
             return Toast.fire({
                 icon: "error",

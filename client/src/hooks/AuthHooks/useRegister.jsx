@@ -7,18 +7,10 @@ const useRegister = () => {
     const { Toast, LoadingToast } = useToast();
     
     const Register = async (employeeID, email, password) => {
-        const regex = /^(?=.{5,})(\d+(-\d+)?)$/;
         if(!employeeID || !email || !password) {
             return Toast.fire({
                 icon: "error",
                 title: 'Required all fields.'
-            });
-        }
-
-        if(!regex.test(employeeID)) {
-            return Toast.fire({
-                icon: "error",
-                title: 'Invalid Employee id format.'
             });
         }
 

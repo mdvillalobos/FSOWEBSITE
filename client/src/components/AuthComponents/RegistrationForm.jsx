@@ -1,47 +1,86 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FaEyeSlash } from "react-icons/fa";
-import { IoEyeSharp, IoLockOpen } from "react-icons/io5";
-import { MdEmail } from "react-icons/md";
-import { FaIdCardClip } from "react-icons/fa6";
 import IconButton from '@mui/material/IconButton';
 import useRegister from '../../hooks/AuthHooks/useRegister';
+import { LuEye, LuEyeOff  } from "react-icons/lu";
 import { PiWarningCircleFill } from "react-icons/pi";
 import { LiaIdCard } from "react-icons/lia";
 import { HiOutlineMail } from "react-icons/hi";
 import { TbLock } from "react-icons/tb";
-
+import useToast from '../../hooks/Helpers/useToast';
 
 const registrationForm = () => {
     const { Register } = useRegister();
+    const { Toast } = useToast();
     const [ showPassword, setShowPassword ] = useState(false);
-    const [ isValid, setIsValid ] = useState(false);
+    const [ isPasswordValid, setIsPasswordValid ] = useState(false);
+    const [ isEmailValid, setIsEmailValid ] = useState(false);
+    const [ isIdValid, setIsIdValid] = useState(false);
     const [ isHovered, setIsHovered ] = useState(false);
+    
+    const [ shake, setShake ] = useState({
+        id: false,
+        email: false,
+        password: false,
+    });
+
     const [ data, setData ] = useState({ 
         employeeID: '', 
         email: '', 
         password: '' 
     });
 
+    const checkId = (id) => {
+        const regex = /^(?=.{5,})(\d+(-\d+)?)$/;
+        return regex.test(id)
+    }
+
+    const checkEmail = (email) => {
+        const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        return regex.test(email)
+    }
+
     const checkPassword = (password) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\-_&$]).{8,}$/;
         return regex.test(password);
     }
 
-    const handlePasswordChange  = (e) => {
-        setData({ ...data, password : e.target.value})
-        setIsValid(checkPassword(data.password))
-    }
+    useEffect(() => {
+        setIsEmailValid(checkEmail(data.email));
+        setIsPasswordValid(checkPassword(data.password));
+        setIsIdValid(checkId(data.employeeID));
+    })
+
 
     const handleRegistration = async (e) => {
         e.preventDefault();
+        if(!data.employeeID || !data.email || !data.password) {
+            setShake({ id: !isIdValid, email: !isEmailValid, password: !isPasswordValid }),
+            setTimeout(() => {
+                setShake({ id: false, email: false, password: false });
+            }, 500);
+
+            return Toast.fire({
+                icon: "error",
+                title: 'Required all fields.'
+            });
+        }
+
+        if(!isIdValid || !isEmailValid || !isPasswordValid) {
+            setShake({ id: !isIdValid, email: !isEmailValid, password: !isPasswordValid }),
+            setTimeout(() => {
+                setShake({ id: false, email: false, password: false });
+            }, 500);
+            return;
+        }
+        
         await Register(data.employeeID, data.email, data.password);
     }
 
     return (
         <div className='font-Poppins'>
             <form onSubmit={handleRegistration} className='auth-container'>
-                <div className='auth-input-container'>
+                <div className={`auth-input-container ${data.employeeID ? (isIdValid) ? 'focus-within:border-[#93adc2]' : 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.id ? 'shake' : ''}`}>
                     <LiaIdCard className='my-auto ml-0.5 mr-0.5' size='1.5rem' color='#707074'/>
                     <input 
                         type="text"
@@ -51,8 +90,11 @@ const registrationForm = () => {
                         className='auth-input-field'
                     />
                 </div>
+                {data.employeeID ? (isIdValid) ? null : ( 
+                    <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid employee id format.</p>
+                ) : null}
 
-                <div className='auth-input-container'>
+                <div className={`auth-input-container ${data.email ? (isEmailValid) ? 'focus-within:border-[#93adc2]' : 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.email ? 'shake' : ''}`}>
                     <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
@@ -62,14 +104,17 @@ const registrationForm = () => {
                         className='auth-input-field'
                     />
                 </div>
+                {data.email ? (isEmailValid) ? null : ( 
+                    <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid email format.</p>
+                ) : null}
 
-                <div className={`relative flex border-2 rounded-lg px-3 duration-200 mb-4 bg-[#fbfcfe] border-[#dde0e5] ${data.password ? (isValid) ? 'focus-within:border-[#93adc2]' : 'border-red-400' : null}`}>
+                <div className={`auth-input-container relative ${data.password ? (isPasswordValid) ? 'focus-within:border-[#93adc2]' : 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.password ? 'shake' : ''}`}>
                     <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 
                         type={showPassword ? 'text' : 'password'}
                         placeholder='Password'
                         value={data.password}
-                        onChange={handlePasswordChange}
+                        onChange={(e) => setData({ ...data, password: e.target.value})}
                         className='auth-input-field'
                     />
                     <IconButton
@@ -77,18 +122,19 @@ const registrationForm = () => {
                             onClick={() => setShowPassword((show) => !show)}
                             edge="end"
                         >
-                            {showPassword ? <FaEyeSlash size="20px" opacity="80%"/> : <IoEyeSharp size="20px" opacity="80%"/>}
+                           {showPassword ? <LuEyeOff size="20px"/> : <LuEye size="20px"/>}
                     </IconButton>
-                    {data.password ? (isValid) ? null : ( 
-                        <div className="absolute right-[-25px] top-4" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                            <PiWarningCircleFill size={'1.2rem'} className='text-red-400'/>
+                    {data.password ? (isPasswordValid) ? null : ( 
+                        <div className="absolute right-[-25px] top-4 " onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                            <PiWarningCircleFill size={'1.2rem'} className='text-red-400 cursor-pointer'/>
                             <div className={`${isHovered ? 'visible arrow' : 'hidden'}`}></div>
                             <p className={`${isHovered ? 'visible absolute right-[-65px] top-[33px] bg-red-400 p-2 text-xs rounded-md w-60 text-white' : 'hidden'}`}>Please enter at least 8 characters with a number, symbol, uppercase and lowercase letter.</p>
                         </div> 
                     ) : null}
-
-
                 </div>
+                {data.password ? (isPasswordValid) ? null : ( 
+                    <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid password format.</p>
+                ) : null}
 
                 <div className="flex flex-col mt-6">
                     <input type="submit" value="Register" className='formBtn'/>
@@ -99,7 +145,7 @@ const registrationForm = () => {
                 </div>
             </form>
         </div>
-    )
+    )   
 }
 
 export default registrationForm

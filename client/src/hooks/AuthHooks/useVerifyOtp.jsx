@@ -6,7 +6,7 @@ const useVerifyOtp = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
     const VerifyUserOtp = async (otp) => {
-        if(!otp) {
+        if(!otp || otp.length < 6) {
             return  Toast.fire({
                 icon: "error",
                 title: 'Required all fields'
