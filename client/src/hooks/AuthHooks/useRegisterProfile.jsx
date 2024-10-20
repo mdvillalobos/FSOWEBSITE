@@ -51,7 +51,6 @@ const useRegisterProfile = () => {
                 getProfileOnLogin();
                 fetchRanksOnLogin();
                 getDataOnLogin();
-                navigate('/home');
             }
         } catch (error) {
             console.error(`Profile registration error ${ error.message }`);

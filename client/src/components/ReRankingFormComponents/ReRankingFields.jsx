@@ -9,6 +9,8 @@ import useToast from '../../hooks/Helpers/useToast';
 
 const ReRankingFields = ({ requirement, data, setData }) => {
     const { Toast } = useToast();
+    const items = String(requirement).split('\n');
+
     const removeFile = () => {
         setData(null)
     }
@@ -69,7 +71,16 @@ const ReRankingFields = ({ requirement, data, setData }) => {
                 )
             )}
             <div className="w-full flex justify-between border-b-2 border-[#35408E] py-5">
-                <ReactMarkdown className='text-[0.9rem] w-[33vw]'>{requirement}</ReactMarkdown>
+                <div className='text-[0.9rem] w-[35vw] space-y-0.5'>
+                    {items.map((item, index) => (
+                      index === 0 ? (
+                        <p className='font-medium'> {item.trim()}</p> 
+                      ) : (
+                        <p >{item.trim()}</p>
+                      )
+                    ))} 
+                </div>
+                
                 <div className='flex space-x-2 text-sm '>
                     {data ? (
                         <span className='flex justify-between items-center border px-2 text-sm rounded-md h-14 w-52 overflow-hidden'>

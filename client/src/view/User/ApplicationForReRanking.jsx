@@ -6,7 +6,7 @@ import Header from "../../components/Tools/Header.jsx";
 
 const ApplicationForReRanking = () => {
     return (
-        <div className="bg-[#f4f7fa] h-screen w-screen font-Poppins">
+        <div className="bg-[#f4f7fa] min-h-screen w-screen font-Poppins">
             <Header location={'Application For Re-Ranking'}/>
             <div className="px-16 py-2">
                 <BackBtn/>

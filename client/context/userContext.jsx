@@ -27,7 +27,6 @@ export const UserContextProvider = ({ children }) => {
         }
     };
 
-
     useEffect(() => {
         checkAuth();
     }, []);

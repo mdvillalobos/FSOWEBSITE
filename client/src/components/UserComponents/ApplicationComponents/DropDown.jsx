@@ -9,12 +9,19 @@ const Requirements = ({ from }) => {
   const navigate = useNavigate();
   const { ranks } = useContext(RankContext);
   const { user } = useContext(UserContext);
-  
-  const availableRank = ranks?.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
-
   const [ isOpen, setIsOpen ] = useState(false);
-  const [ selected, setSelected ] = useState(availableRank[0]?.rankName);
+  const [ selected, setSelected ] = useState();
 
+  const filterRankByTrack = ranks?.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
+  const currentRankIndex = ranks?.findIndex(rank => rank.rankName === user?.rank);
+  const availableRank = filterRankByTrack?.slice(currentRankIndex + 1)
+
+  useEffect(() => {
+    if (ranks) {
+      setSelected(availableRank.length > 0 ? availableRank[0].rankName : null);
+    }
+  }, [ranks, user.track]);
+  
   const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === selected);
 
 
@@ -44,7 +51,7 @@ const Requirements = ({ from }) => {
         </div>
           
         {isOpen && 
-          <div className="absolute flex flex-col mt-1 bg-white border rounded-md shadow-lg fade-in w-full border-[#93adc2] ">
+          <div className="absolute flex flex-col mt-1 bg-white border rounded-md shadow-lg fade-in w-full border-[#93adc2] h-72 overflow-y-scroll ">
             {availableRank?.map(i => (
               <button 
                 key={i._id}
@@ -59,9 +66,24 @@ const Requirements = ({ from }) => {
 
       <div className=" p-4 mt-4 rounded-md border-2 border-[#93adc2]">
         {selectedRank ? (
-          selectedRank?.requirements.map((requirement, i) => (
-            <ReactMarkdown key={requirement._id} className='font-Poppins mb-2'>{`&#8211; ${String(requirement.requirement)}`}</ReactMarkdown>
-          ))
+          selectedRank?.requirements.map((requirement, i) => {
+            const items = String(requirement.requirement) // Remove leading "o"
+            .split('\n'); // Split based on bullet characters and dashes
+
+            return (
+              <div key={requirement._id} className='font-Poppins mb-2'>
+                {items.map((item, index) => (
+                  <div key={index}>
+                  {index === 0 ? (
+                    <ReactMarkdown className='font-medium'>{`&#8211; ${item.trim()}`}</ReactMarkdown> // Dash for the first line
+                  ) : (
+                    <ReactMarkdown className='pl-4'>{item.trim()}</ReactMarkdown> // No dash for subsequent lines
+                  )}
+                </div>
+                ))}
+              </div>
+            );
+          })
         ): (
           <p>No data</p>
         )}

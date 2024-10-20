@@ -1,14 +1,24 @@
 import axios from "axios";
 import useToast from '../Helpers/useToast.jsx';
+import { useContext } from "react";
+import { UserContext } from "../../../context/userContext.jsx";
 
 const useAddSeminar = () => {
     const { Toast, LoadingToast } = useToast();
+    const { getProfileOnLogin } = useContext(UserContext)
 
-    const AddSeminar = async (seminarName, date, props) => {
-        if(!seminarName || !date) {
+    const AddSeminar = async (seminarName, year, props) => {
+        if(!seminarName || !year) {
             return Toast.fire({
                 icon: 'error',
                 title: 'Required all fields!'
+            })
+        }
+
+        if(year.length > 4 || year.length < 4) {
+            return Toast.fire({
+                icon: 'error',
+                title: 'Invalid Year'
             })
         }
 
@@ -32,6 +42,7 @@ const useAddSeminar = () => {
                     icon: 'success',
                     title: 'Created Successfully.'
                 });
+                getProfileOnLogin();
                 props.toggle();
             }
         }
