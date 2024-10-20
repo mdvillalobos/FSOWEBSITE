@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import jwt from 'jsonwebtoken';
-
 import Ranks from '../Models/Ranks.js';
 import Account from '../Models/Account.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
@@ -11,7 +10,7 @@ import Repository from '../Models/Repository.js';
 import { filterAndUploadedRequirements } from '../Helpers/Cloudinary.js';
 
 export const submitApplicationEntry = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action } = req.body;
 
     if(!name || !college || !department || !currentRank || !academicYear || !ApplyingFor || !userTrack) {
@@ -24,7 +23,7 @@ export const submitApplicationEntry = async (req, res) => {
     }
 
     try {
-        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const requirements = await filterAndUploadedRequirements(req.files, folderPath)
         if(requirements) {
             const dataToProcess = {
@@ -52,11 +51,11 @@ export const submitApplicationEntry = async (req, res) => {
 }
 
 export const checkApplication = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { formID, decision, ...checkedReq } = req.body;
 
     try {
-        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const [ userInfo, userApplicationForm ] = await Promise.all([
             Account.findOne({ email }),
             ApplicationForms.findById(formID)

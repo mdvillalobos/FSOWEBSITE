@@ -8,19 +8,19 @@ import { uploadImageToCloudinary } from '../Helpers/Cloudinary.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 
 export const changePassword = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
     if(!oldPassword || !newPassword || !confirmNewPassword) {
         return res.json({ error: 'Required all fields!'});
     }
 
-    if(!loginToken) {
+    if(!token) {
         return res.json({ error: 'Access denied!'});
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await Account.findOne({ email: decode.email });
         if(!userData) {
             return res.json({ error: 'User data not found '});
@@ -50,15 +50,15 @@ export const changePassword = async (req, res) => {
 }
 
 export const updateName = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { firstName, lastName, middleName } = req.body;
 
-    if(!loginToken) {
+    if(!token) {
         return res.json({ error: 'Access denied!'});
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET); 
+        const decode = jwt.verify(token, process.env.JWT_SECRET); 
         const updateUserCredentials = await User.updateOne({ email: decode.email }, { $set: { lastName: lastName, firstName: firstName, middleName: middleName }});
 
         if(!updateUserCredentials) {
@@ -74,10 +74,10 @@ export const updateName = async (req, res) => {
 }
 
 export const updateOtherInfo = async(req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { sex, department, position } = req.body;
 
-    if(!loginToken )  {
+    if(!token )  {
         return res.json({ error: 'Access Denied!'});
     }
 
@@ -86,7 +86,7 @@ export const updateOtherInfo = async(req, res) => {
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         const updateOtherInfo = await User.updateOne({ email: decode.email }, { $set: { sex: sex, department: department, position: position}});
 
@@ -104,14 +104,14 @@ export const updateOtherInfo = async(req, res) => {
 
 
 export const updateProfilePicture = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if(!loginToken) {
+    if(!token) {
         return res.json({ error: 'Access denied!'});
     }
 
     try {
-        const userEmail = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const userEmail = jwt.verify(token, process.env.JWT_SECRET);
         const uploadedPicture = req.file ? req.file.path : null;
 
         const userData = await User.findOne({ email: userEmail.email });

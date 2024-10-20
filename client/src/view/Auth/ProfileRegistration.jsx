@@ -2,10 +2,18 @@ import React, { useContext } from 'react'
 import Header from '../../components/Tools/Header.jsx';
 import ProfileRegistrationForm from '../../components/AuthComponents/ProfileRegistrationForm.jsx';
 import { UserContext } from '../../../context/userContext.jsx';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const ProfileRegistration = () => {
-    const { user } = useContext(UserContext)
-    console.log(user)
+    const { user, role} = useContext(UserContext);
+
+    if(user === undefined) {
+        return <p>Loading...</p>
+    }
+    if(user !== 'No data' && role === null || user !== 'No data' && role !== null) {
+        return user === null ? <Navigate to='/'/> : role === 'user' ? <Navigate to='/home'/> : role === 'admin' && <Navigate to ='/admin/home'/>
+    }
+    
     return (
         <div className='bg-[#f4f7f9] h-full max-sm:h-full'>
             <Header/> 

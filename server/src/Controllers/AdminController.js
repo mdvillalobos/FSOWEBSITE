@@ -25,7 +25,7 @@ export const getAllApprovers = async (req, res) => {
         if(approvers) {
             return res.json(approvers)
         }
-return res.json(null)
+        return res.json(null)
     }
     catch (error) {
         console.error(`Fetching Reports Error: ${ error.message }`);
@@ -34,9 +34,9 @@ return res.json(null)
 }
 
 export const getRanks = async (req, res) => {
-    const { loginToken, verificationToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if(!loginToken && !verificationToken) {
+    if(!token) {
         return res.json(null);
     }
 
@@ -90,9 +90,9 @@ export const createRank = async (req, res) => {
 
 
 export const getApplicationsForReRanking = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     try {
-        const { email } = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await User.findOne({ email: email });
 
         const approverMapping = {
@@ -107,6 +107,7 @@ export const getApplicationsForReRanking = async (req, res) => {
             const applications = await ApplicationForms.find({ prevApprover: previousApprover, status: 'For Approval' });
             return res.json(applications)
         }
+        console.log('tae')
         
         return res.json(null)
 

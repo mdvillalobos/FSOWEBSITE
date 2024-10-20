@@ -31,8 +31,8 @@ export const uploadImageToCloudinary = async (filePath, folderName, resourceType
 }
 
 export const updateFileToCloudinary = async(filePath) => {
-     const publicID = secureURL.split('/').join().split('.')[0];
-     const upload = await cloudinaryInstance.uploader.upload(filePath, { public_id: publicID });
+    const publicID = secureURL.split('/').join().split('.')[0];
+    const upload = await cloudinaryInstance.uploader.upload(filePath, { public_id: publicID });
 }
 
 export const filterAndUploadedRequirements = async (files, folderName) => {
@@ -58,11 +58,8 @@ export const filterAndUploadedRequirements = async (files, folderName) => {
             return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'image',{ concurrent: true }))
         }
         else if(fileFileType.includes(fileArray.fileType)) {
-            console.log('tasdsad')
             return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'raw', { concurrent: true }))
         }
-        
-       
     })
     
     const uploadResponses = await Promise.all(uploadPromises);

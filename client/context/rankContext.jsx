@@ -20,6 +20,8 @@ export const RankContextProvider = ({ children }) => {
         await getRank();
     };
 
+    console.log(ranks)
+
     return (
         <RankContext.Provider value={{ ranks, setRanks, fetchRanksOnLogin}}>
             {children}

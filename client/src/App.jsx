@@ -47,7 +47,7 @@ axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
 axios.defaults.withCredentials = true;
 
 function App() {
-  const { AuthRegistration, PageRouteProtection, AuthPageProtection} = useProtectRoutes();
+  const { PageRouteProtection, AuthPageProtection} = useProtectRoutes();
 
   return (
     <>
@@ -61,9 +61,7 @@ function App() {
       <Routes>
         {/* authentication */}
       
-        {/* <Route element={<AuthRegistration />}>
-          
-        </Route> */}
+        <Route exact path='/profileregistration' element={<ProfileRegistration />} />
 
         <Route element={<AuthPageProtection/>}>
           <Route exact path="/" element={ <Login/> }/>
@@ -71,7 +69,6 @@ function App() {
           <Route exact path="/register" element={ <Registration/> }/>
           <Route exact path="/registration" element={ <Registration/> }/>
           <Route exact path='/emailverification' element={ <EmailVerification/> }/>
-          <Route exact path='/profileregistration' element={<ProfileRegistration />} />
     
           {/* forgot password */}
           <Route exact path='/forgotpassword' element={ <ForgotPassword/> }/>

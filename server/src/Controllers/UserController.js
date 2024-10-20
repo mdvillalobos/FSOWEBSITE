@@ -9,14 +9,14 @@ import Credentials from '../Models/Credentials.js';
 import { filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 
 export const getUserData = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if(!loginToken) {
+    if(!token) {
         return res.json(null);
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await User.findOne({ email: decode.email });
 
         if (userCredentials) {
@@ -33,14 +33,14 @@ export const getUserData = async (req, res) => {
 }
 
 export const getRole = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if(!loginToken) {
+    if(!token) {
         return res.json(null);
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         const userRole = await Account.findOne({email: decode.email});
 
@@ -57,7 +57,7 @@ export const getRole = async (req, res) => {
 }
 
 export const addEducation = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { level, schoolName, address, year } = req.body;
 
     if(!level || !schoolName || !address || !year) {
@@ -65,7 +65,7 @@ export const addEducation = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         const educationData = {
             level: level,
@@ -98,7 +98,7 @@ export const addEducation = async (req, res) => {
 }
 
 export const addSeminar = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { seminarName, date } = req.body;
 
     if(!seminarName || !date ) {
@@ -106,7 +106,7 @@ export const addSeminar = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         const seminarData = {
             seminarName: seminarName,
@@ -137,7 +137,7 @@ export const addSeminar = async (req, res) => {
 }
 
 export const addAchievement = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { achievementName, date } = req.body;
 
     if(!achievementName || !date ) {
@@ -145,7 +145,7 @@ export const addAchievement = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         const achievementData = {
             achievementName: achievementName,
@@ -176,14 +176,14 @@ export const addAchievement = async (req, res) => {
 }
 
 export const getUserCredentials = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     
-    if(!loginToken) { 
+    if(!token) { 
         return res.json({ error: 'Access Denied!'});
     }
     
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await Credentials.findOne({ email: decode.email });
         return res.json(userCredentials);
     }
@@ -195,10 +195,10 @@ export const getUserCredentials = async (req, res) => {
 }
 
 export const getUserRepository = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userRepositoryData = await Repository.find({ email: decode.email });
         return res.json(userRepositoryData);
     }
@@ -250,10 +250,10 @@ export const updateRepository = async (req, res) => {
 
 
 export const getUserReports = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userReportsData = await Reports.find({ email: decode.email });
         return res.json(userReportsData);
         
@@ -264,7 +264,7 @@ export const getUserReports = async (req, res) => {
 }
 
 export const submitReport = async (req, res) => {
-    const { loginToken } = req.cookies;
+    const { token } = req.cookies;
     const { subject, message, date } = req.body;
 
     if(!subject || !message || !date) {
@@ -272,7 +272,7 @@ export const submitReport = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(loginToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         await Reports.create({
             email: decode.email,
             subject,

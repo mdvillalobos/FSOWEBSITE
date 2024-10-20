@@ -36,8 +36,6 @@ export const UserContextProvider = ({ children }) => {
         checkAuth();
     }
 
-    console.log(user)
-
     return (
         <UserContext.Provider value={{ user, setUser, role, setRole, credentials, setCredentials, getProfileOnLogin }}>
             {children}

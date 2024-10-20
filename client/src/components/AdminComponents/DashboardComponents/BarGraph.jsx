@@ -17,9 +17,9 @@ const DashboardGraph = () => {
 
   const chartData = toDisplayData 
     ? toDisplayData?.requirementsCount?.map((data, index) => ({
-        rankName: rankRequirements.rankName,
-        requirement: rankRequirements.requirements[index].requirement,
-        requirementNumber: `Requirement ${rankRequirements.requirements[index].requirementNumber}`,
+        rankName: rankRequirements?.rankName,
+        requirement: rankRequirements?.requirements[index].requirement,
+        requirementNumber: `Requirement ${rankRequirements?.requirements[index].requirementNumber}`,
         approved: data.approved,
         declined: data.declined
       }))

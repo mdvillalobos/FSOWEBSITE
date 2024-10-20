@@ -24,8 +24,8 @@ export const login = async (req, res) => {
             return res.json({ error: 'Incorrect Email or Password.' });
         }
 
-        const loginToken = jwt.sign({ email: email, role: user.role }, process.env.JWT_SECRET);
-        return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully' });
+        const loginToken = jwt.sign({ email: email, employeeID: user.employeeID, role: user.role }, process.env.JWT_SECRET);
+        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully' });
 
     } catch (error) {
         console.error(`Login Error: ${ error.message }`);
@@ -76,7 +76,7 @@ export const register = async (req, res) => {
         if (userAccount) {
             sendEmailVerification(userAccount.email);
             const verificationToken = jwt.sign({ email: email, employeeID: employeeID, role: userRole }, process.env.JWT_SECRET);
-            return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered Successfully' }); 
+            return res.cookie('token', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered Successfully' }); 
         }
 
         return res.json({ error: 'There is an error at the moment. Pleas try again later.'});
@@ -88,19 +88,19 @@ export const register = async (req, res) => {
 }
 
 export const verifyEmail = async (req,res) => {
-    const { verificationToken } = req.cookies;
+    const { token } = req.cookies;
     const { otp } = req.body;
 
     if(!otp) {
         return res.json({ error: 'Required all fields!' });
     }
 
-    if(!verificationToken) {
+    if(!token) {
         return res.json({ error: 'Access denied.'});
     }
 
     try {
-        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userOTP = await EmailVerification.findOne({ owner: email });
 
         if(!userOTP) {
@@ -123,19 +123,19 @@ export const verifyEmail = async (req,res) => {
 }
 
 export const registerProfile = async (req, res) => {
-    const { verificationToken } = req.cookies;
+    const { token } = req.cookies;
     const {  firstName, lastName, middleName, contact, sex, track, rank, department, college, position } = req.body;
 
     if(!firstName || !lastName || !contact || !sex || !track || !rank || !department || !college || !position) {
         return res.json({ error: 'Required all fields!' });
     }
 
-    if(!verificationToken) {
+    if(!token) {
         return res.json({ error: 'Access denied!' });
     }
 
     try {
-        const decode = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         const profilePicture = req.file ? req.file.path  : null;
         var cloudinaryResponse = '';
 
@@ -161,8 +161,8 @@ export const registerProfile = async (req, res) => {
 
         if(userData) {
             res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
-            const loginToken = jwt.sign({ email: decode.email, role: decode.role }, process.env.JWT_SECRET);
-            return res.cookie('loginToken', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
+            const loginToken = jwt.sign({ email: decode.email, employeeID: decode.employeeID, role: decode.role }, process.env.JWT_SECRET);
+            return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
         }
 
         return res.json({ error: 'There is a problem at the moment please try again later' });
@@ -176,7 +176,6 @@ export const registerProfile = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
-    const start = Date.now();
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!email || !emailRegex.test(email)) {

@@ -4,10 +4,10 @@ import { UserContext } from '../../../context/userContext'
 
 const useProtectRoutes = () => {
     const { role, user } = useContext(UserContext);
-console.log(user)
+
     const PageRouteProtection = ({ providedRole }) => {
         if(role !== undefined) {
-            if (user === 'No data') {
+            if (user === 'No data' && role !== null) {
                 return <Navigate to='/profileregistration' />;
             }
 
@@ -37,15 +37,7 @@ console.log(user)
         }
     }
 
-    /* const AuthRegistration = () => {
-        if(user !== undefined) {
-            console.log('tae')
-            return user === 'No data' && role !== null ? <Navigate to='/profileregistration' /> : <Navigate to ='/'/>
-        }
-    } */
-
-
-    return {  PageRouteProtection, AuthPageProtection }
+    return { PageRouteProtection, AuthPageProtection }
 }
 
 

@@ -14,7 +14,6 @@ const Config = () => {
         .then(res => setData(res.data))
         .catch(error => console.error(`Error Fetching Approvers In Front End: ${ error.message }`))
     }, [])
-    console.log(data)
 
     return (
         <div className='flex flex-col justify-between h-full'>
@@ -23,7 +22,7 @@ const Config = () => {
                     <p className='text-xl font-semibold mb-5'>APPROVERS</p>
                     {data ?
                         data?.map(approver => {
-                            if(approver.profilePicture === null) {
+                            if(approver.profilePicture === null || approver.profilePicture === '') {
                                 if(approver.sex === 'Male') {
                                     approver.profilePicture = maleProfile
                                 }

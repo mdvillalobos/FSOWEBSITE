@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken';
 
 const authorizationMiddleware = (userRole) => {
     return (req, res, next) => {
-        const { loginToken } = req.cookies;
+        const { token } = req.cookies;
         
-        if(loginToken) {
-            const decodeToken = jwt.verify(loginToken, process.env.JWT_SECRET);
+        if(token) {
+            const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
             if(decodeToken.role != userRole) { 
                 return res.json({ error: "Permission Denied!" })
             }
