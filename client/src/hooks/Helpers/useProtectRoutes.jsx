@@ -8,9 +8,9 @@ const useProtectRoutes = () => {
         if(user !== undefined) {
             return user === null ? (
                 <Navigate to='/'/>
-            ) : user.role === providedRole ? (
+            ) : user?.role === providedRole ? (
                 <Outlet/>
-            ) : user.role != providedRole && (
+            ) : user?.role != providedRole && (
                 <Navigate to='/restriction'/>
             )
         }
@@ -20,9 +20,9 @@ const useProtectRoutes = () => {
         if(user !== undefined) {
             return user === null ? (
                 <Outlet/>
-            ) : user.role === 'user' ? (
+            ) : user?.role === 'user' ? (
                 <Navigate to='/home'/>
-            ) : user.role === 'admin' ? (
+            ) : user?.role === 'admin' ? (
                 <Navigate to='/admin/home'/>
             ) : null
         }

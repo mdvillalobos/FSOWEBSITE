@@ -12,7 +12,7 @@ export const getUserData = async (req, res) => {
     const { token } = req.cookies;
 
     if(!token) {
-        return res.json('Access denied');
+        return res.json(null);
     }
 
     try {
