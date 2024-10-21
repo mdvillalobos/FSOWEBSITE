@@ -29,8 +29,6 @@ const ProfileRegistrationForm = () => {
   const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
   const filteredRank = ranks?.filter(rank => data.track ? rank.track === data.track : false);
 
-  console.log(ranks)
-  
   const RegisterUserInfo = async (e) => {
     e.preventDefault();
 
