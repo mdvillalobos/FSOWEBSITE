@@ -28,7 +28,7 @@ const useAddSeminar = () => {
 
         try {
             const { data } = await axios.post('/api/addSeminar', { 
-                seminarName, date
+                seminarName, year
             });
 
             if(data.error) {

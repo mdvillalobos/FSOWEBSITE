@@ -144,12 +144,12 @@ const AddSeminar = (props) => {
     const { AddSeminar } = useAddSeminar();
     const [ data, setData ] = useState({
         seminarName: '',
-        date: '',
+        year: '',
     });
 
     const handleAddSeminar = async (e) => {
         e.preventDefault();
-        await AddSeminar(data.seminarName, data.date, props)
+        await AddSeminar(data.seminarName, data.year, props)
     } 
 
     return (
@@ -171,8 +171,9 @@ const AddSeminar = (props) => {
                         />
                         <input 
                             type="text" 
-                            value={data.date}
-                            onChange={(e) => setData({ ...data, date: e.target.value})}
+                            value={data.year}
+                            maxLength='4'
+                            onChange={(e) => setData({ ...data, year: e.target.value})}
                             placeholder='Year'
                             className='rounded-lg mb-3 py-3 px-4 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
                         />
@@ -191,12 +192,12 @@ const AddAchievement = (props) => {
     const { AddAchievement } = useAddAchievement();
     const [ data, setData ] = useState({
         achievementName: '',
-        date: '',
+        year: '',
     });
 
     const handleAddSeminar = async (e) => {
         e.preventDefault();
-        await AddAchievement(data.achievementName, data.date, props)
+        await AddAchievement(data.achievementName, data.year, props)
     } 
 
     return (
@@ -219,8 +220,9 @@ const AddAchievement = (props) => {
 
                         <input 
                             type="text" 
-                            value={data.date}
-                            onChange={(e) => setData({ ...data, date: e.target.value})}
+                            value={data.year}
+                            maxLength='11'
+                            onChange={(e) => setData({ ...data, year: e.target.value})}
                             placeholder='Year'
                             className='rounded-lg mb-3 py-3 px-4 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
                         />

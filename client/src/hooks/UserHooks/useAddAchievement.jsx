@@ -28,7 +28,7 @@ const useAddAchievement = () => {
 
         try {
             const { data } = await axios.post('/api/addAchievement', { 
-                achievementName, date
+                achievementName, year
             });
 
             if(data.error) {

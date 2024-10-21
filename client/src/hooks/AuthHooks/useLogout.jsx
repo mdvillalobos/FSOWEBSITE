@@ -1,17 +1,20 @@
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from 'axios';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/userContext';
+import useToast from '../Helpers/useToast.jsx';
 
 const useLogout = () => {
     const { setUser, setRole } = useContext(UserContext);
     const navigate = useNavigate();
+    const { Toast } = useToast();
     
     const Logout = async () => {
         try {
             await axios.post('/api/logout')
             .then(setUser(null))
             .then(setRole(null))
+            .then(Toast.fire({ icon: 'success', title: 'Logout Successfully'}))
             .then(navigate('/login'));
 
         } catch (error) {

@@ -35,10 +35,12 @@ const useLogin = () => {
             }
     
             else {
+                await Promise.all([
+                    getProfileOnLogin(),
+                    fetchRanksOnLogin(),
+                    getDataOnLogin()
+                ]);
                 LoadingToast.close();
-                getProfileOnLogin();
-                fetchRanksOnLogin();
-                getDataOnLogin();
             }
 
         } catch (error) {

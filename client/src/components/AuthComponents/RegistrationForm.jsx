@@ -34,8 +34,6 @@ const registrationForm = () => {
         password: '' ,
     });
 
-    console.log(isChecked)
-
     const checkId = (id) => {
         const regex = /^(?=.{5,})(\d+(-\d+)?)$/;
         return regex.test(id)
@@ -92,6 +90,7 @@ const registrationForm = () => {
                         type="text"
                         placeholder='Employee ID Number' 
                         value={data.employeeID}
+                        maxLength='15'
                         onChange={(e) => setData({...data, employeeID: e.target.value})}
                         className='auth-input-field'
                     />
