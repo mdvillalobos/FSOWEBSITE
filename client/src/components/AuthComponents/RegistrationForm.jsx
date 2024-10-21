@@ -8,6 +8,7 @@ import { LiaIdCard } from "react-icons/lia";
 import { HiOutlineMail } from "react-icons/hi";
 import { TbLock } from "react-icons/tb";
 import useToast from '../../hooks/Helpers/useToast';
+import TermsAndCondition from '../Tools/TermsAndCondition';
 
 const registrationForm = () => {
     const { Register } = useRegister();
@@ -17,17 +18,20 @@ const registrationForm = () => {
     const [ isEmailValid, setIsEmailValid ] = useState(false);
     const [ isIdValid, setIsIdValid] = useState(false);
     const [ isHovered, setIsHovered ] = useState(false);
-    
+    const [ isOpen, setIsOpen ] = useState(false);
+
     const [ shake, setShake ] = useState({
         id: false,
         email: false,
         password: false,
+        isChecked: false
     });
 
     const [ data, setData ] = useState({ 
         employeeID: '', 
         email: '', 
-        password: '' 
+        password: '' ,
+        isChecked: ''
     });
 
     const checkId = (id) => {
@@ -54,10 +58,10 @@ const registrationForm = () => {
 
     const handleRegistration = async (e) => {
         e.preventDefault();
-        if(!data.employeeID || !data.email || !data.password) {
-            setShake({ id: !isIdValid, email: !isEmailValid, password: !isPasswordValid }),
+        if(!data.employeeID || !data.email || !data.password || !data.isChecked) {
+            setShake({ id: !isIdValid, email: !isEmailValid, password: !isPasswordValid, isChecked: true }),
             setTimeout(() => {
-                setShake({ id: false, email: false, password: false });
+                setShake({ id: false, email: false, password: false, isChecked: false});
             }, 500);
 
             return Toast.fire({
@@ -136,7 +140,14 @@ const registrationForm = () => {
                     <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid password format.</p>
                 ) : null}
 
-                <div className="flex flex-col mt-6">
+                <div className={`flex w-full text-[0.8rem] mt-4 mx-1 space-x-2 ${shake.password ? 'shake' : ''}`}>
+                    <input type="checkbox" checked={ data.isChecked === 'checked' } onChange={(e) => setData({ ...data, isChecked: e.target.value})}/>
+                    <span className='my-auto'>I have read and agree to the <button type='button' onClick={() => setIsOpen(!isOpen)}className='text-NuButton hover:underline duration-200'> Terms and Conditions</button></span>
+                </div>
+
+                {isOpen ? <TermsAndCondition toggle={() => setIsOpen(!isOpen)} /> : null}
+
+                <div className="flex flex-col mt-4">
                     <input type="submit" value="Register" className='formBtn'/>
                     <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] space-x-1.5">
                         <p className='mr-0.5 font-Poppins'>Already Have An Account?</p>

@@ -113,7 +113,7 @@ const ProfileRegistrationForm = () => {
 
             <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="contact">Contact No.</label>
-              <input type="text" id='contact' name='contact' 
+              <input type="text" id='contact' name='contact'  maxlength="11"
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : ''}`}
                 onChange={(e) => setData({ ...data, contact: e.target.value})}
               />
