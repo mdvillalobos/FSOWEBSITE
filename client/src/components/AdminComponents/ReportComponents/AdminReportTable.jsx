@@ -4,20 +4,13 @@ import ReportView from './AdminViewForm';
 import NotFound from '../../../assets/images/NotFound.webp';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 
-const ReportTable = () => {
-  const [ data, setData ] = useState([]);
+const ReportTable = ({ data }) => {
   const [ openView, setOpenView ] = useState(false);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ viewData, setViewData ] = useState({
     message: '',
     date: ''
   })
-  
-  useEffect(() => {
-    axios.get('/api/getAllReports')
-    .then(res => setData(res.data))
-    .catch(error => console.log(error))
-  }, []);
 
   const rowsPerPage = 8;
   const totalPages = Math.ceil(data?.length / rowsPerPage);
@@ -47,7 +40,6 @@ const ReportTable = () => {
     setOpenView(true)
     console.log(i)
   }
-
 
   return (
     <div>
@@ -84,9 +76,9 @@ const ReportTable = () => {
           {data.length > 0 ? (
             currentRows?.map(i=> (
               <div key={i._id} onClick={() => handleView(i)} className='flex cursor-pointer duration-200 hover:shadow-md text-sm text-gray-600 px-6 border-y'>
-                <p className='w-[20%] py-4 px-4 text-ellipsis overflow-hidden whitespace-nowrap'>{i.email}</p>
-                <p className='w-[40%] py-4 px-4 text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</p>
-                <p className='w-[20%] py-4 px-4'>{i.message}</p> 
+                <p className='w-[25%] py-4 px-4 text-ellipsis overflow-hidden whitespace-nowrap'>{i.email}</p>
+                <p className='w-[25%] py-4 px-4 text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</p>
+                <p className='w-[30%] py-4 px-4'>{i.message}</p> 
                 <p className='w-[20%] py-4 px-4'>{i.date}</p>
               </div>
             ))
@@ -98,34 +90,6 @@ const ReportTable = () => {
           )}
         </div>
       </div>
-      {/* <table className='table-auto w-full rounded-md font-Poppins divide-y-4 divide-white'>
-        <thead>
-          <tr>
-          <th className='px-10 py-2 font-semibold text-left w-[15%]'>Email</th>
-            <th className='px-10 py-2 font-semibold text-left w-[15%]'>Subject</th>
-            <th className='px-10 py-2 font-semibold text-left w-[40%]'>Report</th>
-            <th className='px-10 py-2 font-semibold text-left'>Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        {data?.length > 1 ? (
-          <tbody className='divide-y-8 divide-white'>
-            {data.map(i =>(
-              <tr key={i._id} onClick={() => handleView(i)} className=' cursor-pointer duration-200 hover:bg-[#5d69c6] text-sm bg-[#f2f6f9] text-gray-600 hover:text-white'>
-                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.email}</td>      
-                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.subject}</td>       
-                <td className='px-10 py-4 max-w-[200px] text-ellipsis overflow-hidden whitespace-nowrap'>{i.message} </td>
-                <td className='px-10 py-4'>{i.date}</td>
-              </tr>
-            ))}
-          </tbody>
-          ) : (
-            <div className='flex flex-col justify-center items-center mt-10 space-y-2 select-none pointer-events-none'>
-              <img src={NotFound} alt="No Data Found" className='h-80 opacity-90'/>
-              <h1 className='flex justify-center font-medium text-2xl text-gray-500'>No Available Data</h1>
-            </div>
-          )}
-      </table> */}
     </div>
   )
 }

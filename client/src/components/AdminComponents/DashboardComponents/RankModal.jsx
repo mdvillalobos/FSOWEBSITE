@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { FocusOn } from 'react-focus-on'
 import useCreateRank from '../../../hooks/AdminHooks/useCreateRank.jsx';
 import { LuPencil } from "react-icons/lu";
 
@@ -15,7 +16,7 @@ const RankModal = () => {
         <LuPencil size={'0.9rem'} className='mr-2'/> 
         Add Rank
       </button>
-      {seen ? <CreateRankModal toggle={togglePop}/> : null}
+      {seen ? (<FocusOn> <CreateRankModal toggle={togglePop}/></FocusOn>): null}
     </div>
   )
 }

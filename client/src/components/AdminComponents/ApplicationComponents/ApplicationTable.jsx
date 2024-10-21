@@ -4,25 +4,15 @@ import axios from 'axios';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import NotFound from '../../../assets/images/NotFound.webp';
 
-const ApplicationTable = () => {
+const ApplicationTable = ({ data }) => {
     const navigate = useNavigate();
-    const [ data, setData ] = useState();
     const [ currentPage, setCurrentPage ] = useState(1);
-
-    useEffect(() => {
-        axios.get('/api/getApplications')
-        .then(res => setData(res.data))
-        .catch(error => console.log(error))
-    }, []);
-
-    console.log(data)
 
     const rowsPerPage = 8;
     const totalPages = Math.ceil(data?.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
-  
   
     const handleNextPage = () => {
       if (currentPage < totalPages) {

@@ -4,23 +4,16 @@ import maleProfile from '../../../assets/images/male.webp';
 import femaleProfile from '../../../assets/images/female.webp';
 import ConfigImage from '../../../assets/images/config.png';
 
-const Config = () => {
-    const [ data, setData ] = useState();
+const Config = ({ data }) => {
     const [ isOpen, setIsOpen ] = useState({})
     const [ isChecked, setIsChecked ] = useState(false)
-
-    useEffect(() => {
-        axios.get('/api/getapprovers')
-        .then(res => setData(res.data))
-        .catch(error => console.error(`Error Fetching Approvers In Front End: ${ error.message }`))
-    }, [])
 
     return (
         <div className='flex flex-col justify-between h-full'>
             <div className="space-y-10">
                 <div>
                     <p className='text-xl font-semibold mb-5'>APPROVERS</p>
-                    {data ?
+                    {data.length > 0 ?
                         data?.map(approver => {
                             if(approver.profilePicture === null || approver.profilePicture === '') {
                                 if(approver.sex === 'Male') {

@@ -19,15 +19,15 @@ const Repository = () => {
             console.error(err);
             setIsLoading(false);
         });
-    })
+    }, [])
     return (
         <div className="bg-[#f4f7fa] min-h-screen w-screen ">
             {loading ? (
                 <div className="flex justify-center items-center min-h-screen">
-                    <div class="cssloader">
-                        <div class="triangle1"></div>
-                        <div class="triangle2"></div>
-                        <p class="text">Please Wait</p>
+                    <div className="cssloader">
+                        <div className="triangle1"></div>
+                        <div className="triangle2"></div>
+                        <p className="text">Please Wait</p>
                     </div>
                 </div>
             ) : (
