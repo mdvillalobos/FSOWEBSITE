@@ -19,6 +19,7 @@ const registrationForm = () => {
     const [ isIdValid, setIsIdValid] = useState(false);
     const [ isHovered, setIsHovered ] = useState(false);
     const [ isOpen, setIsOpen ] = useState(false);
+    const [ isChecked, setIsChecked ] = useState(null)
 
     const [ shake, setShake ] = useState({
         id: false,
@@ -31,8 +32,9 @@ const registrationForm = () => {
         employeeID: '', 
         email: '', 
         password: '' ,
-        isChecked: ''
     });
+
+    console.log(isChecked)
 
     const checkId = (id) => {
         const regex = /^(?=.{5,})(\d+(-\d+)?)$/;
@@ -58,7 +60,7 @@ const registrationForm = () => {
 
     const handleRegistration = async (e) => {
         e.preventDefault();
-        if(!data.employeeID || !data.email || !data.password || !data.isChecked) {
+        if(!data.employeeID || !data.email || !data.password || !isChecked) {
             setShake({ id: !isIdValid, email: !isEmailValid, password: !isPasswordValid, isChecked: true }),
             setTimeout(() => {
                 setShake({ id: false, email: false, password: false, isChecked: false});
@@ -140,8 +142,8 @@ const registrationForm = () => {
                     <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid password format.</p>
                 ) : null}
 
-                <div className={`flex w-full text-[0.8rem] mt-4 mx-1 space-x-2 ${shake.password ? 'shake' : ''}`}>
-                    <input type="checkbox" checked={ data.isChecked === 'checked' } onChange={(e) => setData({ ...data, isChecked: e.target.value})}/>
+                <div className={`flex w-full text-[0.8rem] mt-4 mx-1 space-x-2 ${shake.isChecked ? 'shake' : ''}`}>
+                    <input type="checkbox" value='Approved' checked={ isChecked === 'Approved' } onChange={(e) => setIsChecked(e.target.checked ? e.target.value : '')}/>
                     <span className='my-auto'>I have read and agree to the <button type='button' onClick={() => setIsOpen(!isOpen)}className='text-NuButton hover:underline duration-200'> Terms and Conditions</button></span>
                 </div>
 

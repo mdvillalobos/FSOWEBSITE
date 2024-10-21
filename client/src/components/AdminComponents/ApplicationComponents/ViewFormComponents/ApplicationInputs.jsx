@@ -56,7 +56,7 @@ const ViewPageMaster = ({ requirement, filePath, checkedValue, setCheckedValue }
                 )
             )}
             <div className="w-full flex justify-between border-b-2 border-[#35408E] py-4">
-                <div className='tfileExtension-[0.9rem]'>
+                <div className='text-[0.9rem]'>
                     <p className='whitespace-pre-wrap w-[33vw]'>{ requirement }</p>
                 </div>
                 <div className='flex space-x-4'>
@@ -74,18 +74,18 @@ const ViewPageMaster = ({ requirement, filePath, checkedValue, setCheckedValue }
                             <input type="checkbox" value='Approved' name='Declined' checked={ checkedValue === 'Approved' } onChange ={(e) => setCheckedValue(e.target.value)} className='checkBoxApprove'/>
                             {checkedValue === 'Approved' ? 
                             (
-                                <p className='tfileExtension-xs font-medium tfileExtension-green-500 translate-y-0.5'>Approve</p>
+                                <p className='text-xs font-medium text-green-500 translate-y-0.5'>Approve</p>
                             ) : (
-                                <p className='tfileExtension-xs font-medium translate-y-0.5'>Approve</p>
+                                <p className='text-xs font-medium translate-y-0.5'>Approve</p>
                             )}
                         </div>
                         <div className="flex space-x-2">
                             <input type="checkbox" value='Declined' name='Declined' checked={ checkedValue === 'Declined' } onChange ={(e) => setCheckedValue(e.target.value)} className='checkBoxDecline'/>
                             {checkedValue === 'Declined' ? 
                             (
-                                <p className='tfileExtension-xs font-medium tfileExtension-red-500 translate-y-0.5'>Decline</p>
+                                <p className='text-xs font-medium text-red-500 translate-y-0.5'>Decline</p>
                             ) : (
-                                <p className='tfileExtension-xs font-medium translate-y-0.5'>Decline</p>
+                                <p className='text-xs font-medium translate-y-0.5'>Decline</p>
                             )}
 
                         </div>
