@@ -5,10 +5,18 @@ import { UserContext } from '../../../context/userContext.jsx';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 const ProfileRegistration = () => {
-    const { user, role} = useContext(UserContext);
+    const { user, role } = useContext(UserContext);
 
     if(user === undefined) {
-        return <p>Loading...</p>
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="bouncing-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        )
     }
     if(user !== 'No data' && role === null || user !== 'No data' && role !== null) {
         return user === null ? <Navigate to='/'/> : role === 'user' ? <Navigate to='/home'/> : role === 'admin' && <Navigate to ='/admin/home'/>

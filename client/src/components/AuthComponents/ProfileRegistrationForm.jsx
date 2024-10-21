@@ -199,9 +199,8 @@ const ProfileRegistrationForm = () => {
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
             </div>
-          </div>
 
-          <div className="relative flex flex-col flex-1 space-y-1">
+            <div className="relative flex flex-col flex-1 space-y-1">
               <label htmlFor="department">College</label>
               <select id='college' name='college'
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : ''}`}
@@ -220,6 +219,7 @@ const ProfileRegistrationForm = () => {
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
             </div>
+          </div>
         </div>
         
         <div className="flex justify-end max-sm:justify-normal">
