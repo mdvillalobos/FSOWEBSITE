@@ -28,6 +28,12 @@ const useProtectRoutes = () => {
         }
     }
 
+    const CheckUserData = () => {
+        if(user !== null) {
+            return user === null
+        }
+    }
+
     return { PageRouteProtection, AuthPageProtection }
 }
 

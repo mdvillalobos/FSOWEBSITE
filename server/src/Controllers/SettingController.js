@@ -3,7 +3,7 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import Account from '../Models/Account.js';
-import { uploadImageToCloudinary } from '../Helpers/Cloudinary.js';
+import { uploadImageToCloudinary, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 
 export const changePassword = async (req, res) => {
