@@ -10,7 +10,7 @@ const Seminar = () => {
             {credentials?.seminars.length > 0 ? (
                 <ul>
                     {credentials?.seminars.map(i => (
-                        <li key={i._id} className='text-md list-disc'>{i.seminarName}, {`(${i.date})`}</li>
+                        <li key={i._id} className='text-md list-disc'>{i.seminarName}, {`(${i.year})`}</li>
                     ))}
                 </ul>
             ) : (

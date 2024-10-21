@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import jwt from 'jsonwebtoken';
-import Ranks from '../Models/Ranks.js';
 import Account from '../Models/Account.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
 import Repository from '../Models/Repository.js';

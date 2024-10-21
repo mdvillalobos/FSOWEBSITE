@@ -8,7 +8,9 @@ import { GrView } from "react-icons/gr";
 import NotFound from '../../../assets/images/NotFound.webp';
 
 const SavedData = ({ data }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  console.log(data);
+  console.log(data.length)
   const [ isOpen, setIsOpen ] = useState(null)
 
   const toggleMenu = (id) => {
@@ -22,7 +24,7 @@ const SavedData = ({ data }) => {
   return (
     <div className='flex flex-col'>
       <div className="flex space-x-6">
-        {data?.length > 1 ? 
+        {data?.length > 0 ? 
           data?.map(files => (
             <div 
               key={files._id} // Ensure each button has a unique key

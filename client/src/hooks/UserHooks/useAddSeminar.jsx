@@ -8,6 +8,7 @@ const useAddSeminar = () => {
     const { getProfileOnLogin } = useContext(UserContext)
 
     const AddSeminar = async (seminarName, year, props) => {
+        console.log(seminarName)
         if(!seminarName || !year) {
             return Toast.fire({
                 icon: 'error',

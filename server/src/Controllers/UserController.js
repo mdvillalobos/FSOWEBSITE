@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
 import Account from '../Models/Account.js';
-import User from '../Models/User.js';
 import Reports from '../Models/Reports.js';
 import Repository from '../Models/Repository.js';
 import Credentials from '../Models/Credentials.js';
@@ -13,46 +12,28 @@ export const getUserData = async (req, res) => {
     const { token } = req.cookies;
 
     if(!token) {
-        return res.json(null);
+        return res.json('Access denied');
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userCredentials = await User.findOne({ email: decode.email });
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userCredentials = await Account.findOne({ email });
 
         if (userCredentials) {
-            const userData = userCredentials.toObject()
-            return res.json(userData);
+            const userObject = {
+                ...userCredentials.accountinfo.toObject()[0],
+                email: email,
+                role: userCredentials.role,
+                employeeID: userCredentials.employeeID
+            };
+
+            return res.json(userObject);
         }
 
-        return res.json('No data'); 
+        return res.json(null); 
 
     } catch (error) {
         console.error(`Fetching User Data Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-export const getRole = async (req, res) => {
-    const { token } = req.cookies;
-
-    if(!token) {
-        return res.json(null);
-    }
-
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-
-        const userRole = await Account.findOne({email: decode.email});
-
-        if(userRole) {
-            return res.json(userRole.role);
-        }
-
-        return res.json(null);
-
-    } catch (error) {
-        console.error(`Fetching User Role Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
@@ -66,7 +47,7 @@ export const addEducation = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
 
         const educationData = {
             level: level,
@@ -75,7 +56,7 @@ export const addEducation = async (req, res) => {
             yearGraduated: year,
         }
 
-        const userData = await Credentials.findOne({ email: decode.email });
+        const userData = await Credentials.findOne({ email });
 
         if(userData) {
             userData.educations.push(educationData);
@@ -85,7 +66,7 @@ export const addEducation = async (req, res) => {
 
         else {
             await Credentials.create({
-                email: decode.email,
+                email: email,
                 educations: educationData
             });
             return res.json({ message: 'Education successfully created!'})
@@ -100,21 +81,21 @@ export const addEducation = async (req, res) => {
 
 export const addSeminar = async (req, res) => {
     const { token } = req.cookies;
-    const { seminarName, date } = req.body;
+    const { seminarName, year } = req.body;
 
-    if(!seminarName || !date ) {
+    if(!seminarName || !year ) {
         return res.json({ error: 'Required all fields!'})
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
 
         const seminarData = {
             seminarName: seminarName,
-            date: date,
+            year: year,
         }
 
-        const userData = await Credentials.findOne({ email: decode.email });
+        const userData = await Credentials.findOne({ email });
 
         if(userData) {
             userData.seminars.push(seminarData);
@@ -124,7 +105,7 @@ export const addSeminar = async (req, res) => {
 
         else {
             await Credentials.create({
-                email: decode.email,
+                email: email,
                 seminars: seminarData
             });
             return res.json({ message: 'Seminar successfully created!'})
@@ -139,21 +120,21 @@ export const addSeminar = async (req, res) => {
 
 export const addAchievement = async (req, res) => {
     const { token } = req.cookies;
-    const { achievementName, date } = req.body;
+    const { achievementName, year } = req.body;
 
-    if(!achievementName || !date ) {
+    if(!achievementName || !year ) {
         return res.json({ error: 'Required all fields!'})
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
 
         const achievementData = {
             achievementName: achievementName,
-            date: date,
+            year: year,
         }
 
-        const userData = await Credentials.findOne({ email: decode.email });
+        const userData = await Credentials.findOne({ email });
 
         if(userData) {
             userData.achievements.push(achievementData);
@@ -163,7 +144,7 @@ export const addAchievement = async (req, res) => {
 
         else {
             await Credentials.create({
-                email: decode.email,
+                email: email,
                 achievements: achievementData
             });
             return res.json({ message: 'Achievement successfully created!'})
@@ -184,8 +165,8 @@ export const getUserCredentials = async (req, res) => {
     }
     
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userCredentials = await Credentials.findOne({ email: decode.email });
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userCredentials = await Credentials.findOne({ email });
         return res.json(userCredentials);
     }
 
@@ -199,8 +180,8 @@ export const getUserRepository = async (req, res) => {
     const { token } = req.cookies;
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userRepositoryData = await Repository.find({ email: decode.email });
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userRepositoryData = await Repository.find({ email });
         return res.json(userRepositoryData);
     }
     catch (error) {
@@ -227,8 +208,7 @@ export const updateRepository = async (req, res) => {
             console.log(dbData)
 
             if(dbData) {
-                const deletedFile = await DestroyImageInCloudinary(dbData.filePath);
-                console.log(deletedFile)
+                await DestroyImageInCloudinary(dbData.filePath);
                 dbData.fileName = requirement.fileName;
                 dbData.filePath = requirement.filePath
             }
@@ -254,8 +234,8 @@ export const getUserReports = async (req, res) => {
     const { token } = req.cookies;
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userReportsData = await Reports.find({ email: decode.email });
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userReportsData = await Reports.find({ email });
         return res.json(userReportsData);
         
     } catch (error) {
@@ -273,9 +253,9 @@ export const submitReport = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         await Reports.create({
-            email: decode.email,
+            email: email,
             subject,
             message,
             date
@@ -293,10 +273,9 @@ export const checkUserEntry = async (req, res) => {
     const { token } = req.cookies;
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userEntry = await ApplicationForms.findOne({email: decode.email});
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userEntry = await ApplicationForms.findOne({ email });
         return res.json(userEntry)
-        
         
     }
     catch (error) {

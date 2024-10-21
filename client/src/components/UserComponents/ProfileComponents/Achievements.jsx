@@ -11,7 +11,7 @@ const Achievements = () => {
             {credentials?.achievements?.length > 0 ? (
                 <ul>
                     {credentials?.achievements?.map(i => (
-                        <li key={i._id} className='text-md list-disc'>{i.achievementName}, {`(${i.date})`}</li>
+                        <li key={i._id} className='text-md list-disc'>{i.achievementName}, {`(${i.year})`}</li>
                     ))}
                 </ul>
             ) : (

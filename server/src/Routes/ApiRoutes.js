@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
-import { getUserData, getRole, addEducation, addSeminar, addAchievement, getUserCredentials, getUserRepository, updateRepository, getUserReports, submitReport, checkUserEntry } from '../Controllers/UserController.js';
+import { getUserData, addEducation, addSeminar, addAchievement, getUserCredentials, getUserRepository, updateRepository, getUserReports, submitReport, checkUserEntry } from '../Controllers/UserController.js';
 import { changePassword, updateName,  updateOtherInfo, updateProfilePicture } from '../Controllers/SettingController.js'
 import { getAllReports, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
 import { submitApplicationEntry, checkApplication , countData } from '../Controllers/ApplicationController.js';
@@ -45,7 +45,6 @@ router.post('/api/submitreport', authorizationMiddleware('user'), submitReport);
 router.get('/api/getreport', authorizationMiddleware('user'), getUserReports);
 router.get('/api/getEntry', authorizationMiddleware('user'), checkUserEntry);
 router.get('/api/getProfile', getUserData);
-router.get('/api/getRole', getRole);
 router.get('/api/getAllRank', getRanks);
 router.post('/api/addEducation', addEducation);
 router.post('/api/addSeminar', addSeminar);

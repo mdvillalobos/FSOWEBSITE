@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import Account from '../Models/Account.js';
-import User from '../Models/User.js';
 import Reports from '../Models/Reports.js';
 import Ranks from '../Models/Ranks.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
@@ -21,7 +20,7 @@ export const getAllReports = async (req, res) => {
 
 export const getAllApprovers = async (req, res) => {
     try {
-        const approvers = await User.find({ approver: { $ne: null }}, { email: 1, _id: 1, approver: 1, lastName: 1, firstName: 1, profilePicture: 1, sex: 1 }).sort({ approver: 1 })
+        const approvers = await Account.find({ 'accountinfo.approver': { $ne: null }}, { 'accountinfo.email': 1, 'accountinfo._id': 1, 'accountinfo.approver': 1, 'accountinfo.lastName': 1, 'accountinfo.firstName': 1, 'accountinfo.profilePicture': 1, 'accountinfo.sex': 1 }).sort({ 'accountinfo.approver': 1 })
         if(approvers) {
             return res.json(approvers)
         }
@@ -93,7 +92,7 @@ export const getApplicationsForReRanking = async (req, res) => {
     const { token } = req.cookies;
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        const userData = await User.findOne({ email: email });
+        const userData = await Account.findOne({ email: email });
 
         const approverMapping = {
             'Approver 1': null,
@@ -102,7 +101,7 @@ export const getApplicationsForReRanking = async (req, res) => {
             'Approver 4': 'Approver 3'
         };
 
-        const previousApprover = approverMapping[userData.approver];
+        const previousApprover = approverMapping[userData.accountinfo.approver];
         if(previousApprover !== undefined) {
             const applications = await ApplicationForms.find({ prevApprover: previousApprover, status: 'For Approval' });
             return res.json(applications)

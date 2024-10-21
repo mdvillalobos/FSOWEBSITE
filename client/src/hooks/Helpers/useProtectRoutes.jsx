@@ -3,19 +3,14 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext'
 
 const useProtectRoutes = () => {
-    const { role, user } = useContext(UserContext);
-
+    const { user } = useContext(UserContext);
     const PageRouteProtection = ({ providedRole }) => {
-        if(role !== undefined) {
-            if (user === 'No data' && role !== null) {
-                return <Navigate to='/profileregistration' />;
-            }
-
+        if(user !== undefined) {
             return user === null ? (
                 <Navigate to='/'/>
-            ) : role === providedRole ? (
+            ) : user.role === providedRole ? (
                 <Outlet/>
-            ) : role != providedRole && (
+            ) : user.role != providedRole && (
                 <Navigate to='/restriction'/>
             )
         }
@@ -23,15 +18,11 @@ const useProtectRoutes = () => {
 
     const AuthPageProtection = () => {
         if(user !== undefined) {
-            if (user === 'No data' && role !== null) {
-                return <Navigate to='/profileregistration' />;
-            }
-
             return user === null ? (
                 <Outlet/>
-            ) : role === 'user' ? (
+            ) : user.role === 'user' ? (
                 <Navigate to='/home'/>
-            ) : role === 'admin' ? (
+            ) : user.role === 'admin' ? (
                 <Navigate to='/admin/home'/>
             ) : null
         }

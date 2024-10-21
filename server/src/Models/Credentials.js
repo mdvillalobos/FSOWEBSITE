@@ -10,12 +10,12 @@ const EducationSchema = new Schema({
 
 const SeminarSchema = new Schema({
     seminarName: String,
-    date: String,
+    year: String,
 });
 
 const AchievementSchema = new Schema({
     achievementName: String,
-    date: String
+    year: String
 })
 
 const CredentialsSchema = new Schema({

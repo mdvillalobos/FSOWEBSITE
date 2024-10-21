@@ -3,7 +3,6 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import Account from '../Models/Account.js';
-import User from '../Models/User.js';
 import { uploadImageToCloudinary } from '../Helpers/Cloudinary.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 
@@ -20,10 +19,11 @@ export const changePassword = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        const userData = await Account.findOne({ email: decode.email });
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const userData = await Account.findOne({ email });
+
         if(!userData) {
-            return res.json({ error: 'User data not found '});
+            return res.json({ error: ' User data not found '});
         }
 
         const isOldPasswordCorrect = await compareHashed(oldPassword, userData.password);
@@ -40,7 +40,7 @@ export const changePassword = async (req, res) => {
         }
 
         const hashedPassword = await hashPassword(newPassword);
-        await Account.updateOne({email: userData.email}, {$set: { password: hashedPassword }});
+        await Account.updateOne({ email: userData.email }, {$set: { password: hashedPassword }});
         return res.json({ message: 'Password updated successfully.' });
    
     } catch (error) {
@@ -51,17 +51,26 @@ export const changePassword = async (req, res) => {
 
 export const updateName = async (req, res) => {
     const { token } = req.cookies;
-    const { firstName, lastName, middleName } = req.body;
+    const { firstName, lastName, middleName, id } = req.body;
 
     if(!token) {
         return res.json({ error: 'Access denied!'});
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET); 
-        const updateUserCredentials = await User.updateOne({ email: decode.email }, { $set: { lastName: lastName, firstName: firstName, middleName: middleName }});
+        const { email } = jwt.verify(token, process.env.JWT_SECRET); 
+        const updatedUserCredentials = await Account.findOneAndUpdate({ email, 'accountinfo._id': id },
+            {
+                $set: {
+                    'accountinfo.$.lastName': lastName,
+                    'accountinfo.$.firstName': firstName,
+                    'accountinfo.$.middleName': middleName,
+                },
+            },
+            { new: true, runValidators: true }
+        );
 
-        if(!updateUserCredentials) {
+        if(!updatedUserCredentials) {
             return res.json({ error: 'User data not found!' });
         }
 
@@ -75,7 +84,7 @@ export const updateName = async (req, res) => {
 
 export const updateOtherInfo = async(req, res) => {
     const { token } = req.cookies;
-    const { sex, department, position } = req.body;
+    const { sex, department, position, id } = req.body;
 
     if(!token )  {
         return res.json({ error: 'Access Denied!'});
@@ -86,9 +95,18 @@ export const updateOtherInfo = async(req, res) => {
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
 
-        const updateOtherInfo = await User.updateOne({ email: decode.email }, { $set: { sex: sex, department: department, position: position}});
+        const updateOtherInfo = await Account.updateOne({ email, 'accountinfo._id': id }, 
+            { 
+                $set: { 
+                    'accountinfo.$.sex': sex,
+                    'accountinfo.$.department': department,
+                    'accountinfo.$.position': position,
+                }
+            },
+            { new: true, runValidators: true }
+        );
 
         if(!updateOtherInfo) {
             return res.json({ error: 'User data not found!' });
@@ -105,22 +123,29 @@ export const updateOtherInfo = async(req, res) => {
 
 export const updateProfilePicture = async (req, res) => {
     const { token } = req.cookies;
+    const { id } = req.body;
 
     if(!token) {
         return res.json({ error: 'Access denied!'});
     }
 
     try {
-        const userEmail = jwt.verify(token, process.env.JWT_SECRET);
+        const { email} = jwt.verify(token, process.env.JWT_SECRET);
         const uploadedPicture = req.file ? req.file.path : null;
 
-        const userData = await User.findOne({ email: userEmail.email });
+        const userData = await Account.findOne({ email, 'accountinfo._id': id});
+        const accountInfo = userData.accountinfo.id(id);
 
-        userData.profilePicture ? await DestroyImageInCloudinary(userData.profilePicture) : null;
-        userData.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'profilepictures') : uploadedPicture;
+        if (accountInfo.profilePicture) {
+            await DestroyImageInCloudinary(accountInfo.profilePicture);
+        }
+        accountInfo.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'ProfilePictures') : null;
         await userData.save();
         return res.json({ message: 'Profile Picture Successfully Changed' });
-    
+        /* userData.accountinfo.profilePicture ? await DestroyImageInCloudinary(userData.profilePicture) : null;
+        userData.accountinfo.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'profilepictures') : uploadedPicture;
+        await userData.save();
+        return res.json({ message: 'Profile Picture Successfully Changed' }); */
     }
 
     catch(error) {

@@ -4,14 +4,14 @@ import useToast from "../Helpers/useToast.jsx";
 const useUpdateName = () => {
   const { Toast, LoadingToast } = useToast();
 
-  const EditName = async (lastName, firstName, middleName, props) => {
+  const EditName = async (lastName, firstName, middleName, id, props) => {
     LoadingToast.fire({
      title: 'Updating...'
     });
 
     try {
       const { data } = await axios.post('/api/updatename' , {
-        lastName, firstName, middleName,
+        lastName, firstName, middleName, id
       });
       console.log('processing')
     

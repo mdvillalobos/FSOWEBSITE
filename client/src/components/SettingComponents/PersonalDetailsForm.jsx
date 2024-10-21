@@ -77,7 +77,7 @@ const UpdateNameModal = (props) => {
 
   const updateProfile = async (e) => {
     e.preventDefault();
-    await EditName(data.lastName, data.firstName, data.middleName, props);
+    await EditName(data.lastName, data.firstName, data.middleName, user._id, props);
   }
 
   return (
@@ -141,7 +141,7 @@ const UpdateOtherInfoModal = (props) => {
 
   const updateProfilePicture = async (e) => {
     e.preventDefault();
-    await updateOtherInformation(data.sex, data.department, data.position, props);
+    await updateOtherInformation(data.sex, data.department, data.position, user._id, props);
   }
 
   return (
@@ -202,7 +202,7 @@ const UpdateProfileModal = (props) => {
 
   const updateProfilePicture = async (e) => {
     e.preventDefault();
-    await updateProfile(profile, props);
+    await updateProfile(profile, user._id, props);
   }
 
   return (
@@ -218,17 +218,17 @@ const UpdateProfileModal = (props) => {
             {!profile ? (
               user ? (
                 user.profilePicture ? (
-                  <img src={user.profilePicture} alt="User Profile Picture" className='w-full h-full object-fill' />
+                  <img src={user.profilePicture} alt="User Profile Picture" className='w-full h-full object-cover' />
                 ) : (
                   <img 
                     src={user.sex === 'Male' ? maleProfile : femaleProfile} 
                     alt="User Default Profile" 
-                    className='w-full h-full object-fill' 
+                    className='w-full h-full object-cover' 
                   />
                 )
               ) : null // You can choose to return null or another placeholder if user is falsy
             ) : (
-              <img src={URL.createObjectURL(profile)} alt="User Uploaded Profile" className='w-full h-full object-fill' />
+              <img src={URL.createObjectURL(profile)} alt="User Uploaded Profile" className='w-full h-full object-cover' />
             )}
           </div>
 

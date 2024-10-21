@@ -11,16 +11,16 @@ const ProfileRegistration = () => {
         return (
             <div className="flex justify-center items-center min-h-screen">
                <div class="cssloader">
-                        <div class="triangle1"></div>
-                        <div class="triangle2"></div>
-                        <p class="text">Please Wait</p>
+                        <div className="triangle1"></div>
+                        <div className="triangle2"></div>
+                        <p className="text">Please Wait</p>
                 </div>
             </div>
         )
     }
-    if(user !== 'No data' && role === null || user !== 'No data' && role !== null) {
+    /* if(user !== 'No data' && role === null || user !== 'No data' && role !== null) {
         return user === null ? <Navigate to='/'/> : role === 'user' ? <Navigate to='/home'/> : role === 'admin' && <Navigate to ='/admin/home'/>
-    }
+    } */
     
     return (
         <div className='bg-[#f4f7f9] h-full max-sm:h-full'>

@@ -4,7 +4,6 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import Account from '../Models/Account.js';
-import User from '../Models/User.js';
 import EmailVerification from '../Models/VerificationToken.js';
 import sendEmailVerification from '../Helpers/SendEmail.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
@@ -24,8 +23,8 @@ export const login = async (req, res) => {
             return res.json({ error: 'Incorrect Email or Password.' });
         }
 
-        const loginToken = jwt.sign({ email: email, employeeID: user.employeeID, role: user.role }, process.env.JWT_SECRET);
-        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully' });
+        const loginToken = jwt.sign({ email: email, role: user.role }, process.env.JWT_SECRET);
+        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully', data: user.accountinfo });
 
     } catch (error) {
         console.error(`Login Error: ${ error.message }`);
@@ -49,7 +48,6 @@ export const register = async (req, res) => {
     }
 
     try {
-
         var userRole = ''
         if(!role) {
             userRole = 'user'
@@ -73,13 +71,9 @@ export const register = async (req, res) => {
             password: hashedPassword
         });
 
-        if (userAccount) {
-            sendEmailVerification(userAccount.email);
-            const verificationToken = jwt.sign({ email: email, employeeID: employeeID, role: userRole }, process.env.JWT_SECRET);
-            return res.cookie('token', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered Successfully' }); 
-        }
-
-        return res.json({ error: 'There is an error at the moment. Pleas try again later.'});
+        sendEmailVerification(userAccount.email);
+        const verificationToken = jwt.sign({ email: email, role: userRole }, process.env.JWT_SECRET);
+        return res.cookie('token', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Registered Successfully' }); 
 
     } catch (error) {
         console.error(`Registration Error: ' ${ error.message }`);
@@ -102,7 +96,6 @@ export const verifyEmail = async (req,res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userOTP = await EmailVerification.findOne({ owner: email });
-        console.log(userOTP)
 
         if(!userOTP) {
             return res.json({ error: 'Please resend your One-Time-Pin' });
@@ -136,17 +129,14 @@ export const registerProfile = async (req, res) => {
     }
 
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const { email, role } = jwt.verify(token, process.env.JWT_SECRET);
         const profilePicture = req.file ? req.file.path  : null;
         var cloudinaryResponse = '';
 
         if(profilePicture) {
             cloudinaryResponse =  await uploadImageToCloudinary(profilePicture, 'ProfilePictures')
         }
-
-        const userData = await User.create({
-            employeeID: decode.employeeID,
-            email: decode.email,
+        const userInfo = {
             firstName: firstName,
             lastName: lastName,
             middleName: middleName,
@@ -158,16 +148,14 @@ export const registerProfile = async (req, res) => {
             department: department,
             position: position,
             profilePicture: cloudinaryResponse
-        });
+        };
 
-        if(userData) {
-            res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
-            const loginToken = jwt.sign({ email: decode.email, employeeID: decode.employeeID, role: decode.role }, process.env.JWT_SECRET);
-            return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
-        }
-
-        return res.json({ error: 'There is a problem at the moment please try again later' });
+        await Account.findOneAndUpdate({ email }, { $push: { accountinfo: userInfo } }, { new: true, runValidators: true });
         
+        res.clearCookie('verificationToken', { path: '/', sameSite: 'None', secure: true });
+        const loginToken = jwt.sign({ email: email, role: role }, process.env.JWT_SECRET);
+        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
+ 
     } catch (error) {
         console.log(error);
         return res.json({ error: 'An internal error occurred. Please try again later!' });

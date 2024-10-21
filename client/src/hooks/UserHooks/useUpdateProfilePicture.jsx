@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 const useUpdateProfilePicture = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const updateProfile = async (profilePicture, props) => {
+    const updateProfile = async (profilePicture, id, props) => {
         LoadingToast.fire({
             title: 'Updating your profile picture...',
         })
 
         try {
             const formData = new FormData();
+            formData.append('id', id);
             formData.append('profilePicture', profilePicture)
 
             const { data } = await axios.post('/api/updateProfilePicture', formData);

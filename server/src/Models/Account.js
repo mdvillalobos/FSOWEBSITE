@@ -1,6 +1,27 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
+const AccountInfoSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    middleName: String,
+    contact: String,
+    sex: String,
+    track: String,
+    rank: String,
+    college: String,
+    department: String,
+    position: String,
+    profilePicture: {
+        type: String,
+        default: null
+    },
+    approver: {
+        type: String,
+        default: null,
+    }
+})
+
 const AccountSchema = new Schema ({
     employeeID: String,
     email: {
@@ -12,6 +33,7 @@ const AccountSchema = new Schema ({
         type: String,
         default: 'user'
     },
+    accountinfo: [AccountInfoSchema]
 })
 
 const AccountModel = mongoose.model('accounts', AccountSchema)
