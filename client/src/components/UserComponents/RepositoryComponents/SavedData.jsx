@@ -18,7 +18,11 @@ const SavedData = ({ data }) => {
   };
 
   const EditApplication = (files) => {
-   return navigate('/preapply/form', { state: { files: files }})
+    return navigate('/preapply/form', { state: { files: files }})
+  }
+
+  const handleDeleteFile = (id) => {
+
   }
 
   return (
@@ -38,9 +42,8 @@ const SavedData = ({ data }) => {
 
                 {isOpen === files._id && (
                   <div className="absolute flex flex-col bg-white text-sm shadow-lg rounded-md overflow-hidden w-full right-[-9rem] fade-in">
-                    <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200' onClick={(e) => {e.stopPropagation(), EditApplication(files)}}><GrView className='my-auto mr-2'/>Open</button>
                     <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200' onClick={(e) => {e.stopPropagation(), EditApplication(files)}}><FiEdit3 className='my-auto mr-2'/>Edit</button>
-                    <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200'><IoTrashOutline className='my-auto mr-2'/>Delete</button>
+                    <button className='flex text-left py-2 px-4 hover:bg-gray-200 duration-200' onClick={(e) => {e.stopPropagation(), handleDeleteFile(files._id)}}><IoTrashOutline className='my-auto mr-2'/>Delete</button>
                   </div>
                 )}
               </div>

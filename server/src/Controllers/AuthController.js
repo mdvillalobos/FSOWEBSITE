@@ -180,7 +180,7 @@ export const forgotPassword = async (req, res) => {
         
         sendEmailVerification(email);
         const verificationToken = jwt.sign({ email: email }, process.env.JWT_SECRET);
-        return res.cookie('verificationToken', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Email is valid' });
+        return res.cookie('token', verificationToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Email is valid' });
         
     } catch (error) {
         console.error(`Forgot Password Error: ${ error.message }`);
@@ -190,7 +190,7 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
     const { password , confirmPassword } = req.body
-    const { verificationToken } = req.cookies;
+    const { token } = req.cookies;
 
     if(!password || !confirmPassword) {
         return res.json({ error: 'Required all fields!' });
@@ -202,7 +202,7 @@ export const resetPassword = async (req, res) => {
 
    
     try {
-        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
 
         const hashedPassword = await hashPassword(password);
 
@@ -219,14 +219,14 @@ export const resetPassword = async (req, res) => {
 }
 
 export const resendOTP = (req, res) => {
-    const { verificationToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if(!verificationToken) {
+    if(!token) {
         return res.json({ error: 'Access denied!' });
     }
 
     try {
-        const { email } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         sendEmailVerification(email);
 
         return res.json({ message: 'OTP sent successfully!' });

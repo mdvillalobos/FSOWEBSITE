@@ -135,18 +135,19 @@ const UpdateOtherInfoModal = (props) => {
   const { user } = useContext(UserContext)
   const [ data, setData ] = useState({
     sex: user?.sex,
+    college: user?.college,
     department: user?.department,
     position: user?.position,
   });
 
   const updateProfilePicture = async (e) => {
     e.preventDefault();
-    await updateOtherInformation(data.sex, data.department, data.position, user._id, props);
+    await updateOtherInformation(data.sex, data.college, data.department, data.position, user._id, props);
   }
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins">
-      <div className="h-[65%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in max-sm:h-[68%] max-sm:w-[85%]">
+      <div className="h-[75%] w-[35%] bg-white shadow-lg rounded-2xl px-6 py-6  space-y-5 overflow-hidden fade-in max-sm:h-[68%] max-sm:w-[85%]">
         <form onSubmit={updateProfilePicture} className='font-Poppins'>
           <button type="button" className="hover:bg-[#eae7e7] text-[#3b3c3c] border-2 px-2 py-2 rounded-lg duration-200" onClick={props.toggle}>
             <IoChevronBackOutline size={'1.3rem'} />
@@ -164,7 +165,7 @@ const UpdateOtherInfoModal = (props) => {
             </div>
 
             <div className="setting-input-container">
-              <select value={data.department} onChange={(e) => setData({...data, department: e.target.value})} className='border-2 rounded-lg px-2 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'>
+              <select value={data.college} onChange={(e) => setData({...data, college: e.target.value})} className='border-2 rounded-lg px-2 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'>
                 <option value="College of Allied Health">College of Allied Health</option>
                 <option value="College of Architecture">College of Architecture</option>
                 <option value="College of Business and Accountancy">College of Business and Accountancy</option>
@@ -173,6 +174,15 @@ const UpdateOtherInfoModal = (props) => {
                 <option value="College of Engineering">College of Engineering</option>
                 <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
               </select>
+              <span className='setting-input-label'>College</span>
+            </div>
+
+            <div className="setting-input-container">
+              <input type="text" 
+                value={data.department} 
+                onChange={(e) => setData({...data, department: e.target.value})} 
+                className='border-2 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+              />
               <span className='setting-input-label'>Department</span>
             </div>
 

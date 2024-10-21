@@ -10,10 +10,10 @@ const ProfileRegistration = () => {
     if(user === undefined) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-               <div class="cssloader">
-                        <div className="triangle1"></div>
-                        <div className="triangle2"></div>
-                        <p className="text">Please Wait</p>
+               <div className="cssloader">
+                    <div className="triangle1"></div>
+                    <div className="triangle2"></div>
+                    <p className="text">Please Wait</p>
                 </div>
             </div>
         )

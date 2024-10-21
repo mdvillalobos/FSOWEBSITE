@@ -13,7 +13,6 @@ const useLogout = () => {
         try {
             await axios.post('/api/logout')
             .then(setUser(null))
-            .then(setRole(null))
             .then(Toast.fire({ icon: 'success', title: 'Logout Successfully'}))
             .then(navigate('/login'));
 

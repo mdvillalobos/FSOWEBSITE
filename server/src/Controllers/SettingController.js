@@ -84,7 +84,7 @@ export const updateName = async (req, res) => {
 
 export const updateOtherInfo = async(req, res) => {
     const { token } = req.cookies;
-    const { sex, department, position, id } = req.body;
+    const { sex, college, department, position, id } = req.body;
 
     if(!token )  {
         return res.json({ error: 'Access Denied!'});
@@ -101,6 +101,7 @@ export const updateOtherInfo = async(req, res) => {
             { 
                 $set: { 
                     'accountinfo.$.sex': sex,
+                    'accountinfo.$.college': college,
                     'accountinfo.$.department': department,
                     'accountinfo.$.position': position,
                 }

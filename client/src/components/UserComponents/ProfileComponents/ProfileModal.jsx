@@ -125,9 +125,9 @@ const AddEducation = (props) => {
                         <input 
                             type="text" 
                             value={data.year}
-                            maxLength='9'
+                            maxLength='4'
                             onChange={(e) => setData({ ...data, year: e.target.value})}
-                            placeholder='Year Start - Year Graduated'
+                            placeholder='Year Graduated'
                             className='rounded-lg mb-3 py-3 px-4 border-2 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd]'
                         />
 

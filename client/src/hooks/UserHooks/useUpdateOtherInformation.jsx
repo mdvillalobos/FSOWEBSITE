@@ -4,14 +4,14 @@ import axios from 'axios'
 const useUpdateOtherInformation = () => {
   const { Toast, LoadingToast } = useToast();
 
-  const updateOtherInformation = async (sex, department, position, id, props) => {
+  const updateOtherInformation = async (sex, college, department, position, id, props) => {
     LoadingToast.fire({
       title: 'Updating...'
     });
 
     try {
       const { data } = await axios.post('/api/updateotherinfo', { 
-        sex, department, position, id
+        sex, college, department, position, id
       });
   
       if(data.error) {
