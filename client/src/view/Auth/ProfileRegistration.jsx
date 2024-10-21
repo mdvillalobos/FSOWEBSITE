@@ -10,10 +10,13 @@ const ProfileRegistration = () => {
     if(user === undefined) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                <div className="bouncing-loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                <div class="🤚">
+                	<div class="👉"></div>
+                	<div class="👉"></div>
+                	<div class="👉"></div>
+                	<div class="👉"></div>
+                	<div class="🌴"></div>		
+                	<div class="👍"></div>
                 </div>
             </div>
         )

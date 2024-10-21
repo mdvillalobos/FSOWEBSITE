@@ -24,10 +24,13 @@ const Repository = () => {
         <div className="bg-[#f4f7fa] min-h-screen w-screen ">
             {loading ? (
                 <div className="flex justify-center items-center min-h-screen">
-                    <div className="bouncing-loader">
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                    <div class="🤚">
+                    	<div class="👉"></div>
+                    	<div class="👉"></div>
+                    	<div class="👉"></div>
+                    	<div class="👉"></div>
+                    	<div class="🌴"></div>		
+                    	<div class="👍"></div>
                     </div>
                 </div>
             ) : (
