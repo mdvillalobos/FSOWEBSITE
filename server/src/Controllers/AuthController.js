@@ -102,6 +102,7 @@ export const verifyEmail = async (req,res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userOTP = await EmailVerification.findOne({ owner: email });
+        console.log(userOTP)
 
         if(!userOTP) {
             return res.json({ error: 'Please resend your One-Time-Pin' });

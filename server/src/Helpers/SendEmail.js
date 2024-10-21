@@ -19,7 +19,6 @@ const sendEmailVerification = async (email) => {
     try {
         const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
         console.log(otp);
-        console.log(email);
 
         const [ HashedOTP, userRecord ] = await Promise.all([
             bcrypt.hash(otp, 12),
