@@ -12,7 +12,6 @@ const loginForm = () => {
     const { Login } = useLogin();
     const { Toast } = useToast();
     const [ showPassword, setShowPassword ] = useState(false);
-    const [ isEmailValid, setIsEmailValid ] = useState(false);
     const [ data, setData ] = useState({ 
         email: '', 
         password: ''
@@ -22,15 +21,6 @@ const loginForm = () => {
         email: false,
         password: false,
     });
-
-    const checkEmail = (email) => {
-        const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-        return regex.test(email)
-    }
-
-    useEffect(() => {
-        setIsEmailValid(checkEmail(data.email))
-    })
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -46,21 +36,13 @@ const loginForm = () => {
             });
         }
 
-        if(!isEmailValid) {
-            setShake({email: !isEmailValid}),
-            setTimeout(() => {
-                setShake({ email: false });
-            }, 500);
-            return;
-        }
-
         await Login(data.email, data.password);
     }
 
     return (
         <div>
             <form onSubmit={handleLogin} className='auth-container' >
-                <div className={`auth-input-container ${data.email ? (isEmailValid) ? 'focus-within:border-[#93adc2]' : 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.email ? 'shake' : ''}`}>
+                <div className={`auth-input-container  ${shake.email ? 'shake' : ''}`}>
                     <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
@@ -70,10 +52,7 @@ const loginForm = () => {
                         className='auth-input-field'
                     />
                 </div>
-                {data.email ? (isEmailValid) ? null : ( 
-                    <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid email format.</p>
-                ) : null}
-        
+   
                 <div className={`auth-input-container ${shake.password ? 'shake' : ''}`}>
                     <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 

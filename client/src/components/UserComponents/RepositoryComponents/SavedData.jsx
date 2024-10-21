@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { FaFile } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { BsThreeDots } from "react-icons/bs";
@@ -8,20 +7,13 @@ import { IoTrashOutline } from "react-icons/io5";
 import { GrView } from "react-icons/gr";
 import NotFound from '../../../assets/images/NotFound.webp';
 
-const SavedData = () => {
+const SavedData = ({ data }) => {
   const navigate = useNavigate()
-  const [ data, setData ] = useState();
   const [ isOpen, setIsOpen ] = useState(null)
 
   const toggleMenu = (id) => {
     setIsOpen(isOpen === id ? null : id); // Toggle the menu
   };
-
-  useEffect(() => {
-    axios.get('/api/getUserRepository')
-    .then(response => setData(response.data))
-    .catch(error => console.error(`Fetching Repository From Front-end Error: ${ error.message }`))
-  }, [])
 
   const EditApplication = (files) => {
    return navigate('/preapply/form', { state: { files: files }})

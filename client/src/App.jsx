@@ -20,6 +20,7 @@ import PreApplyForm from "./view/User/PreApplyForm.jsx";
 import ApplicationForm from './view/User/ApplicationForm.jsx';
 import PersonalDetails from './view/User/PersonalDetails.jsx';
 import PassAndSecurity from './view/User/PassAndSecurity.jsx';
+import ViewSubmittedForm from "./view/User/ViewSubmittedForm.jsx";
 
 //admin 
 import AdminHome from './view/Admin/Home.jsx';
@@ -89,6 +90,7 @@ function App() {
           {/* Application forms */}
           <Route exact path='/preapply/form' element={ <PreApplyForm/> }/>
           <Route exact path='/application/form' element={ <ApplicationForm/> }/>
+          <Route exact path='/myform' element={<ViewSubmittedForm/>} />
         </Route>
         
         {/* admin */}

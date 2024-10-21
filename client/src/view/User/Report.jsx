@@ -1,19 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import Table from '../../components/UserComponents/ReportComponents/ReportTable.jsx';
 import ReportModal from '../../components/UserComponents/ReportComponents/ReportModal.jsx';
 import BackBtn from '../../components/Tools/Back.jsx';
 import Header from "../../components/Tools/Header.jsx";
 
 const Report = () => {
+    const [ data, setData ] = useState();
+    const [ loading, setIsLoading ] = useState(true)
+
+    useEffect(() => {
+        axios.get('/api/getreport')
+        .then(res => {
+            setData(res.data);
+            setIsLoading(false);
+        })
+        .catch(err => {
+            console.error(err);
+            setIsLoading(false);
+        });
+    });
+
     return (
         <div className='bg-[#f4f7fa] min-h-screen'>
-            <Header location={'Weekly Report'}/>
-            <div className="px-16 py-2 max-sm:px-8">
-                <BackBtn/>
-                <div className='bg-white py-6 rounded-xl shadow-md overflow-hidden h-[80vh]'>
-                    <Table/>
+            {loading ? (
+                <div className="flex justify-center items-center min-h-screen">
+                    <div className="bouncing-loader">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
-            </div>  
+            ) : (
+                <>
+                    <Header location={'Weekly Report'}/>
+                    <div className="px-16 py-2 max-sm:px-8">
+                        <BackBtn/>
+                        <div className='bg-white py-6 rounded-xl shadow-md overflow-hidden h-[80vh]'>
+                            <Table data={data}/>
+                        </div>
+                    </div>
+                </>
+            )}
+              
         </div>
     )
 }

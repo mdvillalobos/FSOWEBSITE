@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import ReactMarkdown from 'react-markdown';
 import { RxCross2 } from "react-icons/rx";
 import { GoPaperclip } from "react-icons/go";
 import { FocusOn } from 'react-focus-on'

@@ -295,7 +295,6 @@ export const checkUserEntry = async (req, res) => {
     try {
         const decode = jwt.verify(token, process.env.JWT_SECRET);
         const userEntry = await ApplicationForms.findOne({email: decode.email});
-        console.log(userEntry)
         return res.json(userEntry)
         
         

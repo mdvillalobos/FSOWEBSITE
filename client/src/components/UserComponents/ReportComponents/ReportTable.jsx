@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import ViewForm from './ReportView.jsx';
 import ReportModal from './ReportModal.jsx';
 import NotFound from '../../../assets/images/NotFound.webp';
 
-const ReportTable = () => {
-  const [ data, setData ] = useState([]);
+const ReportTable = ({ data }) => {
   const [ openView, setOpenView ] = useState(false);
   const [ viewData, setViewData ] = useState();
   const [ currentPage, setCurrentPage ] = useState(1);
-
-  useEffect(() => {
-    axios.get('/api/getreport')
-    .then(response => setData(response.data))
-    .catch(error => console.error(`Fetching User Report Error: ${ error.message }`))
-  }, []);
 
   const rowsPerPage = 8;
   const totalPages = Math.ceil(data?.length / rowsPerPage);
