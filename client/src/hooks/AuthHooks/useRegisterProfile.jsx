@@ -13,7 +13,7 @@ const useRegisterProfile = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
 
-    const registerProfile = async (profilePicture, lastName, firstName, middleName, contact, sex, track, rank, department, college, position) => {
+    const registerProfile = async (profilePicture, lastName, firstName, middleName, contact, sex, track, rank, college, department, position) => {
         if(!lastName || !firstName || !sex || !track || !rank || !department || !college, !position) {
             return Toast.fire({
                 icon: "error",
@@ -34,8 +34,8 @@ const useRegisterProfile = () => {
             formData.append('sex', sex);
             formData.append('track', track);
             formData.append('rank', rank);
-            formData.append('department', department);
             formData.append('college', college)
+            formData.append('department', department);
             formData.append('position', position);
 
             const { data } = await axios.post('/api/registeProfile', formData);

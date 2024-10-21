@@ -21,8 +21,8 @@ const ProfileRegistrationForm = () => {
     sex: '',
     track: '', 
     rank: '',
-    department: '', 
     college: '',
+    department: '', 
     position: '', 
   });
 
@@ -55,7 +55,7 @@ const ProfileRegistrationForm = () => {
         title: 'Require All fields'
       })
     }
-    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.contact, data.sex, data.track, data.rank, data.department, data.college, data.position);
+    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.contact, data.sex, data.track, data.rank, data.college, data.department, data.position);
   }
 
   return (
@@ -192,10 +192,10 @@ const ProfileRegistrationForm = () => {
 
           <div className="flex space-x-14 max-lg:flex-col max-lg:space-x-0">
             <div className="relative flex flex-col flex-1 space-y-1">
-              <label htmlFor="department">Department</label>
-              <select id='department' name='department'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : ''}`}
-                onChange={(e) => setData({...data, department: e.target.value})}
+              <label htmlFor="department">College</label>
+              <select id='college' name='college'
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, college: e.target.value})}
               >
                 <option value=''></option>
                 <option value="College of Allied Health">College of Allied Health</option>
@@ -206,18 +206,18 @@ const ProfileRegistrationForm = () => {
                 <option value="College of Engineering">College of Engineering</option>
                 <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</option>
               </select>
-              {isSubmitted && !data.department.trim() && (
+              {isSubmitted && !data.college.trim() && (
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
             </div>
 
             <div className="relative flex flex-col flex-1 space-y-1">
-              <label htmlFor="college">College</label>
-              <input type='text' id='college' name='college'
-               className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : ''}`}
-                onChange={(e) => setData({...data, college: e.target.value})}
+              <label htmlFor="college">Department</label>
+              <input type='text' id='department' name='department'
+               className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, department: e.target.value})}
               />
-              {isSubmitted && !data.college.trim() && (
+              {isSubmitted && !data.department.trim() && (
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
             </div>
