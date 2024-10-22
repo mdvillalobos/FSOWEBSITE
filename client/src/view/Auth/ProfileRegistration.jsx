@@ -1,16 +1,23 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Header from '../../components/Tools/Header.jsx';
 import ProfileRegistrationForm from '../../components/AuthComponents/ProfileRegistrationForm.jsx';
 import { UserContext } from '../../../context/userContext.jsx';
+import { RankContext } from '../../../context/rankContext.jsx';
 
 const ProfileRegistration = () => {
-    const { user, getProfileOnLogin } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const { fetchRanksOnLogin } = useContext(RankContext)
+    const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
-        getProfileOnLogin();
-    })
+        const fetchRank = async () => {
+            await fetchRanksOnLogin();
+            setLoading(false);
+        };
+        fetchRank();
+    }, []);
 
-    if(user === undefined) {
+    if(loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
                <div className="cssloader">
