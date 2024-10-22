@@ -1,11 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from '../../components/Tools/Header.jsx';
 import ProfileRegistrationForm from '../../components/AuthComponents/ProfileRegistrationForm.jsx';
 import { UserContext } from '../../../context/userContext.jsx';
-import { Navigate, useNavigate } from 'react-router-dom';
 
 const ProfileRegistration = () => {
-    const { user, role } = useContext(UserContext);
+    const { user, getProfileOnLogin } = useContext(UserContext);
+
+    useEffect(() => {
+        getProfileOnLogin();
+    })
 
     if(user === undefined) {
         return (
