@@ -3,11 +3,11 @@ import useToast from '../Helpers/useToast.jsx'
 const useDeleteFile = () => {
     const { Toast, LoadingToast } = useToast();
 
-    const DeleteFile = async (id) => {
+    const DeleteFile = async ( formID ) => {
         
         LoadingToast.fire({ title: 'Deleting file...'})
         try {
-            const { data } = await axios.post('/api/deleteRepository', id);
+            const { data } = await axios.post('/api/deleteRepository', { formID });
 
             if(data.error) {
                 return Toast.fire({
@@ -17,6 +17,7 @@ const useDeleteFile = () => {
             }
             else {
                 LoadingToast.close();
+                location.reload();
             }
         }
 

@@ -4,25 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { BsThreeDots } from "react-icons/bs";
 import { FiEdit3 } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
-import { GrView } from "react-icons/gr";
 import NotFound from '../../../assets/images/NotFound.webp';
+import useDeleteFile from '../../../hooks/UserHooks/useDeleteFile';
 
 const SavedData = ({ data }) => {
   const navigate = useNavigate();
-  console.log(data);
-  console.log(data.length)
+  const { DeleteFile } = useDeleteFile();
   const [ isOpen, setIsOpen ] = useState(null)
 
   const toggleMenu = (id) => {
-    setIsOpen(isOpen === id ? null : id); // Toggle the menu
+    setIsOpen(isOpen === id ? null : id); 
   };
 
   const EditApplication = (files) => {
     return navigate('/preapply/form', { state: { files: files }})
   }
 
-  const handleDeleteFile = (id) => {
-
+  const handleDeleteFile = async (formID) => {
+    console.log(formID)
+    await DeleteFile(formID)
   }
 
   return (

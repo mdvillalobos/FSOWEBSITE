@@ -49,18 +49,21 @@ export const filterAndUploadedRequirements = async (files, folderName) => {
         };
     });
 
-    const uploadPromises = userSubmittedRequirements.map(fileArray => {
-        const imageFileType = ['png', 'jpg', 'jpeg'];
-        const fileFileType = ['pdf'];
+    const imageFileTypes = new Set(['png', 'jpg', 'jpeg']);
+    const fileFileTypes = new Set(['pdf']);
 
-        console.log(fileArray.fileType)
-        if(imageFileType.includes(fileArray.fileType)) {
-            return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'image',{ concurrent: true }))
+    const uploadPromises = userSubmittedRequirements.map(file => {
+        console.log(file.fileType)
+        if(imageFileTypes.has(file.fileType)) {
+            console.log('tae')
+            return uploadQueue.add(() => uploadImageToCloudinary(file.path, folderName, 'image',{ concurrent: true }))
         }
-        else if(fileFileType.includes(fileArray.fileType)) {
-            return uploadQueue.add(() => uploadImageToCloudinary(fileArray.path, folderName, 'raw', { concurrent: true }))
+        else if(fileFileTypes.has(file.fileType)) {
+            console.log('utot')
+            return uploadQueue.add(() => uploadImageToCloudinary(file.path, folderName, 'raw', { concurrent: true }))
         }
-    })
+        return Promise.resolve(null);
+    }).filter(Boolean);
     
     const uploadResponses = await Promise.all(uploadPromises);
     
@@ -76,14 +79,20 @@ export const filterAndUploadedRequirements = async (files, folderName) => {
 
 
 export const DestroyImageInCloudinary = async (secureURL, folderName) => {
-    if(secureURL) {
-        const parts = secureURL.split('/');
-        const publicIDWithExtension = parts[parts.length - 1];      
+    if(!secureURL) return;
+    
+    const publicIDWithExtension = secureURL.split('/').pop();      
+    const publicID = publicIDWithExtension.split('.')[0];   
+    const extName = publicIDWithExtension.split('.').pop();
 
-        // Remove the file extension
-        const publicID = publicIDWithExtension.split('.')[0]; 
-        return await cloudinary.uploader.destroy(`repository/${publicID}`)
+
+    const imageFileTypes = new Set(['png', 'jpg', 'jpeg']);
+    const fileFileTypes = new Set(['pdf']);
+
+    if(imageFileTypes.has(extName)) {
+        return await cloudinary.uploader.destroy(`${folderName}${publicID}`)
     }
-    return null;
-
+    else if(fileFileTypes.has(extName)) {
+        return await cloudinary.v2.api.delete_resources([`${folderName}${publicIDWithExtension}`], {type: 'upload', resource_type: 'raw'})
+    }
 }

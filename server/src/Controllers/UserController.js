@@ -203,19 +203,15 @@ export const updateRepository = async (req, res) => {
             Repository.findOne({ _id: formID })
         ])
 
-        for( const requirement of cloudinaryResponse) {
+        for(const requirement of cloudinaryResponse) {
             const dbData = userRepositoryFile.requirements.find(resRequirement => resRequirement.requirementNumber === requirement.requirementNumber);
-            console.log(dbData)
-
             if(dbData) {
-                await DestroyImageInCloudinary(dbData.filePath);
+                await DestroyImageInCloudinary(dbData.filePath, 'repository/');
                 dbData.fileName = requirement.fileName;
                 dbData.filePath = requirement.filePath
             }
             else {
-                userRepositoryFile.requirements.push({
-                    requirement
-                });
+                userRepositoryFile.requirements.push(requirement);
             }
         }
         
@@ -229,6 +225,37 @@ export const updateRepository = async (req, res) => {
     }
 }
 
+export const deleteRepository = async (req, res) => {
+    const { formID } = req.body;
+
+    if(!formID) {
+        return res.json({ error: 'Form ID missing.'});
+    }
+    
+    try {
+        const userForm = await Repository.findById( formID );
+
+        console.log(userForm.requirements.length)
+        /* if(userForm.requirements.length > 0) {
+            await Promise.all(userForm.requirements.map(async (file) => {
+                await DestroyImageInCloudinary(file.filePath, 'repository/');
+            }));
+        } */
+
+        if (userForm.requirements.length > 0) {
+            userForm.requirements.map(async (file) => {
+                return await DestroyImageInCloudinary(file.filePath, 'repository/')
+            });
+        }
+
+        await userForm.deleteOne();
+        return res.json('File deleted successfully!')
+
+    } catch (error) {
+        console.error(`Deletion Of Repository Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
 
 export const getUserReports = async (req, res) => {
     const { token } = req.cookies;
