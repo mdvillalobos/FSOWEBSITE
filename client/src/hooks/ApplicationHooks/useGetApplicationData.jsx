@@ -4,17 +4,7 @@ import useSubmitApplication from "./useSubmitApplication";
 const useGetApplicationData = () => {
     const { Toast } = useToast();
     const { submitForm } = useSubmitApplication();
-    const getApplicationData = async (from, name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
-        
-        console.log(name, college, department, currentRank)
-        if(!name || !college || !department || !currentRank) {
-            return Toast.fire({
-                icon: 'error',
-                title: 'Required all fields!'
-            })
-        }
-
-
+    const getApplicationData = async (from, name, college, department, currentRank, academicYear, ApplyingFor, userTrack, purpose, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5, requirement_6, requirement_7, requirement_8, requirement_9, requirement_10) => {
         try {
             const maxSizeInBytes = 5 * 1024 * 1024;
             const validTypes = ['image/png', 'image/jpeg', 'application/pdf'];
@@ -39,7 +29,7 @@ const useGetApplicationData = () => {
             formData.append('academicYear', academicYear);
             formData.append('ApplyingFor', ApplyingFor);
             formData.append('userTrack', userTrack);
-            formData.append('action', action);
+            formData.append('purpose', purpose);
             
             userSubmittedFields.forEach((field, i) => {
                 if(field !== null) {

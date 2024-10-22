@@ -29,6 +29,8 @@ const ApplicationFormsSchema = new Schema({
     currentRank: String,
     applyingFor: String,
     track: String,
+    userStatus: String,
+    purpose: String,
     requirements: [requirementSchema],
     prevApprover: {
         type: String,
@@ -42,10 +44,10 @@ const ApplicationFormsSchema = new Schema({
         type: String,
         default: null
     },
-    status: {
+    applicationStatus: { 
         type: String,
-        default: 'For Approval'
-    },
+        default: 'For approval'
+    }
 })
 
 const ApplicationForm = mongoose.model('applicationForms', ApplicationFormsSchema);

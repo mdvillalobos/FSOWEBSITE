@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import BackBtn from '../../components/Tools/Back.jsx';
 import Header from "../../components/Tools/Header.jsx";
-import SavedData from '../../components/UserComponents/RepositoryComponents/SavedData.jsx';
+import SavedApplication from '../../components/UserComponents/RepositoryComponents/SavedApplication.jsx';
 import ControlPanel from '../../components/UserComponents/RepositoryComponents/ControlPanel.jsx'
 
 const Repository = () => {
@@ -37,7 +37,7 @@ const Repository = () => {
                         <BackBtn/>
                         <div className='font-Poppins py-5 px-8 shadow-md rounded-xl bg-white space-y-4 max-sm:px-5  '>
                             <ControlPanel/>
-                            <SavedData data={data}/>
+                            <SavedApplication data={data}/>
                         </div>
                     </div>
                 </>

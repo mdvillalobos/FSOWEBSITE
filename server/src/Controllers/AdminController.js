@@ -103,10 +103,9 @@ export const getApplicationsForReRanking = async (req, res) => {
 
         const previousApprover = approverMapping[userData.accountinfo.approver];
         if(previousApprover !== undefined) {
-            const applications = await ApplicationForms.find({ prevApprover: previousApprover, status: 'For Approval' });
+            const applications = await ApplicationForms.find({ prevApprover: previousApprover, purpose: 'application', applicationStatus: 'For approval',});
             return res.json(applications)
         }
-        console.log('tae')
         
         return res.json(null)
 

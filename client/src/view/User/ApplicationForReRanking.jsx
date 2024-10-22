@@ -43,7 +43,7 @@ const ApplicationForReRanking = () => {
                         ) : (
                             <>
                                 <Instruction/>
-                                <DropDown from={ 'Application For Re-Ranking' }/>
+                                <DropDown from={ 'Application' }/>
                             </>
                         )}
                     </div>

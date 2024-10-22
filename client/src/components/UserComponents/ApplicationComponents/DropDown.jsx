@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RankContext } from '../../../../context/rankContext';
 import { UserContext } from '../../../../context/userContext';
 import ReactMarkdown from 'react-markdown';
 import { RiArrowDropDownLine,  RiArrowDropUpLine } from "react-icons/ri";
+import FileDetect from './FileDetect';
+import { FocusOn } from 'react-focus-on';
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();
@@ -11,6 +14,8 @@ const Requirements = ({ from }) => {
   const { user } = useContext(UserContext);
   const [ isOpen, setIsOpen ] = useState(false);
   const [ selected, setSelected ] = useState();
+  const [ data, setData ] = useState(null);
+  const [ isDetect, setIsDetect ] = useState(false)
 
   const filterRankByTrack = ranks?.filter(rankBasedOnTrack => rankBasedOnTrack.track === user.track);
   const currentRankIndex = ranks?.findIndex(rank => rank.rankName === user?.rank);
@@ -25,10 +30,21 @@ const Requirements = ({ from }) => {
   const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === selected);
 
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if(from === 'Application For Re-Ranking') {
-      return navigate('/application/form', { state: { selectedForm: selected, from: from }})
+    console.log(selected)
+    if(from === 'Application') {
+      const userSelected = selected;
+      console.log(userSelected)
+
+      const res = await axios.get(`/api/getUserFileInRepo?selected=${selected}`);
+      setData(res.data); 
+
+      if (res.data) {
+        setIsDetect(!isDetect)
+      } else {
+        return navigate('/application/form', { state: { selectedForm: selected, from: from } });
+      }
     }
 
     if(from === 'Repository') {
@@ -37,6 +53,7 @@ const Requirements = ({ from }) => {
   }
   return (
     <div>
+      {isDetect ? (<FocusOn><FileDetect handleExit={() => setIsDetect(!isDetect)} rest={data}/></FocusOn>) : null}
       <div className="w-full relative max-sm:text-sm">
         <div className="flex justify-between rounded-lg text-ellipsis overflow-hidden whitespace-nowrap border-2 border-[#93adc2] py-1 px-2 mt-3 max-sm:py-0.5 max-sm:px-0.5">
           <button type='button' onClick={() => setIsOpen(!isOpen)} className='flex justify-between w-full py-2 px-4'>

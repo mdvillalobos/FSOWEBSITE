@@ -3,19 +3,35 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import Account from '../Models/Account.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
-import Repository from '../Models/Repository.js';
 
 import { filterAndUploadedRequirements } from '../Helpers/Cloudinary.js';
 
+export const checkUserEntry = async (req, res) => {
+    const { token } = req.cookies;
+
+    try {
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(email)
+        const userEntry = await ApplicationForms.findOne({ email: email, purpose: 'application' });
+        return res.json(userEntry)
+        
+    }
+    catch (error) {
+        console.error(`Fetching User Entry Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
+    }
+}
+
 export const submitApplicationEntry = async (req, res) => {
     const { token } = req.cookies;
-    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack, action } = req.body;
+    const { name, college, department, currentRank, academicYear, ApplyingFor, userTrack, purpose } = req.body;
 
     if(!name || !college || !department || !currentRank || !academicYear || !ApplyingFor || !userTrack) {
         return res.json({ error: 'Required all fields.'})
     }
 
-    const folderPath = (action === 'submit') ? 'requirements' : (action === 'save' ? 'repository' : null);
+    const folderPath = (purpose === 'application') ? 'requirements' : (purpose === 'repository' ? 'repository' : null);
+
     if (!folderPath) {
         return res.json({ error: 'Invalid process type.' });
     }
@@ -33,10 +49,12 @@ export const submitApplicationEntry = async (req, res) => {
                 academicYear,
                 applyingFor: ApplyingFor,
                 track: userTrack,
-                requirements
+                userStatus: 'professor',
+                purpose: purpose,
+                requirements: requirements
             };
     
-            await (action === 'submit' ? ApplicationForms : Repository).create(dataToProcess);
+            await ApplicationForms.create(dataToProcess);
             return res.json({ message: 'Success'});
         }
 
@@ -63,7 +81,7 @@ export const checkApplication = async (req, res) => {
             requirement.isApproved =  checkedReq[`checkedReq${requirement.requirementNumber}`];
         });
 
-        userApplicationForm.status = decision;
+        userApplicationForm.applicationStatus = decision;
 
         if(decision === 'Approved') {
             userApplicationForm.prevApprover = userInfo.approver
@@ -90,7 +108,7 @@ export const checkApplication = async (req, res) => {
 
 export const countData = async (req, res) => {
     try {
-        const applications = await ApplicationForms.find();
+        const applications = await ApplicationForms.find({ purpose: 'application'});
 
         const countIsApproved = {};
         const applicationStatus = {
@@ -101,9 +119,9 @@ export const countData = async (req, res) => {
         applications.forEach(applicationData => {
             const rankName = applicationData.applyingFor;
 
-            if (applicationData.status === 'Approved') {
+            if (applicationData.applicationStatus === 'Approved') {
                 applicationStatus.approved++;
-            } else if (applicationData.status === 'Declined') {
+            } else if (applicationData.applicationStatus === 'Declined') {
                 applicationStatus.declined++;
             }
 
@@ -137,5 +155,17 @@ export const countData = async (req, res) => {
     catch (error) {
         console.error(`Fetching Data Analytics isApproved Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' })
+    }
+}
+
+export const submit = async (req,res) => {
+    const { token } = req.cookies;
+
+    try {
+        console.log(req.body)
+        console.log(req.files)
+    }
+    catch(error) {
+        console.log(error)
     }
 }

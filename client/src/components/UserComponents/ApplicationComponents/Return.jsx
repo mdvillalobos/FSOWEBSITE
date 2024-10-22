@@ -4,6 +4,7 @@ import { MdKeyboardArrowLeft  } from "react-icons/md";
 
 const Return = ({ from }) => {
   const returnTo = from === 'Repository' ? '/repository' : '/application'
+
   return (
     <div>
       <Link to={returnTo} className='flex my-4 w-24 duration-300 hover:text-NuButtonHover'>

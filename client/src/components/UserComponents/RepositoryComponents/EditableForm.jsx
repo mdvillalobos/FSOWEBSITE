@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { RankContext } from '../../../../context/rankContext.jsx';
 import PersonalInformation from '../../ReRankingFormComponents/PersonalInformation.jsx';
 import ReRankingFields from '../../ReRankingFormComponents/ReRankingFields.jsx';
+import useToast from '../../../hooks/Helpers/useToast.jsx';
 import useUpdateRepository from '../../../hooks/UserHooks/useUpdateRepository.jsx';
+import useSubmitFromRepository from '../../../hooks/ApplicationHooks/useSubmitFromRepository.jsx';
 
-const RepositoryForm = ({ files }) => {
+const RepositoryForm = ({ files, from }) => {
     const { ranks } = useContext(RankContext);
+    const { Toast } = useToast();
+    const { SubmitFromRepository } = useSubmitFromRepository();
     const { updateRepository } = useUpdateRepository();
 
     const [ data, setData ] = useState({
@@ -55,18 +59,38 @@ const RepositoryForm = ({ files }) => {
     }, [selectedRank, files]);
 
 
-    const handleSubmitApplication = async (e) => {
+    const handleSaveApplication = async (e) => {
         e.preventDefault();
         const formID = files?._id
         
-        await updateRepository(formID, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
+            await updateRepository(formID, requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
+                requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
+        );
+    }
+
+
+    const handleSubmitApplication = async (e) => {
+        e.preventDefault();
+        const purpose = 'application'
+        const formID = files?._id
+        for (let i = 0; i < selectedRank.requirements.length;  i++) {
+            if (selectedRank.requirements[i] !== null && !stateValues[i].value) {
+                return Toast.fire({
+                    icon: 'error',
+                    title: 'Required all fields!'
+                });
+            }
+        }
+
+        await SubmitFromRepository(formID, purpose,
+            requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
             requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
         );
     }
 
     return (
         <div>
-             <form onSubmit={handleSubmitApplication} className='font-Poppins' encType='multipart/form-data' >
+             <form className='font-Poppins' encType='multipart/form-data' >
                 <div className="flex justify-between">
                     <h1 className='formTitle'>Faculty Ranking Form</h1>
                     <h1 className='formTitle'>{files?.applyingFor}</h1>
@@ -95,8 +119,17 @@ const RepositoryForm = ({ files }) => {
 
                     <div className='flex justify-end mt-4'>
                         <>
-                            <Link to="/repository" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
-                            <input type='submit' value='Save' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0'/>
+                            {from === 'Repository' ? (
+                                <>
+                                    <Link to="/repository" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
+                                    <button type='button' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0' onClick={handleSaveApplication}>Save</button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/application" className='text-sm py-2 px-12 duration-300 mr-3 bg-[#E8E8E8] rounded hover:bg-[#bcbbbb]'>Cancel</Link>
+                                    <button type='button' className='py-2 px-12 text-sm bg-[#35408e] text-white hover:bg-[#5d69c6] duration-300 rounded cursor-pointer border-0' onClick={handleSubmitApplication}>Submit</button>
+                                </>
+                            )}
                         </>
                     </div>
                 </div>

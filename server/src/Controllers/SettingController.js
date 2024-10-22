@@ -40,7 +40,8 @@ export const changePassword = async (req, res) => {
         }
 
         const hashedPassword = await hashPassword(newPassword);
-        await Account.updateOne({ email: userData.email }, {$set: { password: hashedPassword }});
+        userData.password = hashedPassword;
+        await userData.save();
         return res.json({ message: 'Password updated successfully.' });
    
     } catch (error) {
@@ -143,10 +144,6 @@ export const updateProfilePicture = async (req, res) => {
         accountInfo.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'ProfilePictures') : null;
         await userData.save();
         return res.json({ message: 'Profile Picture Successfully Changed' });
-        /* userData.accountinfo.profilePicture ? await DestroyImageInCloudinary(userData.profilePicture) : null;
-        userData.accountinfo.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'profilepictures') : uploadedPicture;
-        await userData.save();
-        return res.json({ message: 'Profile Picture Successfully Changed' }); */
     }
 
     catch(error) {

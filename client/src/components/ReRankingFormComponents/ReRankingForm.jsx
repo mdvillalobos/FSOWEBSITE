@@ -32,27 +32,27 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
     const [ requirement_9, setRequirement_9 ] = useState(null);
     const [ requirement_10, setRequirement_10 ] = useState(null);
 
+    const stateValues = [
+        { value: requirement_1, setValue: setRequirement_1 },
+        { value: requirement_2, setValue: setRequirement_2 },
+        { value: requirement_3, setValue: setRequirement_3 },
+        { value: requirement_4, setValue: setRequirement_4 },
+        { value: requirement_5, setValue: setRequirement_5 },
+        { value: requirement_6, setValue: setRequirement_6 },
+        { value: requirement_7, setValue: setRequirement_7 },
+        { value: requirement_8, setValue: setRequirement_8 },
+        { value: requirement_9, setValue: setRequirement_9 },
+        { value: requirement_10, setValue: setRequirement_10 },
+    ];
+
     const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === ApplyingFor);
     const handleSubmitApplication = async (e) => {
         e.preventDefault();
 
-        const action = (from === 'Application For Re-Ranking') ? 'submit' : (from === 'Repository') && 'save';
-        if (action === 'submit') {
-            const requirementState = [
-                requirement_1,
-                requirement_2,
-                requirement_3,
-                requirement_4,
-                requirement_5,
-                requirement_6,
-                requirement_7,
-                requirement_8,
-                requirement_9,
-                requirement_10,
-            ]
-          
+        const purpose = (from === 'Application') ? 'application' : (from === 'Repository') && 'repository';
+        if (purpose === 'submit') {
             for (let i = 0; i < selectedRank.requirements.length;  i++) {
-                if (selectedRank.requirements[i] !== null && !requirementState[i]) {
+                if (selectedRank.requirements[i] !== null && !stateValues[i].value) {
                     return Toast.fire({
                         icon: 'error',
                         title: 'Required all fields!'
@@ -61,7 +61,7 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
             }
         }
 
-        await getApplicationData(from, data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, action,
+        await getApplicationData(from, data.name, data.college, data.department, data.currentRank, data.academicYear, ApplyingFor, userTrack, purpose,
             requirement_1, requirement_2, requirement_3, requirement_4, requirement_5,
             requirement_6, requirement_7, requirement_8, requirement_9, requirement_10
         );
@@ -87,42 +87,14 @@ const ReRankingForm = ({ ApplyingFor, userTrack, from }) => {
                 <div className='pt-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-1'>Qualification</h1>
                     
-                    {selectedRank?.requirements.map((requirement, i) => {
-                        const stateValues = {
-                            requirement_1: requirement_1,
-                            requirement_2: requirement_2,
-                            requirement_3: requirement_3,
-                            requirement_4: requirement_4,
-                            requirement_5: requirement_5,
-                            requirement_6: requirement_6,
-                            requirement_7: requirement_7,
-                            requirement_8: requirement_8,
-                            requirement_9: requirement_9,
-                            requirement_10: requirement_10,
-                            setRequirement_1: setRequirement_1,
-                            setRequirement_2: setRequirement_2,                            
-                            setRequirement_3: setRequirement_3,
-                            setRequirement_4: setRequirement_4,
-                            setRequirement_5: setRequirement_5,
-                            setRequirement_6: setRequirement_6,
-                            setRequirement_7: setRequirement_7,
-                            setRequirement_8: setRequirement_8,
-                            setRequirement_9: setRequirement_9,
-                            setRequirement_10: setRequirement_10,
-                        };
-
-                        const reqState = [`requirement_${i+1}`]
-                        const setReqState = [`setRequirement_${i+1}`]
-                        const checkReqStateValue = stateValues[reqState]
-                        const checkSetReqValue = stateValues[setReqState]
-
-                        return <ReRankingFields
+                    {selectedRank?.requirements.map((requirement, i) => (
+                        <ReRankingFields
                             key={requirement._id}
                             requirement={requirement.requirement}
-                            data = {checkReqStateValue}
-                            setData={checkSetReqValue}
+                            data = {stateValues[i].value}
+                            setData={stateValues[i].setValue}
                         />
-                    })}
+                    ))}
 
                     <div className='flex justify-end mt-4 space-x-3 text-sm font-medium max-sm:space-x-0 max-sm:justify-normal max-sm:flex-col-reverse'>
                         {from === 'Application For Re-Ranking' ? (

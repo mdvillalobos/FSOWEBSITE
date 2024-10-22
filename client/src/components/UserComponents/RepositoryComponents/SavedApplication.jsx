@@ -17,11 +17,10 @@ const SavedData = ({ data }) => {
   };
 
   const EditApplication = (files) => {
-    return navigate('/preapply/form', { state: { files: files }})
+    return navigate('/application/form/edit', { state: { files: files, from: 'Repository' }})
   }
 
   const handleDeleteFile = async (formID) => {
-    console.log(formID)
     await DeleteFile(formID)
   }
 

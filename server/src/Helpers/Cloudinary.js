@@ -53,13 +53,10 @@ export const filterAndUploadedRequirements = async (files, folderName) => {
     const fileFileTypes = new Set(['pdf']);
 
     const uploadPromises = userSubmittedRequirements.map(file => {
-        console.log(file.fileType)
         if(imageFileTypes.has(file.fileType)) {
-            console.log('tae')
             return uploadQueue.add(() => uploadImageToCloudinary(file.path, folderName, 'image',{ concurrent: true }))
         }
         else if(fileFileTypes.has(file.fileType)) {
-            console.log('utot')
             return uploadQueue.add(() => uploadImageToCloudinary(file.path, folderName, 'raw', { concurrent: true }))
         }
         return Promise.resolve(null);

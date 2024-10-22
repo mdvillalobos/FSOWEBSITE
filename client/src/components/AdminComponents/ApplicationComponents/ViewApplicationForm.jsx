@@ -21,24 +21,23 @@ const ViewApplicationForm = ({ rest }) => {
     const [ checkedReq9, setCheckedReq9 ] = useState(null);
     const [ checkedReq10, setCheckedReq10 ] = useState(null);
 
+    const stateValues = [
+        { value: checkedReq1, setValue: setCheckedReq1 },
+        { value: checkedReq2, setValue: setCheckedReq2 },
+        { value: checkedReq3, setValue: setCheckedReq3 },
+        { value: checkedReq4, setValue: setCheckedReq4 },
+        { value: checkedReq5, setValue: setCheckedReq5 },
+        { value: checkedReq6, setValue: setCheckedReq6 },
+        { value: checkedReq7, setValue: setCheckedReq7 },
+        { value: checkedReq8, setValue: setCheckedReq8 },
+        { value: checkedReq9, setValue: setCheckedReq9 },
+        { value: checkedReq10, setValue: setCheckedReq10 },
+    ];
 
     const selectedRank = ranks?.find(requirement => requirement.rankName === rest.applyingFor);
     const handleSubmitReview = async (decision) => {
-        const requirementState = [
-            checkedReq1,
-            checkedReq2,
-            checkedReq3,
-            checkedReq4,
-            checkedReq5,
-            checkedReq6,
-            checkedReq7,
-            checkedReq8,
-            checkedReq9,
-            checkedReq10,
-        ]
-      
         for (let i = 0; i < selectedRank.requirements.length;  i++) {
-            if (selectedRank.requirements[i] !== null && !requirementState[i]) {
+            if (selectedRank.requirements[i] !== null && !stateValues[i].value) {
                 return Toast.fire({
                     icon: 'error',
                     title: 'Review all fields!'
@@ -68,40 +67,12 @@ const ViewApplicationForm = ({ rest }) => {
                     <div>
                         {rest?.requirements?.map((data, i) => {
                             const requirement = selectedRank.requirements[i];
-                            const stateValues = {
-                                checkedReq1: checkedReq1,
-                                checkedReq2: checkedReq2,
-                                checkedReq3: checkedReq3,
-                                checkedReq4: checkedReq4,
-                                checkedReq5: checkedReq5,
-                                checkedReq6: checkedReq6,
-                                checkedReq7: checkedReq7,
-                                checkedReq8: checkedReq8,
-                                checkedReq9: checkedReq9,
-                                checkedReq10: checkedReq10,
-                                setCheckedReq1: setCheckedReq1,
-                                setCheckedReq2: setCheckedReq2,                            
-                                setCheckedReq3: setCheckedReq3,
-                                setCheckedReq4: setCheckedReq4,
-                                setCheckedReq5: setCheckedReq5,
-                                setCheckedReq6: setCheckedReq6,
-                                setCheckedReq7: setCheckedReq7,
-                                setCheckedReq8: setCheckedReq8,
-                                setCheckedReq9: setCheckedReq9,
-                                setCheckedReq10: setCheckedReq10,
-                            };
-                            
-                            const checkedReq = [`checkedReq${i + 1}`];
-                            const setCheckedReq = [`setCheckedReq${i+1}`]
-                            const checkedValue = stateValues[checkedReq]
-                            const setCheckedValue = stateValues[setCheckedReq]
-
                             return <div key={data._id}>
                                 <ApplicationInput
                                     requirement={requirement.requirement}
                                     filePath={data.filePath}
-                                    checkedValue={checkedValue}
-                                    setCheckedValue={setCheckedValue}
+                                    checkedValue={stateValues[i].value}
+                                    setCheckedValue={stateValues[i].setValue}
                                 />
                             </div>
                         })}

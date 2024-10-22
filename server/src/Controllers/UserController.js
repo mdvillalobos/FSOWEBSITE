@@ -3,10 +3,8 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import Account from '../Models/Account.js';
 import Reports from '../Models/Reports.js';
-import Repository from '../Models/Repository.js';
 import Credentials from '../Models/Credentials.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
-import { filterAndUploadedRequirements, DestroyImageInCloudinary } from '../Helpers/Cloudinary.js';
 
 export const getUserData = async (req, res) => {
     const { token } = req.cookies;
@@ -176,87 +174,6 @@ export const getUserCredentials = async (req, res) => {
     }
 }
 
-export const getUserRepository = async (req, res) => {
-    const { token } = req.cookies;
-
-    try {
-        const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        const userRepositoryData = await Repository.find({ email });
-        return res.json(userRepositoryData);
-    }
-    catch (error) {
-        console.error(`Fetching User Repository Data Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-export const updateRepository = async (req, res) => {
-    const { formID } = req.body;
-
-    if(!formID) {
-        return res.json({ error: 'Form ID is missing. Please try again later!'})
-    }
-
-    try {
-        const [ cloudinaryResponse, userRepositoryFile ] = await Promise.all([
-            filterAndUploadedRequirements(req.files, 'repository'),
-            Repository.findOne({ _id: formID })
-        ])
-
-        for(const requirement of cloudinaryResponse) {
-            const dbData = userRepositoryFile.requirements.find(resRequirement => resRequirement.requirementNumber === requirement.requirementNumber);
-            if(dbData) {
-                await DestroyImageInCloudinary(dbData.filePath, 'repository/');
-                dbData.fileName = requirement.fileName;
-                dbData.filePath = requirement.filePath
-            }
-            else {
-                userRepositoryFile.requirements.push(requirement);
-            }
-        }
-        
-        await userRepositoryFile.save();
-        return res.json({ message: 'Updated Successfully'});
-
-        
-    } catch (error) {
-        console.log(error);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
-export const deleteRepository = async (req, res) => {
-    const { formID } = req.body;
-
-    if(!formID) {
-        return res.json({ error: 'Form ID missing.'});
-    }
-    
-    try {
-        const userForm = await Repository.findById( formID );
-
-        console.log(userForm.requirements.length)
-        /* if(userForm.requirements.length > 0) {
-            await Promise.all(userForm.requirements.map(async (file) => {
-                await DestroyImageInCloudinary(file.filePath, 'repository/');
-            }));
-        } */
-
-        if (userForm.requirements.length > 0) {
-            userForm.requirements.map(async (file) => {
-                return await DestroyImageInCloudinary(file.filePath, 'repository/')
-            });
-        }
-
-        await userForm.deleteOne();
-        return res.json('File deleted successfully!')
-
-    } catch (error) {
-        console.error(`Deletion Of Repository Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
-
 export const getUserReports = async (req, res) => {
     const { token } = req.cookies;
 
@@ -296,18 +213,4 @@ export const submitReport = async (req, res) => {
     }
 }
 
-export const checkUserEntry = async (req, res) => {
-    const { token } = req.cookies;
-
-    try {
-        const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        const userEntry = await ApplicationForms.findOne({ email });
-        return res.json(userEntry)
-        
-    }
-    catch (error) {
-        console.error(`Fetching User Entry Error: ${ error.message }`);
-        return res.json({ error: 'An internal error occurred. Please try again later!' });
-    }
-}
 
