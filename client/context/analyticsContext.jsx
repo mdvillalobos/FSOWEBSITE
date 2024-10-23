@@ -29,6 +29,8 @@ export const AnalyticsContextProvider = ({ children }) => {
         getDataAnalytics();
     }
 
+    console.log(isApprovedData)
+
     return (
         <AnalyticsContext.Provider value={{ isApprovedData, statusData, setIsApprovedData, setStatusData, getDataOnLogin }}>
             {children}

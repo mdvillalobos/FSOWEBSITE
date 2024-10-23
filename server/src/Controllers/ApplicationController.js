@@ -68,7 +68,7 @@ export const submitApplicationEntry = async (req, res) => {
 
 export const checkApplication = async (req, res) => {
     const { token } = req.cookies;
-    const { formID, decision, ...checkedReq } = req.body;
+    const { formID, decision, remarks, ...checkedReq } = req.body;
 
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
@@ -108,8 +108,9 @@ export const checkApplication = async (req, res) => {
 
 export const countData = async (req, res) => {
     try {
-        const applications = await ApplicationForms.find({ purpose: 'application'});
+        const applications = await ApplicationForms.find({ purpose: 'application', applicationStatus: { $ne: 'For approval' }});
 
+        console.log(applications)
         const countIsApproved = {};
         const applicationStatus = {
             approved: 0,

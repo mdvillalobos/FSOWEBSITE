@@ -11,30 +11,30 @@ const Config = ({ data }) => {
 
     return (
         <div className='flex flex-col justify-between h-full'>
-            <div className="space-y-10">
-                <div>
+            <div className="space-y-4">
+                <div className='bg-white px-5 py-4 shadow-md rounded-lg h-[59vh]'>
                     <div className="mb-5 flex justify-between">
-                        <p className='text-xl font-semibold'>APPROVERS</p>
+                        <p className='text-xl font-semibold'>Approver</p>
                         <button className='my-auto' onClick={() => setIsOpen(!isOpen)}><PiDotsThreeOutlineFill/></button>
                     </div>
                     {isOpen ? (<FocusOn><SettingModal handleExit={() => setIsOpen(!isOpen)} data={data}/></FocusOn>) : null}
                     {data ?
                         data?.map(approver => {
-                            if(approver.profilePicture === null || approver.profilePicture === '') {
-                                if(approver.sex === 'Male') {
-                                    approver.profilePicture = maleProfile
+                            if(approver.accountinfo[0].profilePicture === null || approver.accountinfo[0].profilePicture === '') {
+                                if(approver.accountinfo[0].sex === 'Male') {
+                                    approver.accountinfo[0].profilePicture = maleProfile
                                 }
                                 else {
-                                    approver.profilePicture = femaleProfile
+                                    approver.accountinfo[0].profilePicture = femaleProfile
                                 }
                             }
-                            return <div key={approver._id}className="flex justify-between mt-4">
+                            return <div key={approver.accountinfo[0]._id } className="flex justify-between mt-4">
                                 <div className="flex space-x-2">
-                                    <div className="w-[35px] h-[35px] overflow-hidden rounded-full flex items-center justify-center my-auto">
-                                        <img src={approver.profilePicture} alt={`${approver.lastName} Profile Picture`} className='w-full h-auto object-cover'/>
+                                    <div className="flex items-center justify-center w-[45px] h-[45px] overflow-hidden rounded-full">
+                                        <img src={approver.accountinfo[0].profilePicture} alt={`${approver.accountinfo[0].lastName} Profile Picture`} className='w-full h-full object-cover'/>
                                     </div>
-                                    <div className="text-xs">
-                                        <p>{approver.firstName} {approver.lastName}</p>
+                                    <div className="text-xs my-auto">
+                                        <p className='font-medium text-sm'>{approver.accountinfo[0].firstName} {approver.accountinfo[0].lastName}</p>
                                         <p className='text-gray-500'>{approver.approver}</p>
                                     </div>
                                 </div>
@@ -46,8 +46,8 @@ const Config = ({ data }) => {
                     }
                 </div>
 
-                <div>
-                    <p className='text-xl font-semibold my-auto mb-4'>CONFIGURATION</p>
+                <div className='bg-white rounded-lg shadow-md px-5 py-4 space-y-9 '>
+                    <p className='text-xl font-semibold my-auto mb-4'>Configuration</p>
                     <div className="space-y-4 text-xs">
                         <div className="flex justify-between">
                             <p>Academic Yr. </p>
@@ -63,7 +63,6 @@ const Config = ({ data }) => {
                     </div>
                 </div>
             </div>
-            <img src={ConfigImage} alt="" className='opacity-90'/>
         </div>
     )
 }

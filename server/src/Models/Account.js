@@ -7,19 +7,15 @@ const AccountInfoSchema = new Schema({
     middleName: String,
     contact: String,
     sex: String,
+    status: String,
     track: String,
     rank: String,
     college: String,
     department: String,
-    position: String,
     profilePicture: {
         type: String,
         default: null
     },
-    approver: {
-        type: String,
-        default: null,
-    }
 })
 
 const AccountSchema = new Schema ({
@@ -32,6 +28,10 @@ const AccountSchema = new Schema ({
     role: {
         type: String,
         default: 'user'
+    },
+    approver: {
+        type: String,
+        default: null,
     },
     accountinfo: [AccountInfoSchema]
 })

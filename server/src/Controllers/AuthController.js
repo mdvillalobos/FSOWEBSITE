@@ -118,9 +118,9 @@ export const verifyEmail = async (req,res) => {
 
 export const registerProfile = async (req, res) => {
     const { token } = req.cookies;
-    const {  firstName, lastName, middleName, contact, sex, track, rank, college, department, position } = req.body;
+    const {  firstName, lastName, middleName, contact, sex, track, rank, college, department, status } = req.body;
 
-    if(!firstName || !lastName || !contact || !sex || !track || !rank || !college || !department || !position) {
+    if(!firstName || !lastName || !contact || !sex || !track || !rank || !college || !department || !status) {
         return res.json({ error: 'Required all fields!' });
     }
 
@@ -142,11 +142,11 @@ export const registerProfile = async (req, res) => {
             middleName: middleName,
             contact: contact,
             sex: sex,
+            status: status,
             track: track,
             rank: rank,
             college: college,
             department: department,
-            position: position,
             profilePicture: cloudinaryResponse
         };
 

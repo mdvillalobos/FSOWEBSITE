@@ -139,7 +139,7 @@ export const updateProfilePicture = async (req, res) => {
         const accountInfo = userData.accountinfo.id(id);
 
         if (accountInfo.profilePicture) {
-            await DestroyImageInCloudinary(accountInfo.profilePicture);
+            await DestroyImageInCloudinary(accountInfo.profilePicture, 'ProfilePictures');
         }
         accountInfo.profilePicture = uploadedPicture ? await uploadImageToCloudinary(uploadedPicture, 'ProfilePictures') : null;
         await userData.save();

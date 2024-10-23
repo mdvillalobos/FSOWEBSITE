@@ -6,6 +6,7 @@ import BarGraph from '../../components/AdminComponents/DashboardComponents/BarGr
 import PieGraph from "../../components/AdminComponents/DashboardComponents/PieGraph.jsx";
 import Config from '../../components/AdminComponents/DashboardComponents/Config.jsx';
 import RankTable from '../../components/AdminComponents/DashboardComponents/RankTable.jsx'
+import GraphDescription from '../../components/AdminComponents/DashboardComponents/GraphDescription.jsx';
 
 const Dashboard = () => {
   const [ data, setData ] = useState([]);
@@ -40,13 +41,14 @@ const Dashboard = () => {
             <BackBtn/>
             <div className="flex h-full space-x-4">
               <div className="flex-1 space-y-4 ">
+                <GraphDescription/>
                 <BarGraph/>
-                <div className="flex space-x-2 ">
+                <div className="flex space-x-4 ">
                   <PieGraph/>
                   <RankTable/>
                 </div>
               </div>
-              <div className="flex-1 bg-white px-7 py-5 rounded-xl shadow-md w-[18vw]">
+              <div className="flex-1 w-[20vw]">
                 <Config data={data}/>
               </div>
             </div>

@@ -20,7 +20,7 @@ export const getAllReports = async (req, res) => {
 
 export const getAllApprovers = async (req, res) => {
     try {
-        const approvers = await Account.find({ 'accountinfo.approver': { $ne: null }}, { 'accountinfo.email': 1, 'accountinfo._id': 1, 'accountinfo.approver': 1, 'accountinfo.lastName': 1, 'accountinfo.firstName': 1, 'accountinfo.profilePicture': 1, 'accountinfo.sex': 1 }).sort({ 'accountinfo.approver': 1 })
+        const approvers = await Account.find({ approver: { $ne: null }}, { 'accountinfo.email': 1, 'accountinfo._id': 1, approver: 1, 'accountinfo.lastName': 1, 'accountinfo.firstName': 1, 'accountinfo.profilePicture': 1, 'accountinfo.sex': 1 }).sort({ approver: 1 })
         if(approvers) {
             return res.json(approvers)
         }
@@ -101,7 +101,7 @@ export const getApplicationsForReRanking = async (req, res) => {
             'Approver 4': 'Approver 3'
         };
 
-        const previousApprover = approverMapping[userData.accountinfo.approver];
+        const previousApprover = approverMapping[userData.approver];
         if(previousApprover !== undefined) {
             const applications = await ApplicationForms.find({ prevApprover: previousApprover, purpose: 'application', applicationStatus: 'For approval',});
             return res.json(applications)

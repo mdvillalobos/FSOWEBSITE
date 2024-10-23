@@ -4,7 +4,7 @@ import { FocusOn } from 'react-focus-on'
 import ViewImage from './ViewImage.jsx';
 import ViewPdf from './ViewPdf.jsx';
 
-const ViewPageMaster = ({ requirement, filePath, checkedValue, setCheckedValue }) => {
+const ViewPageMaster = ({ requirement, filePath, fileName, checkedValue, setCheckedValue }) => {
     const [ showImage, setShowImage ] = useState({
         show: false,
         image: null,
@@ -59,19 +59,19 @@ const ViewPageMaster = ({ requirement, filePath, checkedValue, setCheckedValue }
                 <div className='text-[0.9rem]'>
                     <p className='whitespace-pre-wrap w-[33vw]'>{ requirement }</p>
                 </div>
-                <div className='flex space-x-4'>
+                <div className='flex space-x-10'>
                     <div>
                         <button type='button' onClick={() => handleViewImage(filePath)} className='imageButton'>
                             <PiImagesLight size='1.8rem' className='translate-y-1'/>
                             <div className="imageNameContainer">
                                 <p className='uploadName'>Uploaded File</p>
-                                <p className='imagePathName'>{ filePath }</p>
+                                <p className='imagePathName'>{ fileName }</p>
                             </div>
                         </button>
                     </div>
                     <div className="flex flex-col space-y-2 mt-2">
                         <div className="flex space-x-2">
-                            <input type="checkbox" value='Approved' name='Declined' checked={ checkedValue === 'Approved' } onChange ={(e) => setCheckedValue(e.target.value)} className='checkBoxApprove'/>
+                            <input type="checkbox" value='Approved' name='Declined' checked={ checkedValue === 'Approved' } onChange ={(e) => setCheckedValue(e.target.checked ? 'Approved' : null)} className='checkbox'/>
                             {checkedValue === 'Approved' ? 
                             (
                                 <p className='text-xs font-medium text-green-500 translate-y-0.5'>Approve</p>
@@ -80,7 +80,7 @@ const ViewPageMaster = ({ requirement, filePath, checkedValue, setCheckedValue }
                             )}
                         </div>
                         <div className="flex space-x-2">
-                            <input type="checkbox" value='Declined' name='Declined' checked={ checkedValue === 'Declined' } onChange ={(e) => setCheckedValue(e.target.value)} className='checkBoxDecline'/>
+                            <input type="checkbox" value='Declined' name='Declined' checked={ checkedValue === 'Declined' } onChange ={(e) => setCheckedValue(e.target.checked ? 'Declined' : null)} className='wrongBox'/>
                             {checkedValue === 'Declined' ? 
                             (
                                 <p className='text-xs font-medium text-red-500 translate-y-0.5'>Decline</p>

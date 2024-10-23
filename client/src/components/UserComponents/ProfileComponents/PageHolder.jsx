@@ -15,9 +15,13 @@ const PageHolder = () => {
       <div className="flex justify-between py-4 px-4 border-b-2">
         <div className=" space-x-2 max-sm:space-x-1">
           <button type='button' onClick={() => setActive('About')} className={`profileNav ${active === 'About' ? 'profileActive' : 'text-gray-500'}`}>About</button>
-          <button type='button' onClick={() => setActive('Education')} className={`profileNav ${active === 'Education' ? 'profileActive' : 'text-gray-500'}`}>Education</button>
-          <button type='button' onClick={() => setActive('Seminars')} className={`profileNav ${active === 'Seminars' ? 'profileActive' : 'text-gray-500'}`}>Seminars</button>
-          <button type='button' onClick={() => setActive('Achievements')} className={`profileNav ${active === 'Achievements' ? 'profileActive' : 'text-gray-500'}`}>Achievements</button>
+          {user?.role === 'user' ? (
+            <>
+              <button type='button' onClick={() => setActive('Education')} className={`profileNav ${active === 'Education' ? 'profileActive' : 'text-gray-500'}`}>Education</button>
+              <button type='button' onClick={() => setActive('Seminars')} className={`profileNav ${active === 'Seminars' ? 'profileActive' : 'text-gray-500'}`}>Seminars</button>
+              <button type='button' onClick={() => setActive('Achievements')} className={`profileNav ${active === 'Achievements' ? 'profileActive' : 'text-gray-500'}`}>Achievements</button>
+            </>
+          ) : null}
         </div>
         {/* <button className='bg-NuButton hover:bg-NuButtonHover duration-200 rounded-md text-white px-8 text-sm hover:shadow-lg hover:scale-105'>Generate CV</button> */}
       </div>

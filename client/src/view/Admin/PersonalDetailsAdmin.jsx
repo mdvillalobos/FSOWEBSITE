@@ -1,10 +1,10 @@
 import React from 'react'
 import SettingNav from '../../components/SettingComponents/SettingNav.jsx';
 import PersonalDetailsForm from '../../components/SettingComponents/PersonalDetailsForm.jsx';
-import Back from '../../components/Tools/Back.jsx';
+import Back from '../../components/Tools/AdminBack.jsx';
 import Header from "../../components/Tools/Header.jsx";
 
-const PersonalDetails = () => {
+const PersonalDetailsAdmin = () => {
     return (
         <div className='bg-[#f4f7fa] h-screen'>
             <Header location={'Account Settings'}/>
@@ -19,4 +19,4 @@ const PersonalDetails = () => {
     )
 }
 
-export default PersonalDetails
+export default PersonalDetailsAdmin

@@ -19,11 +19,11 @@ const ProfileRegistrationForm = () => {
     middleName: '',
     contact: '',
     sex: '',
+    status: '',
     track: '', 
     rank: '',
     college: '',
     department: '', 
-    position: '', 
   });
 
   const trackOptions = Array.from(new Set(ranks?.map(rank => rank.track)));
@@ -37,11 +37,11 @@ const ProfileRegistrationForm = () => {
       data.firstName, 
       data.contact,
       data.sex,
+      data.status,
       data.track,
       data.rank,
       data.department,
       data.college,
-      data.position,
     ];
     setIsSubmitted(true);
 
@@ -51,7 +51,7 @@ const ProfileRegistrationForm = () => {
         title: 'Require All fields'
       })
     }
-    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.contact, data.sex, data.track, data.rank, data.college, data.department, data.position);
+    await registerProfile(data.profilePicture, data.lastName, data.firstName, data.middleName, data.contact, data.sex, data.status, data.track, data.rank, data.college, data.department);
   }
 
   return (
@@ -138,17 +138,17 @@ const ProfileRegistrationForm = () => {
             </div>
 
             <div className="relative flex flex-col flex-1 space-y-1">
-              <label htmlFor="position">Employee Position</label>
+              <label htmlFor="position">Status</label>
               <select id='position' name='position'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.position.trim() ? 'border-red-400' : ''}`}
-                onChange={(e) => setData({...data, position: e.target.value})}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.status.trim() ? 'border-red-400' : ''}`}
+                onChange={(e) => setData({...data, status: e.target.value})}
               >
                 <option value=""></option>
-                <option value="Faculty">Faculty</option>
-                <option value="Director">Director</option>
-                <option value="FSO">Faculty Service Office</option>
+                <option value="Fulltime">Fulltime</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Probation">Probation</option>
               </select>
-              {isSubmitted && !data.position.trim() && (
+              {isSubmitted && !data.status.trim() && (
                   <span className="absolute right-[-25px] top-9"><MdError size={'1.3rem'} className='text-red-400'/></span>
               )}
             </div>
@@ -177,7 +177,7 @@ const ProfileRegistrationForm = () => {
                 className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.rank.trim() ? 'border-red-400' : ''}`}
                 onChange={(e) => setData({ ...data, rank: e.target.value})}
               >
-                <option value='None'>None</option>
+                <option value='None' selected>None</option>
                 {filteredRank?.map(rank => (
                   <option key={rank._id} value={rank.rankName}>{rank.rankName}</option>
                 ))}

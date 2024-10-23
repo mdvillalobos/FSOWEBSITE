@@ -3,13 +3,16 @@ import useToast from '../Helpers/useToast';
 import { useNavigate } from 'react-router-dom';
 
 const useSubmitReview = () => {
-    const { Toast } = useToast();
+    const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const submitReview = async (formID, decision, checkedReq1, checkedReq2, checkedReq3, checkedReq4, checkedReq5, checkedReq6, checkedReq7, checkedReq8, checkedReq9, checkedReq10) => {
+
+    const submitReview = async (formID, decision, checkedReq1, checkedReq2, checkedReq3, checkedReq4, checkedReq5, checkedReq6, checkedReq7, checkedReq8, checkedReq9, checkedReq10, remarks) => {
+        LoadingToast.fire({ title: 'Submitting Review..'})
         try {
             const requestBody = {
                 formID,
-                decision
+                decision,
+                remarks
             }
 
             const checkedReqs = [
@@ -23,7 +26,7 @@ const useSubmitReview = () => {
                 checkedReq8,
                 checkedReq9,
                 checkedReq10
-            ];
+            ]
             
             // Filter out null values and add them to the request body
             checkedReqs.forEach((req, index) => {
@@ -32,8 +35,9 @@ const useSubmitReview = () => {
                 }
             });
 
+
             console.log(requestBody)
-            
+
             const { data } = await axios.post('/api/checkApplication', requestBody);
 
             if(data.erro) {
@@ -43,10 +47,14 @@ const useSubmitReview = () => {
                 });
             }
             else {
-                navigate('/admin/application');
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Review submitted successfully'
+                });
+                return navigate('/admin/application');
             }
         } catch (error) {
-            console.error(`Reviw Application Error: ${ error.message }`);
+            console.log(error);
         }
     }
 

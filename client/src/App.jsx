@@ -29,6 +29,8 @@ import AdminProfile from './view/Admin/Profile.jsx';
 import AdminSurvey from './view/Admin/Report.jsx';
 import AdminApplication from './view/Admin/Application.jsx';
 import ViewApplication from './view/Admin/ViewApplication.jsx';
+import PersonalDetailsAdmin from "./view/Admin/PersonalDetailsAdmin.jsx";
+import PasswordSecurityAdmin from "./view/Admin/PasswordSecurity.jsx";
 
 //Error page
 import ErrorPage from './view/Error/ErrorPage.jsx';
@@ -44,8 +46,8 @@ import maleProfile from './assets/images/male.webp';
 import femaleProfile from './assets/images/female.webp';
 import Done from './assets/images/done.webp'
 
-/* axios.defaults.baseURL = 'http://localhost:3001'; */
-axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3001';
+/* axios.defaults.baseURL = 'https://nu-fso-54ab116ceb1f.herokuapp.com'; */
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -104,6 +106,9 @@ function App() {
           <Route exact path="/admin/report" element={ <AdminSurvey/> }/>
           <Route exact path="/admin/application" element={ <AdminApplication/> }/>
           <Route exact path='/admin/viewapplication' element={ <ViewApplication/> }/>
+
+          <Route exact path="/admin/settings/personaldetails" element={ <PersonalDetailsAdmin/> }/>
+          <Route exact path="/admin/settings/password&security" element={ <PasswordSecurityAdmin/> }/>
         </Route>
     
         {/* Error Page */}

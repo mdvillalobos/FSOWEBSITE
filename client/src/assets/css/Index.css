@@ -189,11 +189,11 @@
     }
 
     .checkBoxApprove {
-        @apply h-5 w-5 cursor-pointer accent-green-600 bg-slate-700 rounded
+        @apply h-5 w-5 cursor-pointer accent-[#0B6E4F] bg-slate-700 rounded
     }
 
     .checkBoxDecline {
-        @apply h-5 w-5 cursor-pointer accent-red-500 bg-slate-700 rounded
+        @apply h-5 w-5 cursor-pointer accent-red bg-slate-700 rounded
     }
 
     /* CREATE RANK MODAL */
@@ -203,6 +203,90 @@
 
 }
 
+/* From Uiverse.io by JaydipPrajapati1910 */ 
+.checkbox {
+    appearance: none;
+    width: 22px;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    border: 2px solid #888;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+  
+.checkbox::before {
+    font-family: "Quicksand", sans-serif;
+    position: absolute;
+    bottom: -10px;
+    left: -1px;
+    content: "✔";
+    font-size: 30px;
+    color: #05c46b;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+}
+  
+.checkbox:checked::before {
+    animation: zoom 0.5s ease-in-out;
+    transform: scale(1);
+}
+
+.wrongBox {
+    appearance: none;
+    width: 22px;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    border: 2px solid #888;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+  
+.wrongBox::before {
+    font-family: "Quicksand", sans-serif;
+    position: absolute;
+    bottom: -13px;
+    left: -3px;
+    content: "✘";
+    font-size: 30px;
+    color: #ef4444;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+}
+  
+.wrongBox:checked::before {
+    animation: zoom 0.5s ease-in-out;
+    transform: scale(1);
+}
+  
+  @keyframes zoom {
+    0% {
+      transform: scale(0);
+    }
+  
+    20% {
+      transform: scale(1.5);
+    }
+  
+    40% {
+      transform: scale(0.5);
+    }
+  
+    50% {
+      transform: scale(1);
+    }
+  
+    70% {
+      transform: scale(1.2);
+    }
+  
+    90% {
+      transform: scale(0.8);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
 
 /* table design  */
 td:first-child{
@@ -300,7 +384,6 @@ td:last-child{
     border-bottom: 15px solid #f87171; /* Color matches popover */
 }
 
-/* From Uiverse.io by Cksunandh */ 
 .triangle1 {
     width: 0;
     height: 0;
@@ -346,8 +429,6 @@ td:last-child{
     letter-spacing: 4px;
 }
 
-
-/* From Uiverse.io by ErzenXz */ 
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -374,8 +455,8 @@ td:last-child{
   
 .toggle-switch-handle {
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 2.5px;
+    left: 3.5px;
     width: 25px;
     height: 25px;
     background-color: #fff;
@@ -415,5 +496,6 @@ td:last-child{
 .toggle-switch input[type="checkbox"]:checked + .toggle-switch-background .toggle-switch-handle {
     transform: translateX(28px);
 }
+
   
   

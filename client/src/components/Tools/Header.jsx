@@ -64,7 +64,7 @@ const header = ({location}) => {
           
           {isOpen && (
             <div className="absolute top-14 right-0 bg-white shadow-md p-3 rounded-lg w-60 fade-in">
-              <Link to='/settings/personaldetails' className='dropDownItem'>
+              <Link to={user?.role === 'admin' ? '/admin/settings/personaldetails' : '/settings/personaldetails'} className='dropDownItem'>
                 <RiUserSettingsLine size={'1.1rem'} className='mr-2'/>
                 Account Settings
               </Link>

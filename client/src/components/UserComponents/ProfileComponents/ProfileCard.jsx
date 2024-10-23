@@ -28,7 +28,11 @@ const ProfileCard = () => {
         </div>
         <div className="px-2.5 mt-4 max-sm:px-0 max-sm:my-auto">
           <h1 className='text-base font-medium text-center w-full'>{user.firstName} {user.lastName}</h1>
-          <p className='mx-auto w-[180px] text-center text-white py-2 font-medium rounded-lg text-xs mt-2 bg-NuButton'>{user.rank}</p>
+          {user?.role === 'user' ? (
+            <p className='mx-auto w-[180px] text-center text-white py-2 font-medium rounded-lg text-xs mt-2 bg-NuButton'>{user.rank}</p>
+          ) : (
+            <p className='mx-auto w-[180px] text-center text-white py-2 font-medium rounded-lg text-xs mt-2 bg-NuButton'>Administrator</p>
+          )}
         </div>
       </div>
       <div className="px-6 space-y-2.5 mt-6">
@@ -40,10 +44,17 @@ const ProfileCard = () => {
           <p className='text-xs text-gray-400'>Employee ID</p>
           <p className='text-sm'>{user.employeeID}</p>
         </div>
-        <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
-          <p className='text-xs text-gray-400'>Track</p>
-          <p className='text-sm'>{user.track}</p>
-        </div>
+        {user.role === 'user' ? (
+          <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
+            <p className='text-xs text-gray-400'>Track</p>
+            <p className='text-sm'>{user.track}</p>
+          </div>
+        ) : (
+          <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
+            <p className='text-xs text-gray-400'>Position</p>
+            <p className='text-sm'>Comittee</p>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { UserContext } from '../../../../context/userContext';
 import { FocusOn } from 'react-focus-on';
 import { IoChevronBackOutline } from "react-icons/io5";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -7,7 +8,8 @@ import useAddSeminar from '../../../hooks/UserHooks/useAddSeminar';
 import useAddAchievement from '../../../hooks/UserHooks/useAddAchievement';
 
 const ProfileModal = () => {
-    const [ isOpen, setIsOpen ] = useState(false)
+    const [ isOpen, setIsOpen ] = useState(false);
+    const { user } = useContext(UserContext)
     
     const togglePop = () => {
         setIsOpen(!isOpen)
@@ -16,11 +18,15 @@ const ProfileModal = () => {
     return (
         <div className='flex justify-between w-full shadow-md bg-white rounded-xl py-4 px-5 max-sm:flex-col '>
             <p className='text-2xl font-semibold my-auto'>Personal Information</p>
-            <div className="space-x-2 max-sm:flex">
-                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Generate CV</button>
-                <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Add Info</button>
-            </div>
+            {user.role === 'user' ? (
+                <div className="space-x-2 max-sm:flex">
+                    <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Generate CV</button>
+                    <button type='button' onClick={togglePop} className='border-2 text-black py-2 border-[#93adc2] text-sm rounded-md px-8 duration-300 hover:bg-NuButtonHover hover:text-white  hover:shadow-lg hover:scale-105 max-sm:w-full'>Add Info</button>
+                </div>
+            ) : null}
+
             {isOpen ? (<FocusOn><AddInfo toggle={togglePop}/></FocusOn>) : null} 
+           
         </div>
     )
 }

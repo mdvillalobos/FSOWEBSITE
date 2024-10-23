@@ -1,12 +1,13 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState }from 'react'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import NotFound from '../../../assets/images/NotFound.webp';
 
 const ApplicationTable = ({ data }) => {
     const navigate = useNavigate();
     const [ currentPage, setCurrentPage ] = useState(1);
+
+    const trackOptions = Array.from(new Set(data?.map(rank => rank.applyingFor)));
 
     const rowsPerPage = 8;
     const totalPages = Math.ceil(data?.length / rowsPerPage);
@@ -33,7 +34,7 @@ const ApplicationTable = ({ data }) => {
     return (
         <div className="">
             <div className="flex justify-between px-8 font-Poppins">
-            <p className='font-medium text-2xl my-auto text-NuButton'>Reports</p>
+            <p className='font-medium text-2xl my-auto text-NuButton'>Applications</p>
             <div className="flex space-x-3">
                 <div className='flex space-x-2 text-sm'>
                     <button onClick={handlePrevPage} disabled={currentPage === 1} className='flex border-2 py-1 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>

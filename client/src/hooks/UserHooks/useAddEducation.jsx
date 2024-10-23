@@ -14,12 +14,6 @@ const useAddEducation = () => {
                 title: 'Required all fields!'
             })
         }
-        if(year.length > 9 || year.length < 9) {
-            return Toast.fire({
-                icon: 'error',
-                title: 'Invalid Year'
-            })
-        }
 
         LoadingToast.fire({
             title: 'Adding...'

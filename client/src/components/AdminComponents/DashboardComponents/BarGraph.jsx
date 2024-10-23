@@ -3,8 +3,8 @@ import { RankContext } from '../../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../../context/analyticsContext.jsx';
 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid  } from 'recharts';
-import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import ReactMarkdown from 'react-markdown';
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 const DashboardGraph = () => {
   const { ranks } = useContext(RankContext);
@@ -46,20 +46,20 @@ const DashboardGraph = () => {
   };
 
   return (
-    <div className='flex flex-col bg-white px-1.5 py-5 rounded-xl shadow-md w-[72vw]'>
+    <div className='flex flex-col bg-white px-1.5 py-5 rounded-lg shadow-md w-[70vw]'>
       <div className="flex justify-between mx-7 mb-2">
         <p className='text-3xl font-medium'>Analytics</p>
         <div>
-          <button  className="flex justify-center items-center border-2 py-2 px-2 w-48 text-sm rounded-md font-medium bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
+          <button  className="relative flex justify-center items-center py-2 px-2 w-56 text-sm rounded-md bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
             {selected}
             {!isOpen ? (
-              <TiArrowSortedDown size={'1.1rem'} className=''/>
+              <MdOutlineKeyboardArrowDown size={'1.1rem'} className='absolute right-2'/>
             ) : (
-              <TiArrowSortedUp size={'1.1rem'} className=''/>
+              <MdOutlineKeyboardArrowUp size={'1.1rem'} className='absolute right-2'/>
             )}
           </button>
           {isOpen && (
-            <div className="absolute w-[13vw] text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 h-80 overflow-y-auto">
+            <div className="absolute w-56 text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 h-80 overflow-y-auto">
               {ranks.map((rank) => (
                 <div
                   key={rank._id}
