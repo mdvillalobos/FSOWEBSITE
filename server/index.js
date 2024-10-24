@@ -28,7 +28,7 @@ app.use(
 /* app.use(sslRedirect.default()); */
 
 /* app.use(sslRedirect()); */
-/* app.use(helmet({
+app.use(helmet({
     hsts: {
         maxAge: 31536000, // 1 year in seconds
         includeSubDomains: true, // Apply HSTS to subdomains
@@ -78,7 +78,7 @@ app.use((req, res, next) => {
     }
     next();
 });
- */
+
 
 // middleware 
 app.use(compression());
