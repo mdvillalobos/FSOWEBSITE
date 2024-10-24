@@ -70,7 +70,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
     if (req.url.endsWith('.html')) {
         res.set('Cache-Control', 'no-store'); // Do not cache HTML pages
     } else {
@@ -78,7 +78,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-
+ */
 
 // middleware 
 app.use(compression());
