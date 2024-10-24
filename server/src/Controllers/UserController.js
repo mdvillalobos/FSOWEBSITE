@@ -24,6 +24,7 @@ export const getUserData = async (req, res) => {
                 role: userCredentials.role,
                 employeeID: userCredentials.employeeID
             };
+            console.log(userObject)
 
             return res.json(userObject);
         }
