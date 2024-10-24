@@ -12,13 +12,13 @@ const ApplicationTable = ({ data }) => {
     const [ selected, setSelected ] = useState()
 
     const rankArray = Array.from(new Set(ranks?.map(rank => rank.rankName)));
+    console.log(rankArray)
 
     useEffect(() => {
       if (ranks) {
         setSelected(rankArray.length > 0 ? rankArray[0] : null);
       }
     }, [ranks]);
-
 
     const rowsPerPage = 8;
     const totalPages = Math.ceil(data?.length / rowsPerPage);
@@ -47,15 +47,13 @@ const ApplicationTable = ({ data }) => {
             <div className="flex justify-between px-8 font-Poppins">
             <p className='font-medium text-2xl my-auto text-NuButton'>Applications</p>
             <div className="flex space-x-3">
-              <div className="flex flex-col">
-                <div className="">
-                  <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}> {selected}</button>
-                </div>
+              <div className="relative">
+                <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}> {selected}</button>
                 {isOpen ? (
-                  <div className='border-2 p-4'>
-                    {rankArray.map(rank => {
-                    <button>{rank}</button>
-                    })}
+                  <div className='absolute flex flex-col w-56 text-xs z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg '>
+                    {rankArray.map(rank => (
+                      <button key={rank} className='text-left cursor-pointer py-2 px-4 hover:bg-[#41518d] hover:text-white duration-200'>{rank}</button>
+                    ))}
                   </div>
                 )
                 : null } 
