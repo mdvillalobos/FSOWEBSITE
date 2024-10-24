@@ -42,7 +42,6 @@ const useLogin = () => {
             }
     
             else {
-                console.log(data.data)
                 await Promise.all([
                     getProfileOnLogin(),
                     fetchRanksOnLogin(),
