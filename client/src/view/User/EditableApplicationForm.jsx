@@ -12,7 +12,7 @@ const EditableApplicationForm = () => {
             <Header location={ files?.applyingFor }/>
             <div className="px-16 py-2">
               <BackBtn from ={from}/>
-                <div className='bg-white py-8 px-10 mx-36 shadow-md rounded-xl overflow-hidden'>
+                <div className='bg-white py-8 px-10 mx-36 border-2 rounded-xl overflow-hidden'>
                     <EditableForm 
                         files = { files }
                         from = { from }

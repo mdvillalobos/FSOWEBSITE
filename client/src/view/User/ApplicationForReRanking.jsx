@@ -37,7 +37,7 @@ const ApplicationForReRanking = () => {
                 <Header location={'Application For Re-Ranking'}/>
                 <div className="px-16 py-2 max-sm:px-8">
                     <BackBtn/>
-                    <div className="font-Poppins py-5 px-8 shadow-md rounded-xl bg-white max-sm:px-6">
+                    <div className="font-Poppins py-5 px-8 border-2 rounded-xl bg-white max-sm:px-6">
                         {data ? (
                             <DisabledPage rest={data}/>
                         ) : (

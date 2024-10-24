@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import useEditName from '../../hooks/UserHooks/useUpdateName.jsx';
 import useUpdateProfilePicture from '../../hooks/UserHooks/useUpdateProfilePicture.jsx';
 import useUpdateOtherInformation from '../../hooks/UserHooks/useUpdateOtherInformation.jsx';

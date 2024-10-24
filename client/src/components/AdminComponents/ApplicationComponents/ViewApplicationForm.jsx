@@ -108,13 +108,14 @@ const ViewApplicationForm = ({ rest }) => {
                 <div className='py-4'>
                     <h1 className='text-base font-semibold text-[#35408E] mb-4'>Qualification</h1>
                     <div>
-                        {rest?.requirements?.map((data, i) => {
-                            const requirement = selectedRank?.requirements[i];
+                        {selectedRank?.requirements?.map((data, i) => {
+                            const filePath = rest?.requirements[i] ? rest?.requirements[i].filePath : null
+                            const fileName = rest?.requirements[i] ? rest?.requirements[i].fileName : null
                             return <div key={data._id}>
                                 <ApplicationInput
-                                    requirement={requirement?.requirement}
-                                    filePath={data?.filePath}
-                                    fileName={data?.fileName}
+                                    requirement={data?.requirement}
+                                    filePath={filePath}
+                                    fileName={fileName}
                                     checkedValue={stateValues[i].value}
                                     setCheckedValue={stateValues[i].setValue}
                                 />

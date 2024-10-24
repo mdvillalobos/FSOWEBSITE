@@ -38,7 +38,7 @@ const Report = () => {
                     <Header location={'Weekly Report'}/>
                     <div className="px-16 py-2 max-sm:px-8">
                         <BackBtn/>
-                        <div className='bg-white py-6 rounded-xl shadow-md overflow-hidden h-[80vh]'>
+                        <div className='bg-white py-6 rounded-xl border-2 overflow-hidden h-[80vh]'>
                             <Table data={data}/>
                         </div>
                     </div>

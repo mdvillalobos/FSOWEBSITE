@@ -19,8 +19,8 @@ const PieGraph = () => {
     } */
         const labelColor = '#FFFFFF';
     return (
-        <div className='bg-white px-6 py-5 rounded-xl shadow-md'>
-            <p className='text-2xl font-medium mb-6'>Total Applications</p>
+        <div className='bg-white px-5 py-4 rounded-2xl border-2'>
+            <p className='text-xl font-medium mb-4'>Total Applications</p>
             <div className="flex">
                 <PieChart
                     colors={['#9DB6C9', '#324E66']}

@@ -16,7 +16,7 @@ const ProfileModal = () => {
     }
 
     return (
-        <div className='flex justify-between w-full shadow-md bg-white rounded-xl py-4 px-5 max-sm:flex-col '>
+        <div className='flex justify-between w-full border-2 bg-white rounded-xl py-4 px-5 max-sm:flex-col '>
             <p className='text-2xl font-semibold my-auto'>Personal Information</p>
             {user.role === 'user' ? (
                 <div className="space-x-2 max-sm:flex">

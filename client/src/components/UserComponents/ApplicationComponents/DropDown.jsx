@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { FocusOn } from 'react-focus-on';
 import { useNavigate } from 'react-router-dom';
 import { RankContext } from '../../../../context/rankContext';
 import { UserContext } from '../../../../context/userContext';
-import ReactMarkdown from 'react-markdown';
 import { RiArrowDropDownLine,  RiArrowDropUpLine } from "react-icons/ri";
+import ReactMarkdown from 'react-markdown';
 import FileDetect from './FileDetect';
-import { FocusOn } from 'react-focus-on';
 
 const Requirements = ({ from }) => {
   const navigate = useNavigate();

@@ -11,7 +11,7 @@ const PageHolder = () => {
   const [ active, setActive ] = useState('About')
 
   return (
-    <div className='bg-white shadow-md rounded-xl w-[70vw] min-h-[65vh] max-sm:w-full'>
+    <div className='bg-white border-2 rounded-xl w-[70vw] min-h-[65vh] max-sm:w-full'>
       <div className="flex justify-between py-4 px-4 border-b-2">
         <div className=" space-x-2 max-sm:space-x-1">
           <button type='button' onClick={() => setActive('About')} className={`profileNav ${active === 'About' ? 'profileActive' : 'text-gray-500'}`}>About</button>

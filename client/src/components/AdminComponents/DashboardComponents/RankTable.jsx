@@ -38,7 +38,7 @@ const RankTable = () => {
     };
 
     return (
-        <div className='shadow-md bg-white rounded-xl px-7 p-5 w-full space-y-4'>
+        <div className='border-2 bg-white rounded-2xl px-8 p-5 w-[67vw] space-y-4'>
             <div className="flex justify-between">
                 <p className='text-2xl font-medium'>Ranks</p>
                 <div className="flex text-sm space-x-2">
@@ -75,7 +75,7 @@ const RankTable = () => {
                 </div>
             </div>
             <div className="h-[25vh]">
-                <table className='w-full text-sm'>
+                <table className='w-full text-sm '>
                     <thead>
                         <tr >
                             <th className='font-normal pb-2 text-left'>Rank Name</th>
@@ -87,8 +87,8 @@ const RankTable = () => {
                          {currentRows?.length > 0 ? (
                             currentRows.map(i => (
                                 <tr key={i._id}>
-                                    <td className='w-[18vw] py-2'>{i.rankName}</td>
-                                    <td className='w-80 py-2'>{i.track}</td>
+                                    <td className='w-[30vw] py-2'>{i.rankName}</td>
+                                    <td className='w-[28vw] py-2'>{i.track}</td>
                                     <td className='py-2 flex space-x-2'>
                                        <button><FiEdit/></button>
                                        <button><MdOutlineDelete/></button>

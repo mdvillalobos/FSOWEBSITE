@@ -5,7 +5,7 @@ import { UserContext } from '../../../context/userContext';
 import useToast from '../Helpers/useToast.jsx';
 
 const useLogout = () => {
-    const { setUser, setRole } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const { Toast } = useToast();
     

@@ -4,7 +4,6 @@ import PersonalInformation from '../../ReRankingFormComponents/PersonalInformati
 import SubmittedFields from './SubmittedFields.jsx';
 import { RankContext } from '../../../../context/rankContext.jsx';
 
-
 const ViewSubmitted = ({ rest }) => {
     const { ranks } = useContext(RankContext);
 

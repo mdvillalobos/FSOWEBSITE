@@ -35,7 +35,7 @@ const Survey = () => {
                     <Header location={'Weekly Report'}/>
                     <div className="px-16 py-2">
                         <BackBtn/>
-                        <div className='bg-white py-6 rounded-xl shadow-md overflow-hidden h-[80vh]'>
+                        <div className='bg-white py-6 rounded-xl border-2 overflow-hidden h-[80vh]'>
                             <ReportTable data={data}/>
                         </div>
                     </div>

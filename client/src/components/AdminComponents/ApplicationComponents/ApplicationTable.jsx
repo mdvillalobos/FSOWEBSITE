@@ -1,13 +1,24 @@
-import React, { useState }from 'react'
+import React, { useState, useEffect, useContext }from 'react'
 import { useNavigate } from 'react-router-dom';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
 import NotFound from '../../../assets/images/NotFound.webp';
+import { RankContext } from '../../../../context/rankContext';
 
 const ApplicationTable = ({ data }) => {
     const navigate = useNavigate();
+    const { ranks } = useContext(RankContext)
     const [ currentPage, setCurrentPage ] = useState(1);
+    const [ isOpen, setIsOpen ] = useState(false);
+    const [ selected, setSelected ] = useState()
 
-    const trackOptions = Array.from(new Set(data?.map(rank => rank.applyingFor)));
+    const rankArray = Array.from(new Set(ranks?.map(rank => rank.rankName)));
+
+    useEffect(() => {
+      if (ranks) {
+        setSelected(rankArray.length > 0 ? rankArray[0] : null);
+      }
+    }, [ranks]);
+
 
     const rowsPerPage = 8;
     const totalPages = Math.ceil(data?.length / rowsPerPage);
@@ -36,17 +47,30 @@ const ApplicationTable = ({ data }) => {
             <div className="flex justify-between px-8 font-Poppins">
             <p className='font-medium text-2xl my-auto text-NuButton'>Applications</p>
             <div className="flex space-x-3">
-                <div className='flex space-x-2 text-sm'>
-                    <button onClick={handlePrevPage} disabled={currentPage === 1} className='flex border-2 py-1 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
-                        <RiArrowLeftDoubleFill className='my-auto ml-1' size={'1.3rem'}/>
-                        <span className='mr-2 ml-1 my-auto'>Prev</span>
-                    </button>
-                    <span className='border-2 py-1.5 px-4 rounded-md'>{currentPage} of {totalPages}</span>
-                    <button onClick={handleNextPage} disabled={currentPage === totalPages} className='flex border-2 py-1 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
-                        <span className='ml-2 mr-1 my-auto'>Next</span>
-                        <RiArrowRightDoubleFill  className='my-auto mr-2' size={'1.3rem'}/>
-                    </button>
+              <div className="flex flex-col">
+                <div className="">
+                  <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}> {selected}</button>
                 </div>
+                {isOpen ? (
+                  <div className='border-2 p-4'>
+                    {rankArray.map(rank => {
+                    <button>{rank}</button>
+                    })}
+                  </div>
+                )
+                : null } 
+              </div>
+              <div className='flex space-x-2 text-sm'>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1} className='flex border-2 py-1 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
+                      <RiArrowLeftDoubleFill className='my-auto ml-1' size={'1.3rem'}/>
+                      <span className='mr-2 ml-1 my-auto'>Prev</span>
+                  </button>
+                  <span className='border-2 py-1.5 px-4 rounded-md'>{currentPage} of {totalPages}</span>
+                  <button onClick={handleNextPage} disabled={currentPage === totalPages} className='flex border-2 py-1 px-2 rounded-md cursor-pointer duration-300 hover:bg-gray-300'>
+                      <span className='ml-2 mr-1 my-auto'>Next</span>
+                      <RiArrowRightDoubleFill  className='my-auto mr-2' size={'1.3rem'}/>
+                  </button>
+              </div>
             </div>
           </div>
           <div className="w-full font-Poppins my-6 h-full">

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { RankContext } from '../../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../../context/analyticsContext.jsx';
 
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid  } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Rectangle } from 'recharts';
 import ReactMarkdown from 'react-markdown';
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 
@@ -24,14 +24,14 @@ const DashboardGraph = () => {
         declined: data.declined
       }))
     : [];
-  
+
+
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const { rankName, requirement, declined, approved } = payload[0].payload;
       return (
         <div className="custom-tooltip">
-          <div className="bg-gray-200 w-[33vw] px-5 p-4 text-sm space-y-1.5 rounded-lg" >
-            <p>{rankName}</p>
+          <div className="bg-white bg-opacity-50 backdrop-blur-md w-[33vw] px-5 p-4 text-sm space-y-1.5 rounded-lg shadow-lg" >
             <ReactMarkdown >{requirement}</ReactMarkdown>
             <div>
               <p className="font-medium">Approved: {approved}</p>
@@ -46,11 +46,11 @@ const DashboardGraph = () => {
   };
 
   return (
-    <div className='flex flex-col bg-white px-1.5 py-5 rounded-lg shadow-md w-[70vw]'>
-      <div className="flex justify-between mx-7 mb-2">
-        <p className='text-3xl font-medium'>Analytics</p>
+    <div className='flex flex-col border-2 bg-white rounded-xl px-1.5 py-5 w-[67vw]'>
+      <div className="flex justify-between mx-6 mb-2">
+        <p className='text-2xl font-medium tracking-tight'>Rank Summary</p>
         <div>
-          <button  className="relative flex justify-center items-center py-2 px-2 w-56 text-sm rounded-md bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
+          <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}>
             {selected}
             {!isOpen ? (
               <MdOutlineKeyboardArrowDown size={'1.1rem'} className='absolute right-2'/>
@@ -73,18 +73,19 @@ const DashboardGraph = () => {
           )}
         </div>
       </div>
-      <div className="mr-10 text-xs select-none z-0">
+      <div className="text-xs ml-5 mr-0 select-none z-0">
         <ResponsiveContainer  width="100%" height={250}>
           <BarChart
-            data={chartData}
+            data={chartData.length > 0 ? chartData : [{ requirementNumber: "", approved: 0, declined: 0 }]}
             margin={{ top: 20 }}
           >
-            <CartesianGrid vertical={false} stroke="#ECECEC" />
-            <XAxis dataKey='requirementNumber' stroke="none" tick={{ fill: '#6a6a6a', dy: 5, }} />
-            <YAxis domain={[0, chartData.length + 3]} stroke="none" tick={{ fill: '#6a6a6a' }}  />
+            <CartesianGrid vertical={false} stroke="#ECECEC"/>
+            <XAxis dataKey='requirementNumber'axisLine={{ stroke: "#41518d", strokeWidth: 1 }} tick={{ fill: '#6a6a6a', dy: 5, }} />
+            <YAxis orientation="right" domain={[0, chartData.length + 3]} stroke="#ECECEC" tick={{ fill: '#6a6a6a' }}  padding={{ bottom: 0.5 }} tickLine={false} tickMargin={0}/>
             <Tooltip content={<CustomTooltip />} /* position={{ x: 170, y: 0 }} */ />
-            <Bar dataKey="approved" fill="#9DB6C9" radius={[ 5, 5, 5, 5 ]} />
-            <Bar dataKey="declined" fill="#324E66" radius={[ 5, 5, 5, 5 ]} />
+
+            <Bar dataKey="approved" fill="#9DB6C9" />
+            <Bar dataKey="declined" fill="#324E66" />
             <Legend  />
           </BarChart>
         </ResponsiveContainer>

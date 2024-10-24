@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IoChevronBackOutline } from "react-icons/io5";
 import Dropdown from '../ApplicationComponents/DropDown.jsx';
-import Instruction from '../ApplicationComponents/Instruction.jsx';
 
 const ControlPanel = () => {
     const [seen, setSeen] = useState(false)

@@ -12,7 +12,7 @@ const ViewSubmittedForm = () => {
             <Header location={ myForm?.applyingFor }/>
             <div className="px-16 py-2">
               <Return from ={'Application For Re-Ranking'}/>
-                <div className='bg-white py-8 px-10 mx-36 shadow-md rounded-xl overflow-hidden'>
+                <div className='bg-white py-8 px-10 mx-36 border-2 rounded-xl overflow-hidden'>
                     <ViewSubmitted 
                         rest = { myForm }
                     />

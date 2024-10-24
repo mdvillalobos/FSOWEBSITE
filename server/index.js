@@ -28,7 +28,7 @@ app.use(
 /* app.use(sslRedirect.default()); */
 
 /* app.use(sslRedirect()); */
-app.use(helmet({
+/* app.use(helmet({
     hsts: {
         maxAge: 31536000, // 1 year in seconds
         includeSubDomains: true, // Apply HSTS to subdomains
@@ -36,11 +36,11 @@ app.use(helmet({
     },
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'"], // Allow resources from the same origin
-            scriptSrc: ["'self'", "'sha256-JgpphxtupW+atTkR3NtSLqsE7EdOykRMk5Dv+tMhcpY='", "https://cdnjs.cloudflare.com"], // Allow scripts from the same origin and trusted CDN
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"], // Allow styles from the same origin and inline styles
-            imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "blob:", "data:"], // Allow images from the same origin, data URIs, and a trusted source
-            connectSrc: ["'self'"], // Allow connections to your own server and a trusted API
+            defaultSrc: ["'self'"], 
+            scriptSrc: ["'self'", "'sha256-JgpphxtupW+atTkR3NtSLqsE7EdOykRMk5Dv+tMhcpY='", "https://cdnjs.cloudflare.com"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "blob:", "data:"],
+            connectSrc: ["'self'"], 
             scriptSrcAttr: ["'self'", "'unsafe-inline'"],
             frameSrc: ["'self'","https://res.cloudinary.com/duochblgz/", "data:"]
         }
@@ -61,15 +61,24 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    res.setHeader('Referrer-Policy', 'no-referrer'); // Change this based on your needs
+    res.setHeader('Referrer-Policy', 'no-referrer'); 
     next();
 });
 
 app.use((req, res, next) => {
-    res.setHeader('Permissions-Policy', 'geolocation=(self), camera=(), microphone=()'); // Adjust as needed
+    res.setHeader('Permissions-Policy', 'geolocation=(self), camera=(), microphone=()'); 
     next();
 });
 
+app.use((req, res, next) => {
+    if (req.url.endsWith('.html')) {
+        res.set('Cache-Control', 'no-store'); // Do not cache HTML pages
+    } else {
+        res.set('Cache-Control', 'public, max-age=31536000'); // Cache static assets for 1 year
+    }
+    next();
+});
+ */
 
 // middleware 
 app.use(compression());

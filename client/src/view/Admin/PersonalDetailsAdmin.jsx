@@ -10,7 +10,7 @@ const PersonalDetailsAdmin = () => {
             <Header location={'Account Settings'}/>
             <div className="px-16 py-2 max-sm:px-8">
                 <Back/>
-                <div className="flex bg-white font-Poppins py-6 shadow-md rounded-xl">
+                <div className="flex bg-white font-Poppins py-6 border-2 rounded-xl">
                     <SettingNav/>
                     <PersonalDetailsForm/>
                 </div>
