@@ -10,12 +10,13 @@ export const getUserData = async (req, res) => {
     const { token } = req.cookies;
 
     if(!token) {
-        return res.json('tae');
+        return res.json(null);
     }
 
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await Account.findOne({ email });
+        console.log(userCredentials);
 
         if (userCredentials) {
             const userObject = {
