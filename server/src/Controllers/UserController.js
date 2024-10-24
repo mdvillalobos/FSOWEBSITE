@@ -10,7 +10,7 @@ export const getUserData = async (req, res) => {
     const { token } = req.cookies;
 
     if(!token) {
-        return res.json(null);
+        return res.json('tae');
     }
 
     try {
