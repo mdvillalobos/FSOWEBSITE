@@ -89,6 +89,7 @@ app.use('/requirements', express.static(path.join(__dirname, 'requirements')));
 app.use('/', apiRoutes);
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
+console.log(__dirname)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
