@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext }from 'react'
 import { useNavigate } from 'react-router-dom';
 import { RiArrowLeftDoubleFill, RiArrowRightDoubleFill } from "react-icons/ri";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import NotFound from '../../../assets/images/NotFound.webp';
 import { RankContext } from '../../../../context/rankContext';
 
@@ -12,19 +13,14 @@ const ApplicationTable = ({ data }) => {
     const [ selected, setSelected ] = useState()
 
     const rankArray = Array.from(new Set(ranks?.map(rank => rank.rankName)));
-    console.log(rankArray)
-
-    useEffect(() => {
-      if (ranks) {
-        setSelected(rankArray.length > 0 ? rankArray[0] : null);
-      }
-    }, [ranks]);
-
+    const filterByRank = data?.filter(rank =>
+      selected ? rank.applyingFor === selected : true
+  );
     const rowsPerPage = 8;
     const totalPages = Math.ceil(data?.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+    const currentRows = filterByRank?.slice(indexOfFirstRow, indexOfLastRow);
   
     const handleNextPage = () => {
       if (currentPage < totalPages) {
@@ -48,11 +44,24 @@ const ApplicationTable = ({ data }) => {
             <p className='font-medium text-2xl my-auto text-NuButton'>Applications</p>
             <div className="flex space-x-3">
               <div className="relative">
-                <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}> {selected}</button>
+                <button className="relative flex justify-center items-center py-1.5 px-2 w-56 text-sm rounded-lg border-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}>
+                  {!selected ? 'All' : selected}
+                    {!isOpen ? (
+                      <TiArrowSortedDown size={'1rem'} className='absolute right-1 top-[8px]'/>
+                  ) : (
+                    <TiArrowSortedUp size={'1rem'} className='absolute right-1 top-[8px]'/>
+                  )}
+                </button>
                 {isOpen ? (
-                  <div className='absolute flex flex-col w-56 text-xs z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg '>
+                  <div className='text-center flex flex-col absolute w-56 text-sm mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 h-80 overflow-y-auto'>
+                     <div
+                          onClick={() => {setSelected(), setIsOpen(!isOpen)}}
+                          className="cursor-pointer py-2 px-4 hover:bg-[#41518d] hover:text-white duration-200"
+                      >
+                          All
+                      </div>
                     {rankArray.map(rank => (
-                      <button key={rank} className='text-left cursor-pointer py-2 px-4 hover:bg-[#41518d] hover:text-white duration-200'>{rank}</button>
+                      <div key={rank} onClick={() => {setSelected(rank), setIsOpen(!isOpen)}}className='cursor-pointer py-2 px-4 hover:bg-[#41518d] hover:text-white duration-200'>{rank}</div>
                     ))}
                   </div>
                 )
@@ -81,7 +90,7 @@ const ApplicationTable = ({ data }) => {
               <p className='w-[16%] py-3 px-4'>Applying For</p>
             </div>
             <div className="w-full">
-              {data?.length !== 0 ? (
+              {filterByRank?.length !== 0 ? (
                 currentRows?.map(i=> (
                   <div key={i._id} onClick={() => handleView(i)} className='flex cursor-pointer duration-200 hover:shadow-md text-sm text-gray-600 px-6 border-y'>
                     <p className='w-[18%] py-4 px-4'>{i.name}</p>

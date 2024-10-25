@@ -157,7 +157,7 @@ export const registerProfile = async (req, res) => {
         return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite: 'none' }).json({ message: 'Profile Registered Successfully', });
  
     } catch (error) {
-        console.log(error);
+        console.error(`Profile Registration Error ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

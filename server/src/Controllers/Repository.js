@@ -68,7 +68,7 @@ export const updateRepository = async (req, res) => {
         return res.json({ message: 'Updated Successfully'});
 
     } catch (error) {
-        console.log(error);
+        console.error(`Updating Repository Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

@@ -4,6 +4,8 @@ import Account from '../Models/Account.js';
 import Reports from '../Models/Reports.js';
 import Ranks from '../Models/Ranks.js';
 import ApplicationForms from '../Models/ApplicationForms.js';
+import Configuration from '../Models/Config.js';
+import { compareHashed } from '../Helpers/Auth.js';
 
 dotenv.config();
 export const getAllReports = async (req, res) => {
@@ -14,6 +16,68 @@ export const getAllReports = async (req, res) => {
 
     catch (error) {
         console.error(`Fetching Reports Error: ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
+    }
+}
+
+export const updateConfig = async (req, res) => {
+    const { token } = req.cookies;
+    const { password, id, academicYear, isPageOpen } = req.body;
+
+    try {
+        const { email } = jwt.verify(token, process.env.JWT_SECRET)
+        const userData = await Account.findOne({ email });
+        const isPasswordCorrect = await compareHashed(password, userData.password);
+
+        if(!isPasswordCorrect) {
+            return res.json({ error: 'Incorrect password!'});
+        }
+
+        if(id) {
+            await Configuration.updateOne({ _id: id}, { $set: { academicYear: academicYear, isPageOpen: isPageOpen}});
+            return res.json({ meesage: 'Configuration Successfully Updated'})
+        }
+        else {
+            await Configuration.create({ academicYear: academicYear, isPageOpen, isPageOpen });
+            return res.json({ message: 'Configuration Successfully Added.'})
+        }
+    }
+    catch(error) {
+        console.error(`Updating System Configuration Error ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
+
+    }
+}
+
+export const getConfigurations = async (req, res) => {
+    try {
+        const configuration = await Configuration.find();
+        return res.json(configuration)
+    } catch (error) {
+        console.error(`Fetching Configuration Error ${ error.message }`);
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
+    }
+}
+
+export const addCommittee = async (req, res) => {
+    const { token } = req.cookies;
+    const { committeeEmail, approverRole } = req.body;
+
+    try {
+        const { email } = jwt.verify(token, process.env.JWT_SECRET)
+        const userData = await Account.findOne({ email });
+        const isPasswordCorrect = await compareHashed(password, userData.password);
+
+        if(!isPasswordCorrect) {
+            return res.json({ error: 'Incorrect password!'});
+        }
+
+        if(isPasswordCorrect) {
+            await Account.updateOne({ email: committeeEmail }, { $set: { approver: approverRole }})
+        }
+    }
+    catch(error) {
+        console.error(`Adding Committee Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!'});
     }
 }

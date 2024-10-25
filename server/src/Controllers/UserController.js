@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import Account from '../Models/Account.js';
 import Reports from '../Models/Reports.js';
 import Credentials from '../Models/Credentials.js';
-import ApplicationForms from '../Models/ApplicationForms.js';
 
 export const getUserData = async (req, res) => {
     const { token } = req.cookies;
@@ -16,7 +15,6 @@ export const getUserData = async (req, res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await Account.findOne({ email });
-        console.log(userCredentials);
 
         if (userCredentials) {
             const userObject = {
@@ -25,8 +23,6 @@ export const getUserData = async (req, res) => {
                 role: userCredentials.role,
                 employeeID: userCredentials.employeeID
             };
-            console.log(userObject)
-
             return res.json(userObject);
         }
 

@@ -11,7 +11,6 @@ export const checkUserEntry = async (req, res) => {
 
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(email)
         const userEntry = await ApplicationForms.findOne({ email: email, purpose: 'application' });
         return res.json(userEntry)
         
@@ -156,17 +155,5 @@ export const countData = async (req, res) => {
     catch (error) {
         console.error(`Fetching Data Analytics isApproved Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' })
-    }
-}
-
-export const submit = async (req,res) => {
-    const { token } = req.cookies;
-
-    try {
-        console.log(req.body)
-        console.log(req.files)
-    }
-    catch(error) {
-        console.log(error)
     }
 }

@@ -7,7 +7,7 @@ import { RankContext } from '../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../context/analyticsContext.jsx';
 
 const useLogin = () => {
-    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { fetchApplicationConfigOnLogin } = useContext(RankContext);
     const { getDataOnLogin } = useContext(AnalyticsContext);
     const { getProfileOnLogin } = useContext(UserContext);
     const { Toast, LoadingToast } = useToast();
@@ -44,7 +44,7 @@ const useLogin = () => {
             else {
                 await Promise.all([
                     getProfileOnLogin(),
-                    fetchRanksOnLogin(),
+                    fetchApplicationConfigOnLogin(),
                     getDataOnLogin()
                 ]);
                 LoadingToast.close();

@@ -5,8 +5,8 @@ import { login, register, verifyEmail, registerProfile, forgotPassword, resetPas
 import { getUserData, addEducation, addSeminar, addAchievement, getUserCredentials, getUserReports, submitReport } from '../Controllers/UserController.js';
 import { getUserRepository, getUserFileInRepository, updateRepository, deleteRepository } from '../Controllers/Repository.js';
 import { changePassword, updateName,  updateOtherInfo, updateProfilePicture } from '../Controllers/SettingController.js'
-import { getAllReports, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
-import { checkUserEntry, submitApplicationEntry, checkApplication , countData, submit } from '../Controllers/ApplicationController.js';
+import { getAllReports, updateConfig, getConfigurations, getRanks, createRank, getAllApprovers, getApplicationsForReRanking } from '../Controllers/AdminController.js';
+import { checkUserEntry, submitApplicationEntry, checkApplication , countData } from '../Controllers/ApplicationController.js';
 
 import authorizationMiddleware from '../Middleware/authorizationMiddleware.js';
 import { upload, multerErrorHandler } from'../Middleware/uploadMiddleware.js';
@@ -60,7 +60,6 @@ router.get('/api/getreport', authorizationMiddleware('user'), getUserReports);
 //Application for re-ranking
 router.get('/api/getEntry', authorizationMiddleware('user'), checkUserEntry);
 router.get('/api/getAllRank', getRanks);
-router.post('/api/submitApp',uploadFiles, submit)
 
 //admin 
 router.get('/api/getAllReports', authorizationMiddleware('admin'), getAllReports);
@@ -69,6 +68,8 @@ router.get('/api/getApplications', authorizationMiddleware('admin'), getApplicat
 router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/checkApplication', authorizationMiddleware('admin'), checkApplication);
 router.get('/api/getDataAnalytics', authorizationMiddleware('admin'), countData);
+router.post('/api/updateConfig', authorizationMiddleware('admin'), updateConfig)
+router.get('/api/getConfiguration', authorizationMiddleware('admin'), getConfigurations)
 
 router.post('/api/submitApplicationEntry',uploadFiles, multerErrorHandler, submitApplicationEntry);
 

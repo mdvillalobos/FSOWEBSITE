@@ -5,23 +5,35 @@ export const RankContext = createContext({});
 
 export const RankContextProvider = ({ children }) => {
     const [ ranks, setRanks ] = useState(null);
+    const [ config, setConfig ] = useState(null)
     
-    const getRank = async () => {
-        await axios.get('/api/getAllRank')
-        .then(response => setRanks(response.data))
-        .catch(error => console.error(`Fetching Ranks Error: ${ error.message }`))
+    const getApplicationConfig = async () => {
+        try {
+            const [ getProfile, getConfiguration ] = await Promise.all([
+                axios.get('/api/getAllRank'),
+                axios.get('/api/getConfiguration')
+            ]);
+            
+            setRanks(getProfile.data);
+            setConfig(getConfiguration.data)
+
+        } catch (error) {
+            console.error(`Fetching Application Configurations Error: ${ error.message }`);
+            setRanks(null);
+            setConfig(null);
+        }
     };
 
     useEffect(() => {
-        getRank();
+        getApplicationConfig();
     }, [])
 
-    const fetchRanksOnLogin = async () => {
-        await getRank();
+    const fetchApplicationConfigOnLogin = async () => {
+        await getApplicationConfig();
     };
 
     return (
-        <RankContext.Provider value={{ ranks, setRanks, fetchRanksOnLogin}}>
+        <RankContext.Provider value={{ ranks, setRanks, config, setConfig, fetchApplicationConfigOnLogin}}>
             {children}
         </RankContext.Provider>
     )

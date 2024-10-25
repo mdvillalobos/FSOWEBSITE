@@ -12,7 +12,7 @@ const ViewApplication = () => {
         <div className='bg-[#f4f7fa] h-full'>
             <Header/>
             <div className="px-14 pt-2 pb-4">
-                <BackBtn/>
+                <BackBtn from={'view'}/>
                 <div className='bg-white py-4 px-8 mx-auto shadow-md rounded-xl overflow-hidden w-[70vw]'>
                     <ViewApplicationForm rest={ data }/>
                 </div>
