@@ -5,7 +5,6 @@ import helmet from 'helmet';
 import sslRedirect from 'heroku-ssl-redirect';
 import { mongoose } from 'mongoose';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import path from 'path';
