@@ -20,7 +20,7 @@ const __dirname = dirname(__filename);
 //cors 
 app.use(
     cors({
-        origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:5173' ],
+        origin: ['https://nu-fso-54ab116ceb1f.herokuapp.com', 'http://localhost:3001' ],
         credentials: true
 }));
 
