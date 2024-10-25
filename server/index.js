@@ -15,7 +15,7 @@ const app = express();
 
 import apiRoutes from './src/Routes/ApiRoutes.js';
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 //cors 
 app.use(
@@ -88,9 +88,9 @@ app.use('/requirements', express.static(path.join(__dirname, 'requirements')));
 // router 
 app.use('/', apiRoutes);
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '/client/dist')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
 
