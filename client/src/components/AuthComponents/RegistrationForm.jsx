@@ -142,8 +142,8 @@ const registrationForm = () => {
                 ) : null}
 
                 <div className={`flex w-full text-[0.8rem] mt-4 mx-1 space-x-2 ${shake.isChecked ? 'shake' : ''}`}>
-                    <input type="checkbox" value='Approved' checked={ isChecked === 'Approved' } onChange={(e) => setIsChecked(e.target.checked ? e.target.value : '')}/>
-                    <span className='my-auto'>I have read and agree to the <button type='button' onClick={() => setIsOpen(!isOpen)}className='text-NuButton hover:underline duration-200'> Terms and Conditions</button></span>
+                    <input type="checkbox" name='approved' id="approved" value='Approved' checked={ isChecked === 'Approved' } onChange={(e) => setIsChecked(e.target.checked ? e.target.value : '')}/>
+                    <label htmlFor="approved" className='my-auto'>I have read and agree to the <button type='button' onClick={() => setIsOpen(!isOpen)}className='text-NuButton hover:underline duration-200'> Terms and Conditions</button></label>
                 </div>
 
                 {isOpen ? <TermsAndCondition toggle={() => setIsOpen(!isOpen)} /> : null}
