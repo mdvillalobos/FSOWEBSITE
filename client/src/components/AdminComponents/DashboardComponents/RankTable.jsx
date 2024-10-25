@@ -75,7 +75,7 @@ const RankTable = () => {
                 </div>
             </div>
             <div className="h-[25vh]">
-                <table className='w-full text-sm '>
+                <table className='w-full text-sm'>
                     <thead>
                         <tr >
                             <th className='font-normal pb-2 text-left'>Rank Name</th>
@@ -90,8 +90,8 @@ const RankTable = () => {
                                     <td className='w-[30vw] py-2'>{i.rankName}</td>
                                     <td className='w-[28vw] py-2'>{i.track}</td>
                                     <td className='py-2 flex space-x-2'>
-                                       <button><FiEdit/></button>
-                                       <button><MdOutlineDelete/></button>
+                                       <button className='hover:underline'>Edit</button>
+                                       <button className='hover:underline'>Delete</button>
                                     </td>
                                 </tr>
                             ))

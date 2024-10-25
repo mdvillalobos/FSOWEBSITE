@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 //cors 
 app.use(
     cors({
-        origin: ['https://nufso.onrender.com', 'http://localhost:3001' ],
+        origin: ['https://nufso.onrender.com', 'http://localhost:5173' ],
         credentials: true
 }));
 

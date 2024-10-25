@@ -37,21 +37,21 @@ const ProfileCard = () => {
       </div>
       <div className="px-6 space-y-2.5 mt-6">
         <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
-          <p className='text-xs text-gray-400'>Email</p>
+          <p className='text-xs text-gray-500'>Email</p>
           <p className='text-sm'>{user.email}</p>
         </div>
         <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
-          <p className='text-xs text-gray-400'>Employee ID</p>
+          <p className='text-xs text-gray-500'>Employee ID</p>
           <p className='text-sm'>{user.employeeID}</p>
         </div>
         {user.role === 'user' ? (
           <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
-            <p className='text-xs text-gray-400'>Track</p>
+            <p className='text-xs text-gray-500'>Track</p>
             <p className='text-sm'>{user.track}</p>
           </div>
         ) : (
           <div className="border-2 bg-[#f9fafc] rounded-xl px-4 py-2 space-y-1">
-            <p className='text-xs text-gray-400'>Position</p>
+            <p className='text-xs text-gray-500'>Position</p>
             <p className='text-sm'>Comittee</p>
           </div>
         )}
