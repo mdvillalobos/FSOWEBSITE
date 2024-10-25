@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import http2 from 'http2'
 import sslRedirect from 'heroku-ssl-redirect';
 import { mongoose } from 'mongoose';
 import { fileURLToPath } from 'url';
@@ -13,7 +12,6 @@ import path from 'path';
 
 dotenv.config();
 const app = express();
-const server = http2.createServer(app);
 
 import apiRoutes from './src/Routes/ApiRoutes.js';
 const __filename = fileURLToPath(import.meta.url);
