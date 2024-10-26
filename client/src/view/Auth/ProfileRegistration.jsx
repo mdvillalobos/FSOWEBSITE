@@ -5,6 +5,10 @@ import { UserContext } from '../../../context/userContext.jsx';
 import { RankContext } from '../../../context/rankContext.jsx';
 
 const ProfileRegistration = () => {
+<<<<<<< HEAD
+=======
+    const { user } = useContext(UserContext);
+>>>>>>> 9d5cbb9c852942f14c3ef7f359acaf05911228f9
     const { fetchApplicationConfigOnLogin } = useContext(RankContext)
     const [ loading, setLoading ] = useState(true);
 

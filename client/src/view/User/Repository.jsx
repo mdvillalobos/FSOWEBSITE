@@ -35,7 +35,7 @@ const Repository = () => {
                     <Header location={ 'Repository' }/>
                     <div className="px-16 py-2 max-sm:px-8">
                         <BackBtn/>
-                        <div className='font-Poppins py-5 px-8 border-2 rounded-xl bg-white space-y-4 max-sm:px-5  '>
+                        <div className='font-Poppins py-5 px-8 border-2 rounded-xl h-[80vh] bg-white space-y-4 max-sm:px-5  '>
                             <ControlPanel/>
                             <SavedApplication data={data}/>
                         </div>

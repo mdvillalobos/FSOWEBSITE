@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { RankContext } from '../../../context/rankContext.jsx';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useToast from '../Helpers/useToast.jsx';
 import { UserContext } from '../../../context/userContext.jsx';
@@ -8,7 +8,7 @@ import { UserContext } from '../../../context/userContext.jsx';
 const useVerifyEmail = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const { fetchRanksfetchApplicationConfigOnLoginOnLogin } = useContext(RankContext);
+    const { fetchApplicationConfigOnLogin } = useContext(RankContext);
     const { getProfileOnLogin } = useContext(UserContext)
 
     const verifyEmail = async (otp) => {
@@ -37,7 +37,7 @@ const useVerifyEmail = () => {
                 await Promise.all([
                     fetchApplicationConfigOnLogin(),
                     getProfileOnLogin()
-                ])
+                ]);
                 navigate('/profileregistration');
                 LoadingToast.close();
             }

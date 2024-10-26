@@ -47,11 +47,11 @@ const useRegisterProfile = () => {
                 });
             }
             else {
-                await Promise.all([ 
+                await Promise.all([
                     getProfileOnLogin(),
                     fetchApplicationConfigOnLogin(),
                     getDataOnLogin()
-                ])
+                ]);
                 LoadingToast.close();
                 navigate('/home');
             }
