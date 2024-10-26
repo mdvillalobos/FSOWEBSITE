@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import SettingNav from '../../components/SettingComponents/SettingNav.jsx';
 import PersonalDetailsForm from '../../components/SettingComponents/PersonalDetailsForm.jsx';
 import Back from '../../components/Tools/AdminBack.jsx';
 import Header from "../../components/Tools/Header.jsx";
+import { UserContext } from '../../../context/userContext.jsx';
 
 const PersonalDetailsAdmin = () => {
+    const { user } = useContext(UserContext);
     return (
         <div className='bg-[#f4f7fa] h-screen'>
             <Header location={'Account Settings'}/>

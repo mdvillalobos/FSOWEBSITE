@@ -7,7 +7,7 @@ import { RankContext } from '../../../context/rankContext.jsx';
 import { AnalyticsContext } from '../../../context/analyticsContext.jsx';
 
 const useRegisterProfile = () => {
-    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { fetchApplicationConfigOnLogin } = useContext(RankContext);
     const { getDataOnLogin } = useContext(AnalyticsContext);
     const { getProfileOnLogin } = useContext(UserContext);
     const { Toast, LoadingToast } = useToast();
@@ -47,10 +47,12 @@ const useRegisterProfile = () => {
                 });
             }
             else {
+                await Promise.all([ 
+                    getProfileOnLogin(),
+                    fetchApplicationConfigOnLogin(),
+                    getDataOnLogin()
+                ])
                 LoadingToast.close();
-                getProfileOnLogin();
-                fetchRanksOnLogin();
-                getDataOnLogin();
                 navigate('/home');
             }
         } catch (error) {

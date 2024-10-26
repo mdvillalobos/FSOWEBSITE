@@ -72,11 +72,11 @@ const loginForm = () => {
                 </div>
         
                 <div className="flex flex-col">
-                    <Link to="/forgotpassword" className='flex self-end text-sm mt-2 mb-4 text-[#41518d] font-medium hover:underline max-[396px]:text-[0.8rem] max-[396px]:mt-2'>Forgot Password?</Link>
+                    <Link to="/forgotpassword" className='flex self-end text-sm mt-2 mb-4 text-[#41518d] font-medium hover:underline max-[396px]:text-[0.8rem] max-[396px]:mt-2'>Forgot password?</Link>
                     <input type="submit" value="Login" className='formBtn'/>
                     <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] space-x-1.5" >
-                        <p className='r-2 max-[396px]:mr-0'>Dont Have Account?</p> 
-                        <Link to="/register" className="no-underline text-[#41518d] font-medium hover:underline">Create an Account</Link>
+                        <p className='r-2 max-[396px]:mr-0'>Don't have an account?</p> 
+                        <Link to="/register" className="no-underline text-[#41518d] font-medium hover:underline">Create an account</Link>
                     </span>
                 </div>
             </form>

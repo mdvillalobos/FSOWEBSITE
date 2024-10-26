@@ -103,7 +103,7 @@ const registrationForm = () => {
                     <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
-                        placeholder='Work Email' 
+                        placeholder='Work email' 
                         value={data.email}
                         onChange={(e) => setData({...data, email: e.target.value})}
                         className='auth-input-field'
@@ -151,7 +151,7 @@ const registrationForm = () => {
                 <div className="flex flex-col mt-4">
                     <input type="submit" value="Register" className='formBtn'/>
                     <span className="flex justify-center mt-4 text-sm max-[396px]:flex-col max-[396px]:text-center max-[396px]:text-[0.8rem] space-x-1.5">
-                        <p className='mr-0.5 font-Poppins'>Already Have An Account?</p>
+                        <p className='mr-0.5 font-Poppins'>Already have an account?</p>
                         <Link to="/" className="no-underline text-[#41518d] font-medium font-Poppins hover:underline">Login</Link>
                     </span>
                 </div>

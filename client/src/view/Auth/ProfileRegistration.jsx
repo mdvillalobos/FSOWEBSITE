@@ -5,13 +5,12 @@ import { UserContext } from '../../../context/userContext.jsx';
 import { RankContext } from '../../../context/rankContext.jsx';
 
 const ProfileRegistration = () => {
-    const { user } = useContext(UserContext);
-    const { fetchRanksOnLogin } = useContext(RankContext)
+    const { fetchApplicationConfigOnLogin } = useContext(RankContext)
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
         const fetchRank = async () => {
-            await fetchRanksOnLogin();
+            await fetchApplicationConfigOnLogin();
             setLoading(false);
         };
         fetchRank();

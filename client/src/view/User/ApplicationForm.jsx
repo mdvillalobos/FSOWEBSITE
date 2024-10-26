@@ -10,6 +10,18 @@ const ApplicationForm = () => {
     const { user } = useContext(UserContext);
     const { selectedForm, from } = location.state || {};
     const track = user.track;
+
+    if(user === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen"> 
+                <div className="cssloader">
+                  <div className="triangle1"></div>
+                  <div className="triangle2"></div>
+                  <p className="text">Please Wait</p>
+                </div>
+            </div>
+        )
+    }
     
     return (
         <div className='bg-[#f4f7fa] h-full'>

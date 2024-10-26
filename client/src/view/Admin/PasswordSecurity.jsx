@@ -3,8 +3,22 @@ import SettingNav from '../../components/SettingComponents/SettingNav.jsx';
 import Security from '../../components/SettingComponents/Security.jsx';
 import BackBtn from '../../components/Tools/AdminBack.jsx';
 import Header from "../../components/Tools/Header.jsx";
+import { UserContext } from '../../../context/userContext.jsx';
 
 const PasswordSecurityAdmin = () => {
+    const { user } = UserContext(UserContext);
+    if(user === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen"> 
+                <div className="cssloader">
+                  <div className="triangle1"></div>
+                  <div className="triangle2"></div>
+                  <p className="text">Please Wait</p>
+                </div>
+            </div>
+        )
+    }
+    
     return (
         <div>
             <div className='bg-[#f4f7fa] h-screen'>

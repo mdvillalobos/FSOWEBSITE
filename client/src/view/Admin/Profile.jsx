@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from "../../components/Tools/Header.jsx";
 import BackBtn from '../../components/Tools/AdminBack.jsx';
 import PageHolder from  '../../components/UserComponents/ProfileComponents/PageHolder.jsx';
 import ProfileModal from '../../components/UserComponents/ProfileComponents/ProfileModal.jsx';
 import ProfileCard from  '../../components/UserComponents/ProfileComponents/ProfileCard.jsx';
+import { UserContext } from '../../../context/userContext.jsx';
 
 const Profile = () => {
+    const { user } = useContext(UserContext);
+    
+    if(user === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen"> 
+                <div className="cssloader">
+                  <div className="triangle1"></div>
+                  <div className="triangle2"></div>
+                  <p className="text">Please Wait</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="bg-[#f4f7fa] h-screen font-Poppins">
             <Header location={'Profile'} />

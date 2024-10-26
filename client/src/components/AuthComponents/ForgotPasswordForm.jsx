@@ -55,7 +55,7 @@ const ForgotPasswordForm = () => {
                     <HiOutlineMail  className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
-                        placeholder='Work Email' 
+                        placeholder='Work email' 
                         value={ data.email }
                         onChange={(e) => setData({...data, email: e.target.value })}
                         className='auth-input-field'

@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import NavigationBar from "../../components/Tools/AdminNav.jsx";
 import Header from "../../components/Tools/Header.jsx";
+import { UserContext } from '../../../context/userContext.jsx';
 
 const Home = () => {
+    const { user } = useContext(UserContext);
+    if(user === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen"> 
+                <div className="cssloader">
+                  <div className="triangle1"></div>
+                  <div className="triangle2"></div>
+                  <p className="text">Please Wait</p>
+                </div>
+            </div>
+        )
+    }
+    
     return (
         <div className="bg-[#f4f7fa] h-screen max-2xl:h-full max-sm:h-screen max-md:h-auto max-lg:h-screen"> 
             <Header location='Home' />

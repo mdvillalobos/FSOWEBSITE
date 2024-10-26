@@ -7,6 +7,20 @@ import EditableForm from '../../components/UserComponents/RepositoryComponents/E
 const EditableApplicationForm = () => {
     const location = useLocation();
     const { files, from } = location.state || {};
+    const { user } = useContext(UserContext);
+
+    if(user === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen"> 
+                <div className="cssloader">
+                  <div className="triangle1"></div>
+                  <div className="triangle2"></div>
+                  <p className="text">Please Wait</p>
+                </div>
+            </div>
+        )
+    }
+    
     return (
         <div className='bg-[#f4f7fa] h-full'>
             <Header location={ files?.applyingFor }/>

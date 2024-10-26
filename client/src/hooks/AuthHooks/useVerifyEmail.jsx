@@ -8,7 +8,7 @@ import { UserContext } from '../../../context/userContext.jsx';
 const useVerifyEmail = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { fetchRanksfetchApplicationConfigOnLoginOnLogin } = useContext(RankContext);
     const { getProfileOnLogin } = useContext(UserContext)
 
     const verifyEmail = async (otp) => {
@@ -35,7 +35,7 @@ const useVerifyEmail = () => {
             }
             else {
                 await Promise.all([
-                    fetchRanksOnLogin(),
+                    fetchApplicationConfigOnLogin(),
                     getProfileOnLogin()
                 ])
                 navigate('/profileregistration');

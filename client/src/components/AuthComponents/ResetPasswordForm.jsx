@@ -95,7 +95,7 @@ const ResetPasswordForm = () => {
         <div  className={`auth-input-container focus-within:border-[#93adc2] ${shake.confirm ? 'shake' : ''}`}>
           <input 
             type={showConfirm ? 'text' : 'password'}
-            placeholder='Confirm Password'
+            placeholder='Confirm password'
             value={data.confirmPassword}
             onChange={(e) => setData({...data, confirmPassword: e.target.value})}
             className='auth-input-field'
