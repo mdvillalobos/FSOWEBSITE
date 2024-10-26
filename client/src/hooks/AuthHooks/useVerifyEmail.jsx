@@ -35,9 +35,9 @@ const useVerifyEmail = () => {
             }
             else {
                 await Promise.all([
-                    fetchRanksOnLogin(),
+                    fetchApplicationConfigOnLogin(),
                     getProfileOnLogin()
-                ])
+                ]);
                 navigate('/profileregistration');
                 LoadingToast.close();
             }
