@@ -11,7 +11,7 @@ const ProfileRegistration = () => {
 
     useEffect(() => {
         const fetchRank = async () => {
-            await fetchRanksOnLogin();
+            await fetchApplicationConfigOnLogin();
             setLoading(false);
         };
         fetchRank();
