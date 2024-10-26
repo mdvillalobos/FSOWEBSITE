@@ -48,8 +48,8 @@ const useRegisterProfile = () => {
             }
             else {
                 await Promise.all([
-                    getProfileOnLogin()
-                    fetchApplicationConfigOnLogin()
+                    getProfileOnLogin(),
+                    fetchApplicationConfigOnLogin(),
                     getDataOnLogin()
                 ]);
                 LoadingToast.close();
