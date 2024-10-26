@@ -48,9 +48,9 @@ const useRegisterProfile = () => {
             }
             else {
                 await Promise.all([
-                    getProfileOnLogin();
-                    fetchApplicationConfigOnLogin();
-                    getDataOnLogin();
+                    getProfileOnLogin()
+                    fetchApplicationConfigOnLogin()
+                    getDataOnLogin()
                 ]);
                 LoadingToast.close();
                 navigate('/home');
