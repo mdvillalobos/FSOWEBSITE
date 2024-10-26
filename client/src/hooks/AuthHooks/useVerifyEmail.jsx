@@ -8,7 +8,7 @@ import { UserContext } from '../../../context/userContext.jsx';
 const useVerifyEmail = () => {
     const { Toast, LoadingToast } = useToast();
     const navigate = useNavigate();
-    const { fetchRanksOnLogin } = useContext(RankContext);
+    const { fetchApplicationConfigOnLogin } = useContext(RankContext);
     const { getProfileOnLogin } = useContext(UserContext)
 
     const verifyEmail = async (otp) => {
